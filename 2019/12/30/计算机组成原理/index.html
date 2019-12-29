@@ -1,0 +1,1415 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="计算机组成原理, 成">
+    <meta name="description" content="一. 计算机系统概述计算机性能指标硬件性能参数
+
+计算机字长：CPU字长，指CPU一次能处理数据的二进制位数
+机器主频：时钟脉冲的频率
+主存容量：计算机能够存放的最大的二进制位数bit，B，KB，MB
+
+计算机性能指标
+
+响应时间：计算机完">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>计算机组成原理 | 成</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <script src="/libs/jquery/jquery.min.js"></script>
+    
+<meta name="generator" content="Hexo 4.2.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper head-container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">成</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">成</div>
+        <div class="logo-desc">
+            
+            你好哇！李三日！遇到你真高兴！
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">计算机组成原理</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">
+                                <span class="chip bg-color">计算机组成原理</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/" class="post-category">
+                                期末复习
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2019-12-30
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    6.6k
+                </div>
+                
+
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="一-计算机系统概述"><a href="#一-计算机系统概述" class="headerlink" title="一. 计算机系统概述"></a>一. 计算机系统概述</h2><h3 id="计算机性能指标"><a href="#计算机性能指标" class="headerlink" title="计算机性能指标"></a>计算机性能指标</h3><p>硬件性能参数</p>
+<ul>
+<li>计算机字长：CPU字长，指CPU一次能处理数据的二进制位数</li>
+<li>机器主频：时钟脉冲的频率</li>
+<li>主存容量：计算机能够存放的最大的二进制位数bit，B，KB，MB</li>
+</ul>
+<p>计算机性能指标</p>
+<ul>
+<li><p>响应时间：计算机完成某任务从任务输入到结果输出的全部时间</p>
+</li>
+<li><p>吞吐量：单位时间内计算机完成的工作量</p>
+<p>CPI：执行一条指令平均使用的CPU时钟个数</p>
+<p>MIPS：每秒完成百万条（10的六次方）指令数</p>
+</li>
+</ul>
+<h2 id="二-数据的表示和运算"><a href="#二-数据的表示和运算" class="headerlink" title="二. 数据的表示和运算"></a>二. 数据的表示和运算</h2><h3 id="数据的表示"><a href="#数据的表示" class="headerlink" title="数据的表示"></a>数据的表示</h3><p>$X =x_0x_1x_2…x_n$ </p>
+<p>定点小数：$x_0$为符号位，$x_1x_2…x_n$为尾数（小数部分的内容）$[-(1-2^n),1-2^{n}]$</p>
+<p>定点整数：$x_0$为符号位，$x_1x_2…x_n$为尾数（整数部分的内容）$[-(2^n-1),2^n-1]$</p>
+<table>
+<thead>
+<tr>
+<th>真值</th>
+<th>$-2^n$</th>
+<th>$-(2^n-1)$</th>
+<th>-1</th>
+<th>0</th>
+<th>+1</th>
+<th>$2^n-1$</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>原码</td>
+<td>无</td>
+<td>11…11</td>
+<td>10…01</td>
+<td>10…00/00…00</td>
+<td>00…01</td>
+<td>01…11</td>
+</tr>
+<tr>
+<td>反码</td>
+<td>无</td>
+<td>10…00</td>
+<td>11…10</td>
+<td>11…11/00…00</td>
+<td>00…01</td>
+<td>01…11</td>
+</tr>
+<tr>
+<td>补码</td>
+<td>10…00</td>
+<td>10…01</td>
+<td>11…11</td>
+<td>00…00</td>
+<td>00…01</td>
+<td>01…11</td>
+</tr>
+</tbody></table>
+<h3 id="浮点数加减运算"><a href="#浮点数加减运算" class="headerlink" title="浮点数加减运算"></a>浮点数加减运算</h3><p>步骤</p>
+<ul>
+<li>对阶</li>
+<li>尾数加减运算</li>
+<li>尾数结果规格化</li>
+<li>舍入</li>
+<li>溢出判断</li>
+</ul>
+<p>算术逻辑单元ALU</p>
+<ul>
+<li><p>一位全加器</p>
+<p>加数A，加数B，进位C</p>
+</li>
+<li><p>并行加法器</p>
+<p>由多个一位全加器组成</p>
+<ul>
+<li><p>串行进位</p>
+<p>高位依赖低位的进位信息</p>
+</li>
+<li><p>并行进位</p>
+<p>高位低位同时进行运算</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="三-存储器层次结构"><a href="#三-存储器层次结构" class="headerlink" title="三. 存储器层次结构"></a>三. 存储器层次结构</h2><h3 id="半导体存储器RAM"><a href="#半导体存储器RAM" class="headerlink" title="半导体存储器RAM"></a>半导体存储器RAM</h3><p>RAM（随机存取存储器）随机存取存储器，每次访问时间是固定的，与其所在的物理位置无关。</p>
+<p>RAM可以分为静态RAM与动态RAM。</p>
+<ul>
+<li>SRAM：利用触发器电路状态存储信息</li>
+<li>DRAM：利用MOS电容是否带电荷存储信息</li>
+</ul>
+<p>RAM与ROM</p>
+<ul>
+<li>ROM只能读不能写，常用于存放系统程序或不需要修改的数据，非易失</li>
+<li>RAM既可以读也可以写，常用来存放用户程序，数据或作为系统程序的工作区，易失</li>
+</ul>
+<h4 id="SRAM"><a href="#SRAM" class="headerlink" title="SRAM"></a>SRAM</h4><p>多用于cache</p>
+<p>由存储阵列，地址译码器，I/O电路，片选线，读写控制电路组成</p>
+<ul>
+<li><p>存储阵列：是主存储器的核心，程序与数据存放在存储阵列中</p>
+</li>
+<li><p>地址译码器：包含译码器与驱动器，可分为一维译码器（字选择线），二维译码器（字选择线+位选择线）</p>
+<ul>
+<li><p>二维译码器</p>
+<p>将一维线性排列的存储单元进行重新排列，变成二维排列。行选择线选择某一行，位选择线选择该行第几个存储器。</p>
+</li>
+</ul>
+</li>
+<li><p>片选器：实现选择某一个芯片</p>
+</li>
+<li><p>I/O电路与读写控制电路：完成选中存储单元中各位的读出与写入操作</p>
+</li>
+</ul>
+<p>参数：</p>
+<ul>
+<li>数据引脚数量=存储字长=存储单元所包含存储元个数</li>
+<li>存储阵列容量=存储数量（存储单元的个数，与地址线数量有关）*存储字长</li>
+<li>地址引脚数量：与存储单元的个数有关</li>
+</ul>
+<h4 id="DRAM"><a href="#DRAM" class="headerlink" title="DRAM"></a>DRAM</h4><p>多用于主存</p>
+<ul>
+<li><p>刷新：对DRAM定期进行全部重写过程。刷新操作主要解决存储单元中电容缓慢泄露电荷导致的信息丢失问题。</p>
+</li>
+<li><p>DRAM刷新地址计数器：指刷新存储器的行地址。其位数就是行地址的位数</p>
+</li>
+<li><p>刷新的方式</p>
+<ul>
+<li><p>集中式刷新</p>
+<p>是指将各行的行刷新集中一段时间统一进行</p>
+</li>
+<li><p>分散式刷新</p>
+<p>将存储周期扩大一倍，前半段用于正常的读写，后半段用于行刷新。不存在“死区”</p>
+</li>
+<li><p>异步式刷新</p>
+<p>将各行的行刷新均匀分散在整个刷新周期中进行，对集中式刷新和分散式刷新的折中</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="主存储器"><a href="#主存储器" class="headerlink" title="主存储器"></a>主存储器</h3><p>数据存放的方式：</p>
+<ul>
+<li>小端照齐：数据的最低位存放在地址低位</li>
+<li>大端照齐：数据的最高位存放在地址低位</li>
+</ul>
+<h4 id="主存容量的扩展"><a href="#主存容量的扩展" class="headerlink" title="主存容量的扩展"></a>主存容量的扩展</h4><ul>
+<li>位扩展：横向扩展</li>
+<li>字扩展：纵向扩展</li>
+<li>字与位同时扩展：纵向横向同时扩展</li>
+</ul>
+<h4 id="片选"><a href="#片选" class="headerlink" title="片选"></a>片选</h4><p>CPU对存储单元的访问：</p>
+<ol>
+<li>选择存储芯片，即进行片选</li>
+<li>从选中的芯片中依地址码选择对应的存储单元，即进行字选</li>
+</ol>
+<p>片选的方法：</p>
+<ul>
+<li>线选法：有多少个芯片就有多少个选择线，一个选择线对应一个芯片</li>
+<li>全译码法：对芯片进行编码，n个芯片，需要$log_2n$个选择线</li>
+<li>部分译码：相比全译码方法，会多出几位无用</li>
+</ul>
+<h3 id="高速缓冲存储器Cache"><a href="#高速缓冲存储器Cache" class="headerlink" title="高速缓冲存储器Cache"></a>高速缓冲存储器Cache</h3><h4 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h4><p>读</p>
+<ul>
+<li>Cache和主存均被分为若干个大小相等的块，每个块由若干字节组成</li>
+<li>CPU发出主存地址后<ul>
+<li>首先判断该存储字是否在Cache中，若命中，直接访问Cache</li>
+<li>若不命中，则访问主存并将该字所在的主存块装入Cache</li>
+</ul>
+</li>
+</ul>
+<p>写，可能出现数据不一致问题</p>
+<ul>
+<li>如果命中Cache<ul>
+<li>写直达法：将信息同时写入Cache和主存中</li>
+<li>写回法：将信息写入Cache，在Cache被替换时再写入主存</li>
+<li>写一次法：与写回法一样，但再第一次写入时也将信息写入到主存</li>
+</ul>
+</li>
+<li>如果不命中Cache<ul>
+<li>不按写分配法：只将需要写的信息写入主存</li>
+<li>按写分配法：将需要写的信息写入主存后，再将该块从主存中读入Cache</li>
+</ul>
+</li>
+</ul>
+<h4 id="Cache与主存之间的映射关系"><a href="#Cache与主存之间的映射关系" class="headerlink" title="Cache与主存之间的映射关系"></a>Cache与主存之间的映射关系</h4><p>主存的块标记有m位，即主存有$2^m$个块，块大小$2^b$个字，Cache一个$2^c$个块，块大小$2^b$个字</p>
+<ol>
+<li><p>全相联映射</p>
+<p>主存中某个块可以被放到Cache中任意一个位置</p>
+<p>主存：| 块号m位 | 块内地址b位 |</p>
+<p>Cache：| 块号c位 | 块内地址b位 |</p>
+<p>目录表： 块标记位数m位</p>
+</li>
+<li><p>直接映射</p>
+<p>将主存划分为若干个区，每个区的块数与Cache的块数相同，区内第$j$个块只能放在Cache第$j$个块</p>
+<p>主存快标记m=k+c，$2^c$为Cache的块数，k为区标记，一共$2^k$个区</p>
+<p>主存：| 区号k位 | 区内块号c位 | 块内地址b位 |</p>
+<p>Cache：| 块号c位 | 块内地址b位 |</p>
+<p>目录表：块标记位数k位</p>
+</li>
+<li><p>组相联映射</p>
+<p>Cache分成若干个组，每个组包含多个块，将主存划分为若干个区，每个区的主存块数与Cache的组数相同，区内第j块可以放置在Cache的第j组的任意位置</p>
+<p>Cache中c=(c-g)+g，一个$2^{c-g}$个组，一个组内有$2^g$个块</p>
+<p>主存快标记m=(m-c+g) + (c-g) ，一共$2^{m-c+g}$个区，一个区内有$2^{c-g}$个块数</p>
+<p>n路组相联表示一组中有n个数据块</p>
+<p>主存：| 区号k位 | 区内块号g位 | 块内地址b位 |</p>
+<p>Cache：| 组号g位 | 块号c位 | 块内地址b位 |</p>
+<p>目录表：块标记位数k位</p>
+</li>
+</ol>
+<h2 id="四-MIPS-指令系统"><a href="#四-MIPS-指令系统" class="headerlink" title="四. MIPS 指令系统"></a>四. MIPS 指令系统</h2><p>MIPS按字节寻址，一条指令长度为32位，一个字长，所以执行一条指令，PC＋４</p>
+<p>程序控制局部性原理：<strong>时间局部性</strong>和<strong>空间局部性</strong></p>
+<h3 id="MIPS指令格式"><a href="#MIPS指令格式" class="headerlink" title="MIPS指令格式"></a>MIPS指令格式</h3><p><img src=".%5C%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86_MIPS%E6%8C%87%E4%BB%A4%E6%A0%BC%E5%BC%8F.PNG" alt=""></p>
+<h3 id="MIPS寻址方式"><a href="#MIPS寻址方式" class="headerlink" title="MIPS寻址方式"></a>MIPS寻址方式</h3><p>寄存器取数使用()，例如(R)</p>
+<p>主存按地址取数使用[]，例如[(R)]</p>
+<h4 id="MISP"><a href="#MISP" class="headerlink" title="MISP"></a>MISP</h4><ul>
+<li><p>寄存器寻址：操作数在寄存器组中，指令中有寄存器编号</p>
+</li>
+<li><p>立即数寻址：操作数在指令中</p>
+</li>
+<li><p>基址寻址：操作数地址=基址+偏移地址，基址寄存器编号和偏移地址均在指令中</p>
+</li>
+<li><p>PC相对寻址：操作数地址=PC+偏移地址，偏移地址在指令中</p>
+</li>
+<li><p>伪直接寻址：操作数在主存中，操作数地址在指令中</p>
+<p>单地址指令：操作码+A</p>
+<p>双地址指令：操作码+A+A</p>
+<p>操作码采用定长编码：所有指令格式的操作码长度相同</p>
+<p>操作码采用变长编码：指令格式操作码长度不一样</p>
+</li>
+</ul>
+<p>有效地址为EA，获取操作数需要访问内存的次数</p>
+<table>
+<thead>
+<tr>
+<th>寻址方式</th>
+<th>有效地址</th>
+<th>访存次数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>立即数寻址</td>
+<td>A即为操作数</td>
+<td>0</td>
+</tr>
+<tr>
+<td>直接寻址</td>
+<td>EA=A</td>
+<td>1</td>
+</tr>
+<tr>
+<td>寄存器寻址</td>
+<td>EA=$R_i$</td>
+<td>0</td>
+</tr>
+<tr>
+<td>基址寻址</td>
+<td>EA=(BR)+A</td>
+<td>1</td>
+</tr>
+<tr>
+<td>PC相对寻址</td>
+<td>EA=(PC)+A</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<h4 id="普通"><a href="#普通" class="headerlink" title="普通"></a>普通</h4><ul>
+<li>立即寻址：√</li>
+<li>寄存器寻址：√</li>
+<li>直接寻址：√</li>
+<li>间接寻址：两次寻址</li>
+<li>寄存器间接寻址：两次寻址</li>
+<li>基址寻址：基址固定不变</li>
+<li>变址寻址 = MISP的基址寻址（基址寄存器）</li>
+<li>相对寻址：√</li>
+</ul>
+<h2 id="五-MIPS处理器"><a href="#五-MIPS处理器" class="headerlink" title="五.MIPS处理器"></a>五.MIPS处理器</h2><h3 id="CPU的功能和基本结构"><a href="#CPU的功能和基本结构" class="headerlink" title="CPU的功能和基本结构"></a>CPU的功能和基本结构</h3><p><img src=".%5C%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86_CPU%E5%86%85%E9%83%A8%E7%BB%93%E6%9E%84.PNG" alt="CPU内部结构"></p>
+<p>CPU的基本功能就是对指令流和数据流在时间和空间上实施正确的控制</p>
+<ul>
+<li>指令流：CPU执行的指令序列</li>
+<li>数据流：根据指令操作要求依次存取数据的序列</li>
+</ul>
+<p>指令的四种基本操作：</p>
+<ul>
+<li>取数：读取某个主存单元的数据，并传输到某个寄存器中</li>
+<li>存数：将某个寄存器的数据存入到主存某个单元之中</li>
+<li>传送：将某个寄存器的数据传输到ALU或者另一个寄存器中</li>
+<li>运算：进行某种逻辑运算，并将结果保存到某一个寄存器中</li>
+</ul>
+<p>CPU组成：</p>
+<ul>
+<li>程序计数器PC</li>
+<li>指令寄存器IR：存放从存储器中取出的指令</li>
+<li>存储器数据寄存器MDR：暂存由主存读出的一条指令或一个数据字</li>
+<li>存储器地址寄存器MAR：保存当前CPU所访问的主存单元地址</li>
+</ul>
+<p>CPU执行流程：</p>
+<pre><code>以ADD R1,(R2)为例：R1 &lt;- (R1)+((R2))
+最后再将R1中数据放回内存
+取指：
+    T1:PC -&gt; MAR            //读取地址
+    T2:1 -&gt; READ            //发出读命令
+       M(MAR) -&gt; MDR        //读取数据
+    T3:MDR -&gt; IR            //读出的数据放在
+    T4:PC+1 -&gt; PC             //PC+1
+取数：
+    T1:R2 -&gt; MAR
+    T2:1 -&gt; READ
+       M(MAR) -&gt; MDR
+    T3:MDR -&gt; B
+    T4:R1 -&gt; A
+运算：
+    A+B -&gt; AC
+    AC -&gt; R1
+写回：
+    T1: R1 -&gt; MDR
+    T2: PC -&gt; MAR
+    T3: 1 -&gt; WRITE
+        MDR-&gt;M(MAR)
+    T4: PC+1 -&gt; PC</code></pre><h3 id="单周期处理器"><a href="#单周期处理器" class="headerlink" title="单周期处理器"></a>单周期处理器</h3><p>所有指令执行周期为固定为单一时钟周期，即CPI=1.采用<strong>哈弗体系结构</strong>（指令和数据采用不同存储器）。</p>
+<h4 id="单周期数据通路设计"><a href="#单周期数据通路设计" class="headerlink" title="单周期数据通路设计"></a>单周期数据通路设计</h4><ol>
+<li><p>取指和PC自增数据通路</p>
+<p>功能描述：</p>
+<ul>
+<li>取指：IM Address ⬅PC，instruction=IM[PC]</li>
+<li>PC自增：PC⬅PC+4</li>
+</ul>
+<p>所需部件：PC，Adder，指令寄存器IM</p>
+</li>
+<li><p>R型指令数据通路</p>
+<p>add rd，rs，rt</p>
+<ul>
+<li>rd第三个寄存器</li>
+<li>rs第一个寄存器</li>
+<li>rt第二个寄存器</li>
+</ul>
+<p>功能描述：R[rd]⬅R[rs]+R[rt]</p>
+<p>所需部件：寄存器堆，ALU</p>
+</li>
+<li><p>加载数据指令</p>
+<p>lw rt，rs，imm16</p>
+<p>功能描述：R[rt] = DM[ R[rs]+Signext(imm16) ]</p>
+<p>通路部件：寄存器堆，ALU，符号扩展单元Signext，数据存储器DM</p>
+</li>
+<li><p>存数指令</p>
+<p>sw rt，rs，imm16</p>
+<p>功能描述：DM[R[rs]+Signext(imm16)] ⬅R[rt]</p>
+<p>通路部件：寄存器堆，ALU，符号扩展单元Signext，数据存储器DM</p>
+</li>
+<li><p>分支指令数据通路</p>
+<p>beq rs，rt，imm16</p>
+<p>功能描述：If ( R[rs] – R[rt] =0) then PC  ⬅ (PC + 4) + Signext(imm16)&lt;&lt;2</p>
+<pre><code>                                                 else PC  ⬅  PC + 4</code></pre><p>通路部件：寄存器堆，ALU，增加一个加法器，符号扩展器，移位器</p>
+</li>
+</ol>
+<p><img src=".%5C%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86_%E5%8D%95%E5%91%A8%E6%9C%9F%E5%A4%84%E7%90%86%E5%99%A8%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1.PNG" alt=""></p>
+<h4 id="指令执行时间计算"><a href="#指令执行时间计算" class="headerlink" title="指令执行时间计算"></a>指令执行时间计算</h4><ul>
+<li>采用单周期，即所有指令周期固定为单一时钟周期，<ul>
+<li>时钟周期由最长的指令决定(LW指令)，为600ps</li>
+</ul>
+</li>
+<li>不同类型采用不同的指令周期（可变时钟周期）</li>
+</ul>
+<p>改进方法：改变m每种指令类型所用的时钟数，采用多周期实现</p>
+<h3 id="多周期处理器"><a href="#多周期处理器" class="headerlink" title="多周期处理器"></a>多周期处理器</h3><p>为什么不使用单周期实现方式</p>
+<pre><code>单周期设计中，时钟周期对所有指令等长，而时钟周期由计算机中可能的最长执行时间的指令决定，一般为取数指令。因此一些较短执行时间的指令会浪费一段时间</code></pre><p>多周期方案（采用普林斯顿结构，指令和数据采用一个存储器）</p>
+<ul>
+<li>将指令分为多个步骤执行，每一个步骤一个时钟周期，则指令执行周期为多个周期，不同指令的指令周期包含时钟周期不一样。</li>
+<li>优点：<ul>
+<li>提高性能</li>
+<li>降低成本：一个功能单元可以在一条指令执行过程中使用多次，只要是在不同的周期内（有点像流水线）</li>
+</ul>
+</li>
+</ul>
+<h4 id="MIPS多周期数据通路设计"><a href="#MIPS多周期数据通路设计" class="headerlink" title="MIPS多周期数据通路设计"></a>MIPS多周期数据通路设计</h4><p>一个ALU，指令算术逻辑运算，取指后PC+4，beq转移指令，都在ALU中完成，扩展数据为补码形式。</p>
+<p><img src=".%5C%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86_%E5%A4%9A%E5%91%A8%E6%9C%9F%E6%8C%87%E4%BB%A4.PNG" alt=""></p>
+<p><img src=".%5C%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86_%E5%A4%9A%E5%91%A8%E6%9C%9F%E5%A4%84%E7%90%86%E5%99%A8%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1.PNG" alt=""></p>
+<h3 id="流水线处理器"><a href="#流水线处理器" class="headerlink" title="流水线处理器"></a>流水线处理器</h3><ul>
+<li>流水线不改善单个任务处理延迟，但改善了整个工作负载得吞吐率</li>
+<li>流水线速率受限于最慢的流水段</li>
+<li>多个任务同时工作，但占用不同的资源</li>
+<li>潜在加速比=流水线级数</li>
+</ul>
+<h4 id="流水线的五个阶段"><a href="#流水线的五个阶段" class="headerlink" title="流水线的五个阶段"></a>流水线的五个阶段</h4><ol>
+<li>IF：取指令，PC值变化，利用PC中地址从内存中读取指令，放入ID/IF中</li>
+<li>ID：指令译码，读寄存器，从寄存器堆中读取数据放入到ID/EXE中</li>
+<li>EX：执行运算，ALU操作，将结果放在EX/MEM中<ul>
+<li>Load/Store：计算地址</li>
+</ul>
+</li>
+<li>EME：访存。为每一条指令分配该阶段是为了保证同一时刻不会有两条指令都访问数据缓存<ul>
+<li>Load：从Memory读取数据</li>
+<li>Store：将数据写入Memory</li>
+</ul>
+</li>
+<li>WB：数据写回寄存器，将计算结果从ALU输出寄存器写回RF中</li>
+</ol>
+<p>不同阶段之间增加寄存器，保存前一个周期产生的信息。</p>
+<ul>
+<li>命名法则：前级/后继</li>
+<li>功能：时钟上升沿到来，保存前级结果，之后输出至下级组合逻辑</li>
+</ul>
+<p>RF：Register File寄存器堆有两次使用：第二级读，第五级写。并且其第二个寄存器的值可以直接传递到EX/MEM</p>
+<p><img src="C:%5CUsers%5C10920%5CDownloads%5C%E6%96%87%E6%A1%A3%5C%E8%80%83%E7%A0%94%E8%B5%84%E6%96%99%5C%E6%80%BB%E7%BB%93%5C%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%BC%E5%90%88%5C%E6%B5%81%E6%B0%B4%E7%BA%BF.PNG" alt=""></p>
+<h3 id="数据冒险"><a href="#数据冒险" class="headerlink" title="数据冒险"></a>数据冒险</h3><p>流水线处理中，由于各个阶段的依赖关系，硬件资源的竞争等原因，会出现操作无法执行的情况。</p>
+<p>在下一个时钟周期妨碍下一条指令执行的执行的情况称为<strong>数据冒险</strong></p>
+<h4 id="结构冒险"><a href="#结构冒险" class="headerlink" title="结构冒险"></a>结构冒险</h4><p> 结构冒险是指由于硬件资源的竞争，操作无法同时执行的情况，即资源使用冲突</p>
+<ol>
+<li><p>内存访问造成构造冒险</p>
+<p>IF阶段和MEM阶段都涉及内存访问，访问内存使用的总线是共享资源，无法同时进行。（若依曼架构）</p>
+<p>第一条指令为load或者save指令的第四个周期，会与第四条指令的第一个周期发生冲突。</p>
+<p>解决方法：使用哈弗架构</p>
+<pre><code>将指令用的内存和数据用的内存分别设置，即可解决构造冒险。CPU直接访问的缓存基本上都分为指令用和数据用两种，称为指令缓存和数据缓存</code></pre></li>
+<li><p>寄存器访问造成构造冒险</p>
+<p>WB阶段写回寄存器和ID阶段读取寄存器，寄存器无法读写同时进行</p>
+<p>第一条指令为load或者R型指令第五个周期，会与第四条指令第二个周期发生冲突。</p>
+<p>解决办法：分割寄存器堆的访问周期</p>
+<pre><code>时钟周期前半段写，后半段读</code></pre></li>
+</ol>
+<h4 id="数据冒险-1"><a href="#数据冒险-1" class="headerlink" title="数据冒险"></a>数据冒险</h4><p>数据冒险指，由于指令所需要的数据还未准备好所引起的冒险情况。当即将执行的指令依赖于还未完成的数据时，会导致指令无法立刻开始执行，引起数据冒险。</p>
+<ol>
+<li><p>第一条指令在第五个周期将数据写回寄存器，若第二条指令第二个周期要用到第一条指令的数据，则会出现数据冒险</p>
+<p>写回的数据，后续指令需要用到。第一条指令为R型指令，在第五个周期将数据写回寄存器，而第二条指令在第二个周期取指时需要用到该寄存器的值，发生数据冒险。</p>
+</li>
+</ol>
+<p>解决方法：使用<strong>直通的方法</strong>，或者两个nop</p>
+<pre><code>R型指令原本回写运算结果是在WB阶段，而实际上决定运算结果的是在EX阶段。直通方法就是指，在运算结果确定的EX阶段，将数据直接传递给下一个指令的ALU阶段
+EX/MEM.RegisterRd = ID/EX.RegisterRs = r1
+在EX/MEM与ID/EX中间加一个转发单元</code></pre><ol start="2">
+<li><p>数据冒险与阻塞</p>
+<p>当一条指令读取一个寄存器而其前一条指令是load指令（需要将内存中的数据写回寄存器），并且该load指令写入的是同一个寄存器，则直通方法无法解决。原因：load指令写回的数据在MEM阶段完成后产生</p>
+<p>解决方法：阻塞流水线</p>
+<pre><code>当load指令后紧跟着一个需要其结果的指令时，必须采用相应的机制阻塞流水线。
+除了转发单元，还要将第二条指令阻塞一个周期，使用nop指令（没有任何效果），如果没有转发单元，需要两个nop指令</code></pre></li>
+</ol>
+<p>还可以调整指令的执行顺序。</p>
+<h4 id="控制冒险"><a href="#控制冒险" class="headerlink" title="控制冒险"></a>控制冒险</h4><p>控制冒险指，无法确定下一条指令而引发的冒险情况。</p>
+<p>在执行可能会改变下一条指令的分支指令时，在这一条指令执行结果确定前（MEM之后）下一条指令无法进行</p>
+<p>解决方法：</p>
+<ul>
+<li><p>假定分支不发生</p>
+<p>即不管分支结果是否产生，继续向下执行，如果分支产生，则丢弃已经预取并译码的指令</p>
+</li>
+<li><p>缩短分支延迟</p>
+<p>一般到MEM阶段才能确定分支结构要执行的下一条指令的PC。</p>
+<p>题前计算分支的目的地址可以将分支加法器从EX段移动到ID段，将PC值和IF/ID流水线寄存器中的指令立即数相加，计算分支结果。</p>
+<p>当分支指令的判断条件的数据寄存器依赖前一条指令的结果时</p>
+<ul>
+<li>如果依赖前一条指令的ALU计算结果时，通过转发单元完成</li>
+<li>如果依赖前一条指令的回写阶段，通过nop指令实现</li>
+</ul>
+</li>
+</ul>
+<h2 id="六-总线与输入输出系统"><a href="#六-总线与输入输出系统" class="headerlink" title="六. 总线与输入输出系统"></a>六. 总线与输入输出系统</h2><h3 id="总线的仲裁方式"><a href="#总线的仲裁方式" class="headerlink" title="总线的仲裁方式"></a>总线的仲裁方式</h3><p>仲裁的方式有集中式和分布式两种。</p>
+<h4 id="集中式"><a href="#集中式" class="headerlink" title="集中式"></a>集中式</h4><p>总线上主设备最少有两根信号线连接到总线仲裁机构，一根是总线请求信号线BR，一根是总线允许信号线BG</p>
+<ol>
+<li><p>链式查询方式</p>
+<p>总线仲裁机构在有总线请求时，发出总线允许信号BG，由各主设备自行仲裁。需要三根信号线</p>
+<p>特点：</p>
+<ul>
+<li>仲裁采用优先级策略，且各主设备的优先级固定，即离CPU越近主设备优先级越高</li>
+<li>需要的仲裁信号线较少</li>
+<li>可扩展性比较高，但对电路故障敏感，容易产生断链现象</li>
+<li>三条线：BS（总线忙），BR（总线请求），BG（总线允许）</li>
+</ul>
+</li>
+<li><p>计数器定时查询方式</p>
+<p>使用设备地址信号线代替BG，内部使用计数器的计数信号表示设备。可以实现循环优先级和固定优先级两种方式。</p>
+<p>特点：</p>
+<p>　* 对电路不敏感，但信号线数量增多<br>　* 需要2+$log_2 n$条信号线，总线允许线改为设备地址线</p>
+</li>
+<li><p>独立请求方式</p>
+<p>每个设备需要一对总线请求和总线允许信号线</p>
+<p>特点</p>
+<ul>
+<li>速度快</li>
+<li>优先次序控制灵活</li>
+<li>线路多，电路复杂</li>
+<li>n条BR，n条BG</li>
+</ul>
+</li>
+</ol>
+<h4 id="分布式"><a href="#分布式" class="headerlink" title="分布式"></a>分布式</h4><p>不需要中央总裁器，每个设备都有自己的仲裁号和仲裁器，当某主设别由总线请求时，由自身决定仲裁结果。</p>
+<h3 id="I-O控制器"><a href="#I-O控制器" class="headerlink" title="I/O控制器"></a>I/O控制器</h3><h4 id="I-O接口的功能"><a href="#I-O接口的功能" class="headerlink" title="I/O接口的功能"></a>I/O接口的功能</h4><ul>
+<li><p>实现对主机和外设的通信联络控制</p>
+</li>
+<li><p>进行地址译码和设备选择</p>
+<p>接口必须对地址进行译码以产生设备选择信息，使主机能和指定外设交换信息</p>
+</li>
+<li><p>实现数据缓冲</p>
+</li>
+<li><p>数据格式的变换</p>
+<p>并-串转换，串-并转换，模-数转换，数-模转换</p>
+</li>
+<li><p>传输控制命令和状态信息</p>
+</li>
+</ul>
+<h4 id="I-O接口的结构"><a href="#I-O接口的结构" class="headerlink" title="I/O接口的结构"></a>I/O接口的结构</h4><p>接口要分别传送数据信息，控制信息，状态信息，这些数据都是由数据总线来传输</p>
+<p>接口类型</p>
+<ul>
+<li>数据传输方式分类：串行接口，并行接口</li>
+<li>主机访问I/O设备的控制方式分类：程序查询式接口，程序中断接口，DMA接口，通道</li>
+<li>功能选择分灵活性分：可编程接口，不可编程接口</li>
+<li>通用性分类：通用接口，专用接口</li>
+<li>输入输出的信号分类：数字接口，模拟接口</li>
+</ul>
+<p>I/O端口：接口电路中可以被CPU直接访问的寄存器，若干个端口+相应的控制逻辑电路=接口</p>
+<ul>
+<li>数据端口：存放数据信息</li>
+<li>命令端口：存放控制命令，CPU只可写</li>
+<li>状态端口：存放状态信息，CPU只可读</li>
+</ul>
+<p>I/O端口编址方式：</p>
+<ul>
+<li>独立编址方式</li>
+<li>统一编址方式</li>
+</ul>
+<h3 id="基本I-O方式"><a href="#基本I-O方式" class="headerlink" title="基本I/O方式"></a>基本I/O方式</h3><h4 id="程序查询方式"><a href="#程序查询方式" class="headerlink" title="程序查询方式"></a>程序查询方式</h4><p>为了保证数据传输的正确进行，要求CPU在程序中查询外设的工作状态。如果外设没有准备好，CPU就循环等待，如果已经准备好，CPU才能执行I/O指令进行数据传送</p>
+<p>流程：</p>
+<ol>
+<li>预置传送参数</li>
+<li>向外设接口发出命令字</li>
+<li>从外设接口取回状态字</li>
+<li>查询外设标志</li>
+<li>传送数据</li>
+<li>修改传送参数：每进行一次数据传送之后必须修改传送参数：主存缓冲区地址+1，传送个数计数器-1</li>
+<li>判断传送是否结束</li>
+</ol>
+<p>接口：</p>
+<ul>
+<li>数据缓冲寄存器：数据端口，用来存放CPU进行传送的数据信息</li>
+<li>设备状态寄存器：供CPU查询的设备状态寄存器，即状态端口</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>CPU等待外部设备</li>
+<li>CPU只能和一台外设交换信息</li>
+<li>不能发现和处理预先无法估计的错误和异常</li>
+</ul>
+<h4 id="程序中断方式"><a href="#程序中断方式" class="headerlink" title="程序中断方式"></a>程序中断方式</h4><p>计算机执行程序的过程中，出现某些急需处理的异常情况和特殊请求，CPU暂时中止现行程序，转去对出现的异常情况和特殊请求处理，在处理完毕之后，CPU将自动返回原来的程序继续执行</p>
+<p>中断条件：</p>
+<ul>
+<li>CPU接收到中断请求信号</li>
+<li>CPU允许中断，CPU内部有一个中断允许触发器（EINT）</li>
+<li>一条指令执行完毕（缺页中断除外）</li>
+</ul>
+<p>中断隐指令：CPU响应中断之后，经过某些操作，需执行中断程序，这些操作由硬件实现，称为中断隐指令，包括保存断点，暂不允许中断，引出中断服务程序</p>
+<p>中断过程：</p>
+<ul>
+<li>中断请求</li>
+<li>中断判优（判断中断的优先级）</li>
+<li>中断响应</li>
+<li>中断处理<ul>
+<li>准备部分：关中断，保护现场，判断中断源，开中断指令（允许更高级中断）</li>
+<li>处理部分：执行中断服务程序</li>
+<li>结尾部分：关中断，恢复现场，开中断指令</li>
+</ul>
+</li>
+<li>中断返回</li>
+</ul>
+<p>中断屏蔽：有些中断发生后，可以选择性封锁部分中断，即中断屏蔽。中断屏蔽触发器（MASK），可以改变中断优先级（将原来较低的中断源编程较高的级别，称为中断升级）</p>
+<p>中断分类：</p>
+<p>分类一</p>
+<ul>
+<li>强迫性中断</li>
+<li>自愿性中断</li>
+</ul>
+<p>分类二</p>
+<ul>
+<li>外中断</li>
+<li>内中断</li>
+</ul>
+<p>分类三</p>
+<ul>
+<li>硬中断</li>
+<li>软中断</li>
+</ul>
+<p>分类四</p>
+<ul>
+<li><p>向量中断：用硬件方法识别中断源和获得中断服务程序入口地址</p>
+<p>中断向量：中断服务程序的入口地址</p>
+</li>
+<li><p>非向量中断：用软件查询的方式识别中断源和获得中断程序程序入口地址</p>
+</li>
+</ul>
+<h4 id="DMA方式"><a href="#DMA方式" class="headerlink" title="DMA方式"></a>DMA方式</h4><p>周期挪用（周期窃取）：每传输一个字需要占用一个存储周期的时间</p>
+<p>直接存储器访问（DMA）在<strong>外设</strong>和<strong>主存</strong>之间开辟一条”直接数据通道”，在不需要CPU干预不需要软件介入的情况下在两者之间进行高速数据传送。</p>
+<p>通过DMA控制器向CPU提出DMA传送请求，CPU响应之后将让出<strong>系统总线</strong>，由DMA控制器接管总线进行数据传送</p>
+<p>DMA在传送开始前要通过程序进行预处理，结束后要通过中断方式进行后处理。</p>
+<p>DMA与中断的区别：</p>
+<ul>
+<li>中断方式是程序切换，需要现场保护和现场恢复；DMA方式除了开始与结尾，不占用任何CPU资源</li>
+<li>中断请求一般发生在每条指令执行完毕；DMA请求的响应时间可以发生在每个机器周期结束</li>
+<li>中断传送需要CPU参与，DMA方式传输数据时无需CPU干预</li>
+<li>DMA请求优先级高于中断请求</li>
+<li>中断方式可以处理异常事件，DMA局限于传输数据块</li>
+</ul>
+<p>DMA控制器</p>
+<ul>
+<li>主存地址计数器：存放待交换数据的主存地址</li>
+<li>传送长度计数器：记录长度计数器</li>
+<li>数据缓冲寄存器：暂存每次传输的数据</li>
+<li>DMA请求触发器：每当外设准备好数据后给出一个控制信号，使DMA请求触发器置位</li>
+<li>控制/状态逻辑</li>
+<li>中断机构：当一个数据块传输完毕之后触发中断机构，向CPU提出中断请求，CPU进行结尾处理</li>
+</ul>
+<p>传输过程</p>
+<ul>
+<li>DMA预处理：DMA传输之前进行初始化，由CPU完成</li>
+<li>数据传送：以数据块为基本单位进行传输</li>
+<li>DMA后处理：DMA向CPU发中断请求，CPU停止原来的程序执行，转去执行DMA结束处理工作</li>
+</ul>
+
+            </div>
+            <hr/>
+
+            
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">
+                                    <span class="chip bg-color">计算机组成原理</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2019/12/30/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="操作系统">
+                        
+                        <span class="card-title">操作系统</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            一.操作系统概述操作系统操作系统目前有五大类型：批操作系统，分时系统，实时系统，网络操作系统，分布式系统
+操作系统的特征：
+
+并发
+并发：多个程序在同一时间段发生
+并行：多个程序在同一时刻发生。单处理器进程交替进行；多处理器进程可重叠执行
+
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-12-30
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/" class="post-category">
+                                    期末复习
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">
+                        <span class="chip bg-color">操作系统</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2019/12/25/hello-world/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
+                        
+                        <span class="card-title">Hello World</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hex
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-12-25
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            yzc
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2019</span>
+            <a href="http://yzcheng.com" target="_blank">yzc</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2019";
+                    var startMonth = "12";
+                    var startDate = "26";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

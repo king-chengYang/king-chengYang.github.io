@@ -3,7 +3,7 @@
 
 
 <head>
-    <meta charset="utf-8">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
     <meta name="keywords" content="计算机组成原理, 成">
     <meta name="description" content="一. 计算机系统概述计算机性能指标硬件性能参数
 
@@ -34,11 +34,11 @@
     
     <script src="/libs/jquery/jquery.min.js"></script>
     
-<meta name="generator" content="Hexo 4.2.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<meta name="generator" content="Hexo 4.2.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 
 
 <body>
-    <header class="navbar-fixed">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header class="navbar-fixed">
     <nav id="headNav" class="bg-color nav-transparent">
         <div id="navContainer" class="nav-wrapper head-container">
             <div class="brand-logo">
@@ -374,6 +374,7 @@
 <h2 id="二-数据的表示和运算"><a href="#二-数据的表示和运算" class="headerlink" title="二. 数据的表示和运算"></a>二. 数据的表示和运算</h2><h3 id="数据的表示"><a href="#数据的表示" class="headerlink" title="数据的表示"></a>数据的表示</h3><p>$X =x_0x_1x_2…x_n$ </p>
 <p>定点小数：$x_0$为符号位，$x_1x_2…x_n$为尾数（小数部分的内容）$[-(1-2^n),1-2^{n}]$</p>
 <p>定点整数：$x_0$为符号位，$x_1x_2…x_n$为尾数（整数部分的内容）$[-(2^n-1),2^n-1]$</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -386,7 +387,8 @@
 <th>$2^n-1$</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>原码</td>
 <td>无</td>
 <td>11…11</td>
@@ -413,7 +415,9 @@
 <td>00…01</td>
 <td>01…11</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h3 id="浮点数加减运算"><a href="#浮点数加减运算" class="headerlink" title="浮点数加减运算"></a>浮点数加减运算</h3><p>步骤</p>
 <ul>
 <li>对阶</li>
@@ -564,7 +568,7 @@
 </ol>
 <h2 id="四-MIPS-指令系统"><a href="#四-MIPS-指令系统" class="headerlink" title="四. MIPS 指令系统"></a>四. MIPS 指令系统</h2><p>MIPS按字节寻址，一条指令长度为32位，一个字长，所以执行一条指令，PC＋４</p>
 <p>程序控制局部性原理：<strong>时间局部性</strong>和<strong>空间局部性</strong></p>
-<h3 id="MIPS指令格式"><a href="#MIPS指令格式" class="headerlink" title="MIPS指令格式"></a>MIPS指令格式</h3><p><img src=".%5C%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86_MIPS%E6%8C%87%E4%BB%A4%E6%A0%BC%E5%BC%8F.PNG" alt=""></p>
+<h3 id="MIPS指令格式"><a href="#MIPS指令格式" class="headerlink" title="MIPS指令格式"></a>MIPS指令格式</h3><p><img src=".\计算机组成原理_MIPS指令格式.PNG" alt=""></p>
 <h3 id="MIPS寻址方式"><a href="#MIPS寻址方式" class="headerlink" title="MIPS寻址方式"></a>MIPS寻址方式</h3><p>寄存器取数使用()，例如(R)</p>
 <p>主存按地址取数使用[]，例如[(R)]</p>
 <h4 id="MISP"><a href="#MISP" class="headerlink" title="MISP"></a>MISP</h4><ul>
@@ -584,6 +588,7 @@
 </li>
 </ul>
 <p>有效地址为EA，获取操作数需要访问内存的次数</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -592,7 +597,8 @@
 <th>访存次数</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>立即数寻址</td>
 <td>A即为操作数</td>
 <td>0</td>
@@ -617,7 +623,9 @@
 <td>EA=(PC)+A</td>
 <td>1</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h4 id="普通"><a href="#普通" class="headerlink" title="普通"></a>普通</h4><ul>
 <li>立即寻址：√</li>
 <li>寄存器寻址：√</li>
@@ -628,7 +636,7 @@
 <li>变址寻址 = MISP的基址寻址（基址寄存器）</li>
 <li>相对寻址：√</li>
 </ul>
-<h2 id="五-MIPS处理器"><a href="#五-MIPS处理器" class="headerlink" title="五.MIPS处理器"></a>五.MIPS处理器</h2><h3 id="CPU的功能和基本结构"><a href="#CPU的功能和基本结构" class="headerlink" title="CPU的功能和基本结构"></a>CPU的功能和基本结构</h3><p><img src=".%5C%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86_CPU%E5%86%85%E9%83%A8%E7%BB%93%E6%9E%84.PNG" alt="CPU内部结构"></p>
+<h2 id="五-MIPS处理器"><a href="#五-MIPS处理器" class="headerlink" title="五.MIPS处理器"></a>五.MIPS处理器</h2><h3 id="CPU的功能和基本结构"><a href="#CPU的功能和基本结构" class="headerlink" title="CPU的功能和基本结构"></a>CPU的功能和基本结构</h3><p><img src=".\计算机组成原理_CPU内部结构.PNG" alt="CPU内部结构"></p>
 <p>CPU的基本功能就是对指令流和数据流在时间和空间上实施正确的控制</p>
 <ul>
 <li>指令流：CPU执行的指令序列</li>
@@ -671,7 +679,8 @@
     T2: PC -&gt; MAR
     T3: 1 -&gt; WRITE
         MDR-&gt;M(MAR)
-    T4: PC+1 -&gt; PC</code></pre><h3 id="单周期处理器"><a href="#单周期处理器" class="headerlink" title="单周期处理器"></a>单周期处理器</h3><p>所有指令执行周期为固定为单一时钟周期，即CPI=1.采用<strong>哈弗体系结构</strong>（指令和数据采用不同存储器）。</p>
+    T4: PC+1 -&gt; PC
+</code></pre><h3 id="单周期处理器"><a href="#单周期处理器" class="headerlink" title="单周期处理器"></a>单周期处理器</h3><p>所有指令执行周期为固定为单一时钟周期，即CPI=1.采用<strong>哈弗体系结构</strong>（指令和数据采用不同存储器）。</p>
 <h4 id="单周期数据通路设计"><a href="#单周期数据通路设计" class="headerlink" title="单周期数据通路设计"></a>单周期数据通路设计</h4><ol>
 <li><p>取指和PC自增数据通路</p>
 <p>功能描述：</p>
@@ -704,10 +713,11 @@
 <li><p>分支指令数据通路</p>
 <p>beq rs，rt，imm16</p>
 <p>功能描述：If ( R[rs] – R[rt] =0) then PC  ⬅ (PC + 4) + Signext(imm16)&lt;&lt;2</p>
-<pre><code>                                                 else PC  ⬅  PC + 4</code></pre><p>通路部件：寄存器堆，ALU，增加一个加法器，符号扩展器，移位器</p>
+<pre><code>                                                 else PC  ⬅  PC + 4
+</code></pre><p>通路部件：寄存器堆，ALU，增加一个加法器，符号扩展器，移位器</p>
 </li>
 </ol>
-<p><img src=".%5C%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86_%E5%8D%95%E5%91%A8%E6%9C%9F%E5%A4%84%E7%90%86%E5%99%A8%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1.PNG" alt=""></p>
+<p><img src=".\计算机组成原理_单周期处理器电路设计.PNG" alt=""></p>
 <h4 id="指令执行时间计算"><a href="#指令执行时间计算" class="headerlink" title="指令执行时间计算"></a>指令执行时间计算</h4><ul>
 <li>采用单周期，即所有指令周期固定为单一时钟周期，<ul>
 <li>时钟周期由最长的指令决定(LW指令)，为600ps</li>
@@ -717,7 +727,8 @@
 </ul>
 <p>改进方法：改变m每种指令类型所用的时钟数，采用多周期实现</p>
 <h3 id="多周期处理器"><a href="#多周期处理器" class="headerlink" title="多周期处理器"></a>多周期处理器</h3><p>为什么不使用单周期实现方式</p>
-<pre><code>单周期设计中，时钟周期对所有指令等长，而时钟周期由计算机中可能的最长执行时间的指令决定，一般为取数指令。因此一些较短执行时间的指令会浪费一段时间</code></pre><p>多周期方案（采用普林斯顿结构，指令和数据采用一个存储器）</p>
+<pre><code>单周期设计中，时钟周期对所有指令等长，而时钟周期由计算机中可能的最长执行时间的指令决定，一般为取数指令。因此一些较短执行时间的指令会浪费一段时间
+</code></pre><p>多周期方案（采用普林斯顿结构，指令和数据采用一个存储器）</p>
 <ul>
 <li>将指令分为多个步骤执行，每一个步骤一个时钟周期，则指令执行周期为多个周期，不同指令的指令周期包含时钟周期不一样。</li>
 <li>优点：<ul>
@@ -727,8 +738,8 @@
 </li>
 </ul>
 <h4 id="MIPS多周期数据通路设计"><a href="#MIPS多周期数据通路设计" class="headerlink" title="MIPS多周期数据通路设计"></a>MIPS多周期数据通路设计</h4><p>一个ALU，指令算术逻辑运算，取指后PC+4，beq转移指令，都在ALU中完成，扩展数据为补码形式。</p>
-<p><img src=".%5C%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86_%E5%A4%9A%E5%91%A8%E6%9C%9F%E6%8C%87%E4%BB%A4.PNG" alt=""></p>
-<p><img src=".%5C%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86_%E5%A4%9A%E5%91%A8%E6%9C%9F%E5%A4%84%E7%90%86%E5%99%A8%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1.PNG" alt=""></p>
+<p><img src=".\计算机组成原理_多周期指令.PNG" alt=""></p>
+<p><img src=".\计算机组成原理_多周期处理器电路设计.PNG" alt=""></p>
 <h3 id="流水线处理器"><a href="#流水线处理器" class="headerlink" title="流水线处理器"></a>流水线处理器</h3><ul>
 <li>流水线不改善单个任务处理延迟，但改善了整个工作负载得吞吐率</li>
 <li>流水线速率受限于最慢的流水段</li>
@@ -755,7 +766,7 @@
 <li>功能：时钟上升沿到来，保存前级结果，之后输出至下级组合逻辑</li>
 </ul>
 <p>RF：Register File寄存器堆有两次使用：第二级读，第五级写。并且其第二个寄存器的值可以直接传递到EX/MEM</p>
-<p><img src="C:%5CUsers%5C10920%5CDownloads%5C%E6%96%87%E6%A1%A3%5C%E8%80%83%E7%A0%94%E8%B5%84%E6%96%99%5C%E6%80%BB%E7%BB%93%5C%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%BC%E5%90%88%5C%E6%B5%81%E6%B0%B4%E7%BA%BF.PNG" alt=""></p>
+<p><img src="C:\Users\10920\Downloads\文档\考研资料\总结\计算机综合\流水线.PNG" alt=""></p>
 <h3 id="数据冒险"><a href="#数据冒险" class="headerlink" title="数据冒险"></a>数据冒险</h3><p>流水线处理中，由于各个阶段的依赖关系，硬件资源的竞争等原因，会出现操作无法执行的情况。</p>
 <p>在下一个时钟周期妨碍下一条指令执行的执行的情况称为<strong>数据冒险</strong></p>
 <h4 id="结构冒险"><a href="#结构冒险" class="headerlink" title="结构冒险"></a>结构冒险</h4><p> 结构冒险是指由于硬件资源的竞争，操作无法同时执行的情况，即资源使用冲突</p>
@@ -764,12 +775,14 @@
 <p>IF阶段和MEM阶段都涉及内存访问，访问内存使用的总线是共享资源，无法同时进行。（若依曼架构）</p>
 <p>第一条指令为load或者save指令的第四个周期，会与第四条指令的第一个周期发生冲突。</p>
 <p>解决方法：使用哈弗架构</p>
-<pre><code>将指令用的内存和数据用的内存分别设置，即可解决构造冒险。CPU直接访问的缓存基本上都分为指令用和数据用两种，称为指令缓存和数据缓存</code></pre></li>
+<pre><code>将指令用的内存和数据用的内存分别设置，即可解决构造冒险。CPU直接访问的缓存基本上都分为指令用和数据用两种，称为指令缓存和数据缓存
+</code></pre></li>
 <li><p>寄存器访问造成构造冒险</p>
 <p>WB阶段写回寄存器和ID阶段读取寄存器，寄存器无法读写同时进行</p>
 <p>第一条指令为load或者R型指令第五个周期，会与第四条指令第二个周期发生冲突。</p>
 <p>解决办法：分割寄存器堆的访问周期</p>
-<pre><code>时钟周期前半段写，后半段读</code></pre></li>
+<pre><code>时钟周期前半段写，后半段读
+</code></pre></li>
 </ol>
 <h4 id="数据冒险-1"><a href="#数据冒险-1" class="headerlink" title="数据冒险"></a>数据冒险</h4><p>数据冒险指，由于指令所需要的数据还未准备好所引起的冒险情况。当即将执行的指令依赖于还未完成的数据时，会导致指令无法立刻开始执行，引起数据冒险。</p>
 <ol>
@@ -780,12 +793,14 @@
 <p>解决方法：使用<strong>直通的方法</strong>，或者两个nop</p>
 <pre><code>R型指令原本回写运算结果是在WB阶段，而实际上决定运算结果的是在EX阶段。直通方法就是指，在运算结果确定的EX阶段，将数据直接传递给下一个指令的ALU阶段
 EX/MEM.RegisterRd = ID/EX.RegisterRs = r1
-在EX/MEM与ID/EX中间加一个转发单元</code></pre><ol start="2">
+在EX/MEM与ID/EX中间加一个转发单元
+</code></pre><ol>
 <li><p>数据冒险与阻塞</p>
 <p>当一条指令读取一个寄存器而其前一条指令是load指令（需要将内存中的数据写回寄存器），并且该load指令写入的是同一个寄存器，则直通方法无法解决。原因：load指令写回的数据在MEM阶段完成后产生</p>
 <p>解决方法：阻塞流水线</p>
 <pre><code>当load指令后紧跟着一个需要其结果的指令时，必须采用相应的机制阻塞流水线。
-除了转发单元，还要将第二条指令阻塞一个周期，使用nop指令（没有任何效果），如果没有转发单元，需要两个nop指令</code></pre></li>
+除了转发单元，还要将第二条指令阻塞一个周期，使用nop指令（没有任何效果），如果没有转发单元，需要两个nop指令
+</code></pre></li>
 </ol>
 <p>还可以调整指令的执行顺序。</p>
 <h4 id="控制冒险"><a href="#控制冒险" class="headerlink" title="控制冒险"></a>控制冒险</h4><p>控制冒险指，无法确定下一条指令而引发的冒险情况。</p>
@@ -821,7 +836,8 @@ EX/MEM.RegisterRd = ID/EX.RegisterRs = r1
 <li><p>计数器定时查询方式</p>
 <p>使用设备地址信号线代替BG，内部使用计数器的计数信号表示设备。可以实现循环优先级和固定优先级两种方式。</p>
 <p>特点：</p>
-<p>　* 对电路不敏感，但信号线数量增多<br>　* 需要2+$log_2 n$条信号线，总线允许线改为设备地址线</p>
+<p>　<em> 对电路不敏感，但信号线数量增多
+　</em> 需要2+$log_2 n$条信号线，总线允许线改为设备地址线</p>
 </li>
 <li><p>独立请求方式</p>
 <p>每个设备需要一对总线请求和总线允许信号线</p>
@@ -1407,7 +1423,24 @@ $(function () {
     
     
     
-    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    <script src="/libs/instantpage/instantpage.js" type="module"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
     
 
 </body>

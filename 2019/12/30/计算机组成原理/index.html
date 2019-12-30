@@ -568,7 +568,7 @@
 </ol>
 <h2 id="四-MIPS-指令系统"><a href="#四-MIPS-指令系统" class="headerlink" title="四. MIPS 指令系统"></a>四. MIPS 指令系统</h2><p>MIPS按字节寻址，一条指令长度为32位，一个字长，所以执行一条指令，PC＋４</p>
 <p>程序控制局部性原理：<strong>时间局部性</strong>和<strong>空间局部性</strong></p>
-<h3 id="MIPS指令格式"><a href="#MIPS指令格式" class="headerlink" title="MIPS指令格式"></a>MIPS指令格式</h3><p><img src="./计算机组成原理_MIPS指令格式.PNG" alt=""></p>
+<h3 id="MIPS指令格式"><a href="#MIPS指令格式" class="headerlink" title="MIPS指令格式"></a>MIPS指令格式</h3><p><img src="计算机组成原理_MIPS指令格式.PNG" alt=""></p>
 <h3 id="MIPS寻址方式"><a href="#MIPS寻址方式" class="headerlink" title="MIPS寻址方式"></a>MIPS寻址方式</h3><p>寄存器取数使用()，例如(R)</p>
 <p>主存按地址取数使用[]，例如[(R)]</p>
 <h4 id="MISP"><a href="#MISP" class="headerlink" title="MISP"></a>MISP</h4><ul>
@@ -636,7 +636,7 @@
 <li>变址寻址 = MISP的基址寻址（基址寄存器）</li>
 <li>相对寻址：√</li>
 </ul>
-<h2 id="五-MIPS处理器"><a href="#五-MIPS处理器" class="headerlink" title="五.MIPS处理器"></a>五.MIPS处理器</h2><h3 id="CPU的功能和基本结构"><a href="#CPU的功能和基本结构" class="headerlink" title="CPU的功能和基本结构"></a>CPU的功能和基本结构</h3><p><img src="./计算机组成原理_CPU内部结构.PNG" alt="CPU内部结构"></p>
+<h2 id="五-MIPS处理器"><a href="#五-MIPS处理器" class="headerlink" title="五.MIPS处理器"></a>五.MIPS处理器</h2><h3 id="CPU的功能和基本结构"><a href="#CPU的功能和基本结构" class="headerlink" title="CPU的功能和基本结构"></a>CPU的功能和基本结构</h3><p><img src="计算机组成原理_CPU内部结构.PNG" alt="CPU内部结构"></p>
 <p>CPU的基本功能就是对指令流和数据流在时间和空间上实施正确的控制</p>
 <ul>
 <li>指令流：CPU执行的指令序列</li>
@@ -717,7 +717,7 @@
 </code></pre><p>通路部件：寄存器堆，ALU，增加一个加法器，符号扩展器，移位器</p>
 </li>
 </ol>
-<p><img src="./计算机组成原理_单周期处理器电路设计.PNG" alt=""></p>
+<p><img src="计算机组成原理_单周期处理器电路设计.PNG" alt=""></p>
 <h4 id="指令执行时间计算"><a href="#指令执行时间计算" class="headerlink" title="指令执行时间计算"></a>指令执行时间计算</h4><ul>
 <li>采用单周期，即所有指令周期固定为单一时钟周期，<ul>
 <li>时钟周期由最长的指令决定(LW指令)，为600ps</li>
@@ -738,8 +738,8 @@
 </li>
 </ul>
 <h4 id="MIPS多周期数据通路设计"><a href="#MIPS多周期数据通路设计" class="headerlink" title="MIPS多周期数据通路设计"></a>MIPS多周期数据通路设计</h4><p>一个ALU，指令算术逻辑运算，取指后PC+4，beq转移指令，都在ALU中完成，扩展数据为补码形式。</p>
-<p><img src="./计算机组成原理_多周期指令.PNG" alt=""></p>
-<p><img src="./计算机组成原理_多周期处理器电路设计.PNG" alt=""></p>
+<p><img src="计算机组成原理_多周期指令.PNG" alt=""></p>
+<p><img src="计算机组成原理_多周期处理器电路设计.PNG" alt=""></p>
 <h3 id="流水线处理器"><a href="#流水线处理器" class="headerlink" title="流水线处理器"></a>流水线处理器</h3><ul>
 <li>流水线不改善单个任务处理延迟，但改善了整个工作负载得吞吐率</li>
 <li>流水线速率受限于最慢的流水段</li>
@@ -766,7 +766,7 @@
 <li>功能：时钟上升沿到来，保存前级结果，之后输出至下级组合逻辑</li>
 </ul>
 <p>RF：Register File寄存器堆有两次使用：第二级读，第五级写。并且其第二个寄存器的值可以直接传递到EX/MEM</p>
-<p><img src="./计算机组成原理_流水线.PNG" alt=""></p>
+<p><img src="计算机组成原理_流水线.PNG" alt=""></p>
 <h3 id="数据冒险"><a href="#数据冒险" class="headerlink" title="数据冒险"></a>数据冒险</h3><p>流水线处理中，由于各个阶段的依赖关系，硬件资源的竞争等原因，会出现操作无法执行的情况。</p>
 <p>在下一个时钟周期妨碍下一条指令执行的执行的情况称为<strong>数据冒险</strong></p>
 <h4 id="结构冒险"><a href="#结构冒险" class="headerlink" title="结构冒险"></a>结构冒险</h4><p> 结构冒险是指由于硬件资源的竞争，操作无法同时执行的情况，即资源使用冲突</p>

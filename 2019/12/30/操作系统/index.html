@@ -32,7 +32,8 @@
     
     <script src="/libs/jquery/jquery.min.js"></script>
     
-<meta name="generator" content="Hexo 4.2.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+<meta name="generator" content="Hexo 4.2.0"><link rel="stylesheet" href="/css/prism-solarizedlight.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 
 
 <body>
@@ -430,8 +431,7 @@ signal(S){
     S = S+1;
     if(S&lt;=0)
         唤醒
-}
-</code></pre><p>PV操作中互斥量设置为1，同步信号量若期望的消息尚未产生，则对应的初值应为0，若期望的消息已经存在，则信号量初值设置为存在的数目。</p>
+}</code></pre><p>PV操作中互斥量设置为1，同步信号量若期望的消息尚未产生，则对应的初值应为0，若期望的消息已经存在，则信号量初值设置为存在的数目。</p>
 <p>生产者消费者问题</p>
 <pre><code>参数：
     empty表示缓冲区是否为空，初值为n；
@@ -461,8 +461,7 @@ consumer()
         V(empty);
         消费产品
     }
-}
-</code></pre><p>读者-写者问题（当写者发起请求时，后续读者都只能在队列中等待，直到写者完成）</p>
+}</code></pre><p>读者-写者问题（当写者发起请求时，后续读者都只能在队列中等待，直到写者完成）</p>
 <pre><code>参数：
     readcount记录读者数量，初始为0；
     mutex为互斥信号量，用于保护更新readcount变量时的互斥；
@@ -492,8 +491,7 @@ begin
     P(rw);
     V(canoperate);
     写文件
-    V(rw);
-</code></pre><h3 id="进程的调度"><a href="#进程的调度" class="headerlink" title="进程的调度"></a>进程的调度</h3><h4 id="调度的层次"><a href="#调度的层次" class="headerlink" title="调度的层次"></a>调度的层次</h4><ul>
+    V(rw);</code></pre><h3 id="进程的调度"><a href="#进程的调度" class="headerlink" title="进程的调度"></a>进程的调度</h3><h4 id="调度的层次"><a href="#调度的层次" class="headerlink" title="调度的层次"></a>调度的层次</h4><ul>
 <li>高级调度：作业调度或者长程调度，以作业为单位从外存调入内存</li>
 <li>中级调度：内存与外存对换区交换内容，从存储器资源的角度，将进程的部分或全部内容换出到外存上，将当前进程所需部分内容换入到内存</li>
 <li>低级调度：从就绪队列中选择一个等待CPU的进程并分配CPU给它</li>
@@ -784,7 +782,7 @@ begin
 <li>实现虚拟设备功能。多个进程同时使用同一台独占设备</li>
 <li>利用空间换时间</li>
 </ul>
-<p><img src="操作系统_SPOOLing.PNG" alt=""></p>
+<p><img src="%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_SPOOLing.PNG" alt=""></p>
 <p>共享打印机</p>
 <p>当用户进程请求打印输出时，SPOOLing系统同意为它打印输出，但并不真正立即把打印机分配给该用户进程</p>
 <ul>
@@ -811,7 +809,6 @@ begin
 </li>
 </ul>
 <h4 id="物理结构"><a href="#物理结构" class="headerlink" title="物理结构"></a>物理结构</h4><p>文件的物理结构直接与外存的分配方式有关，采用不同的分配方式时，将形成不同的文件物理结构</p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -821,8 +818,7 @@ begin
 <th>缺点</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>顺序分配</td>
 <td>访问磁盘一次（不存在一个记录存在两个磁盘块的情况）</td>
 <td>存取速度快，根据相对地址快速定位</td>
@@ -840,9 +836,7 @@ begin
 <td>可以随机访问，易于文件的扩充</td>
 <td>索引表的查找策略对文件系统影响较大</td>
 </tr>
-</tbody>
-</table>
-</div>
+</tbody></table>
 <h3 id="文件管理"><a href="#文件管理" class="headerlink" title="文件管理"></a>文件管理</h3><p>文件控制块：FCB，用于描述和控制文件的数据结构。文件与文件控制块一一对应。</p>
 <p>目录表</p>
 <p>存储空间管理</p>
@@ -853,7 +847,7 @@ begin
 <li>成组链接法</li>
 </ul>
 <h2 id="五-磁盘"><a href="#五-磁盘" class="headerlink" title="五.磁盘"></a>五.磁盘</h2><h3 id="磁盘结构"><a href="#磁盘结构" class="headerlink" title="磁盘结构"></a>磁盘结构</h3><p>磁道划分为扇区。</p>
-<p><img src="操作系统_磁盘结构.PNG" alt=""></p>
+<p><img src="%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_%E7%A3%81%E7%9B%98%E7%BB%93%E6%9E%84.PNG" alt=""></p>
 <h3 id="磁盘调度"><a href="#磁盘调度" class="headerlink" title="磁盘调度"></a>磁盘调度</h3><p>先寻道，再定位到对应扇区，最后传输数据</p>
 <ul>
 <li><p>寻道时间 = 启动振臂时间$S$+经过的磁道数$N$*经过一个磁道的时间$M$</p>

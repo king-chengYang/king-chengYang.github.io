@@ -31,8 +31,7 @@ Bl">
     
     <script src="/libs/jquery/jquery.min.js"></script>
     
-<meta name="generator" content="Hexo 4.2.0"><link rel="stylesheet" href="/css/prism-solarizedlight.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+<meta name="generator" content="Hexo 4.2.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 
 
 <body>
@@ -406,7 +405,7 @@ Bl">
 <li>阻塞：操作无法立即执行，该方法调用将会发生阻塞，直到能够执行。</li>
 <li>超时：操作无法立即执行，该方法调用将在给定的时间内发生阻塞，直到能够执行，操作成功返回true；若在给定时间内无法完成操作，返回false</li>
 </ul>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">BlockingQueue</span><span class="token operator">&lt;</span>E<span class="token operator">></span> <span class="token keyword">extends</span> <span class="token class-name">Queue</span><span class="token operator">&lt;</span>E<span class="token operator">></span> <span class="token punctuation">{</span>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">BlockingQueue</span><span class="token operator">&lt;</span>E<span class="token operator">></span> <span class="token keyword">extends</span> <span class="token class-name">Queue</span><span class="token operator">&lt;</span>E<span class="token operator">></span> <span class="token punctuation">{</span>
     <span class="token comment" spellcheck="true">/**
      * 插入队列，通常会使用offer实现
      *
@@ -465,7 +464,7 @@ Bl">
      * @throws InterruptedException 如果等待时被中断
      */</span>
     E <span class="token function">poll</span><span class="token punctuation">(</span><span class="token keyword">long</span> timeout<span class="token punctuation">,</span> TimeUnit unit<span class="token punctuation">)</span>
-        <span class="token keyword">throws</span> InterruptedException<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+        <span class="token keyword">throws</span> InterruptedException<span class="token punctuation">;</span></code></pre>
 <p>谨记：BlockingQueue无法插入null</p>
 <h2 id="消费者生产者问题"><a href="#消费者生产者问题" class="headerlink" title="消费者生产者问题"></a>消费者生产者问题</h2><p>操作系统中，生产者消费者问题，一般定义两个同步信号量和一个互斥信号量</p>
 <ul>
@@ -475,7 +474,7 @@ Bl">
 </ul>
 <p>消费者生产者问题可以自己定义P操作，V操作，然后再利用这三个信号量完成。</p>
 <p>下面是一个利用LinkedBlockingQueue，并且空间大小为5的阻塞队列实现的消费者生产者</p>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span>LinkedBlockingQueue<span class="token punctuation">;</span>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span>LinkedBlockingQueue<span class="token punctuation">;</span>
 <span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span>TimeUnit<span class="token punctuation">;</span>
 
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">LinkedBlockingQueueDemo</span> <span class="token punctuation">{</span>
@@ -546,7 +545,7 @@ Bl">
         Apple apple <span class="token operator">=</span> queue<span class="token punctuation">.</span><span class="token function">take</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"消费Apple="</span><span class="token operator">+</span>apple<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">}</span></code></pre>
 <h2 id="ArrayBlockingQueue"><a href="#ArrayBlockingQueue" class="headerlink" title="ArrayBlockingQueue"></a>ArrayBlockingQueue</h2><p>ArrayBlockingQueue是一种<strong>有界阻塞队列</strong>，在初始构造的时候需要指定队列的容量。具有如下特点：</p>
 <ol>
 <li>队列的容量一旦在构造时指定，后续不能改变；</li>
@@ -561,7 +560,7 @@ Bl">
 <li>所有线程共用一把锁</li>
 </ol>
 <h3 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h3><p>所有线程共同使用同一个重入锁</p>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">/** 存储数据的数组 */</span>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/** 存储数据的数组 */</span>
 <span class="token keyword">final</span> Object<span class="token punctuation">[</span><span class="token punctuation">]</span> items<span class="token punctuation">;</span>
 
 <span class="token comment" spellcheck="true">/**获取数据的索引，头索引，主要用于take，poll，peek，remove方法 */</span>
@@ -585,16 +584,16 @@ Bl">
 <span class="token comment" spellcheck="true">/**
  迭代器
  */</span>
-<span class="token keyword">transient</span> Itrs itrs <span class="token operator">=</span> null<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token keyword">transient</span> Itrs itrs <span class="token operator">=</span> null<span class="token punctuation">;</span></code></pre>
 <h3 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h3><p>ArrayBlockingQueue有三个构造函数</p>
-<pre class="line-numbers language-javascript"><code class="language-javascript"><span class="token comment" spellcheck="true">/**
+<pre class=" language-javascript"><code class="language-javascript"><span class="token comment" spellcheck="true">/**
  * 指定队列初始容量的构造器.
  */</span>
 <span class="token keyword">public</span> <span class="token function">ArrayBlockingQueue</span><span class="token punctuation">(</span>int capacity<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">this</span><span class="token punctuation">(</span>capacity<span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//调用ArrayBlockingQueue(int capacity, boolean fair) </span>
 <span class="token punctuation">}</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-java"><code class="language-java">
+</code></pre>
+<pre class=" language-java"><code class="language-java">
 <span class="token comment" spellcheck="true">/**
  * 指定队列初始容量和公平/非公平策略的构造器.
  */</span>
@@ -606,8 +605,8 @@ Bl">
     lock <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ReentrantLock</span><span class="token punctuation">(</span>fair<span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment" spellcheck="true">// 利用独占锁的策略</span>
     notEmpty <span class="token operator">=</span> lock<span class="token punctuation">.</span><span class="token function">newCondition</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     notFull <span class="token operator">=</span> lock<span class="token punctuation">.</span><span class="token function">newCondition</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
+<span class="token punctuation">}</span></code></pre>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
  * 根据已有集合构造队列
  */</span>
 <span class="token keyword">public</span> <span class="token function">ArrayBlockingQueue</span><span class="token punctuation">(</span><span class="token keyword">int</span> capacity<span class="token punctuation">,</span> <span class="token keyword">boolean</span> fair<span class="token punctuation">,</span> Collection<span class="token operator">&lt;</span><span class="token operator">?</span> <span class="token keyword">extends</span> <span class="token class-name">E</span><span class="token operator">></span> c<span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -631,7 +630,7 @@ Bl">
     <span class="token punctuation">}</span> <span class="token keyword">finally</span> <span class="token punctuation">{</span>
         lock<span class="token punctuation">.</span><span class="token function">unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">}</span></code></pre>
 <p>核心构造方法 ArrayBlockingQueue(int capacity, boolean fair) 默认的是非公平锁</p>
 <ul>
 <li><p><strong>公平策略：</strong>按照“先来后到”的原则，对于每一个等待线程都是公平的。</p>
@@ -644,7 +643,7 @@ Bl">
 <p><img src="ArrayBlockingQueue%E5%88%9D%E5%A7%8B%E5%8C%96%E7%BB%93%E6%9E%84.png" alt=""></p>
 <p>插入元素之后，ArrayBlockingQueue的结构如下</p>
 <p><img src="ArrayBlockingQueue%E6%8F%92%E5%85%A5%E5%85%83%E7%B4%A0%E7%BB%93%E6%9E%84.png" alt=""></p>
-<h3 id="尾部插入"><a href="#尾部插入" class="headerlink" title="尾部插入"></a>尾部插入</h3><pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">//ArrayBlockingQueue中的add方法调用其父类AbstractQueue中的add方法，如下</span>
+<h3 id="尾部插入"><a href="#尾部插入" class="headerlink" title="尾部插入"></a>尾部插入</h3><pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">//ArrayBlockingQueue中的add方法调用其父类AbstractQueue中的add方法，如下</span>
 <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">add</span><span class="token punctuation">(</span>E e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token comment" spellcheck="true">//调用offer方法</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">offer</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">)</span>
@@ -714,8 +713,8 @@ Bl">
         putIndex <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
     count<span class="token operator">++</span><span class="token punctuation">;</span>
     notEmpty<span class="token punctuation">.</span><span class="token function">signal</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>        <span class="token comment" spellcheck="true">//已经有数据插入，可以唤醒删除线程</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="头部删除"><a href="#头部删除" class="headerlink" title="头部删除"></a>头部删除</h3><pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> E <span class="token function">poll</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<span class="token punctuation">}</span></code></pre>
+<h3 id="头部删除"><a href="#头部删除" class="headerlink" title="头部删除"></a>头部删除</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> E <span class="token function">poll</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">final</span> ReentrantLock lock <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>lock<span class="token punctuation">;</span>
     lock<span class="token punctuation">.</span><span class="token function">lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">try</span> <span class="token punctuation">{</span>
@@ -766,7 +765,7 @@ Bl">
         itrs<span class="token punctuation">.</span><span class="token function">elementDequeued</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     notFull<span class="token punctuation">.</span><span class="token function">signal</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>        <span class="token comment" spellcheck="true">//队列中已经空余出位置，唤醒插入线程</span>
     <span class="token keyword">return</span> x<span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">}</span></code></pre>
 <h2 id="LinkedBlockingQueue"><a href="#LinkedBlockingQueue" class="headerlink" title="LinkedBlockingQueue"></a>LinkedBlockingQueue</h2><p>LinkedBlockingQueue是一种<strong>近似有界阻塞队列</strong>，因为LinkedBlockingQueue既可以在初始构造时就指定队列的容量，也可以不指定，如果不指定，那么它的容量大小默认为<code>Integer.MAX_VALUE</code>。</p>
 <ol>
 <li>插入元素时，在队尾进行；删除元素时，在队首进行；</li>
@@ -779,7 +778,7 @@ Bl">
 </li>
 <li>所有的元素都被封装成Node类型的节点插入到队列中</li>
 </ol>
-<h3 id="参数-1"><a href="#参数-1" class="headerlink" title="参数"></a>参数</h3><pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
+<h3 id="参数-1"><a href="#参数-1" class="headerlink" title="参数"></a>参数</h3><pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
  * 节点类，用于存储数据
  */</span>
 <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">Node</span><span class="token operator">&lt;</span>E<span class="token operator">></span> <span class="token punctuation">{</span>
@@ -812,23 +811,23 @@ Bl">
 <span class="token keyword">private</span> <span class="token keyword">final</span> ReentrantLock putLock <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ReentrantLock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
 <span class="token comment" spellcheck="true">/** notFull条件对象，当队列数据已满时用于挂起执行添加的线程 */</span>
-<span class="token keyword">private</span> <span class="token keyword">final</span> Condition notFull <span class="token operator">=</span> putLock<span class="token punctuation">.</span><span class="token function">newCondition</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="构造函数-1"><a href="#构造函数-1" class="headerlink" title="构造函数"></a>构造函数</h3><pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
+<span class="token keyword">private</span> <span class="token keyword">final</span> Condition notFull <span class="token operator">=</span> putLock<span class="token punctuation">.</span><span class="token function">newCondition</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<h3 id="构造函数-1"><a href="#构造函数-1" class="headerlink" title="构造函数"></a>构造函数</h3><pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
  * 默认构造器.
  * 队列容量为Integer.MAX_VALUE.
  */</span>
 <span class="token keyword">public</span> <span class="token function">LinkedBlockingQueue</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">this</span><span class="token punctuation">(</span>Integer<span class="token punctuation">.</span>MAX_VALUE<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//调用LinkedBlockingQueue(int capacity)</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
+<span class="token punctuation">}</span></code></pre>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
  * 显示指定队列容量的构造器
  */</span>
 <span class="token keyword">public</span> <span class="token function">LinkedBlockingQueue</span><span class="token punctuation">(</span><span class="token keyword">int</span> capacity<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>capacity <span class="token operator">&lt;=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">IllegalArgumentException</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">this</span><span class="token punctuation">.</span>capacity <span class="token operator">=</span> capacity<span class="token punctuation">;</span>
     last <span class="token operator">=</span> head <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Node</span><span class="token operator">&lt;</span>E<span class="token operator">></span><span class="token punctuation">(</span>null<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//初始化为头指针，尾指针为null的队列</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
+<span class="token punctuation">}</span></code></pre>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
  * 从已有集合构造队列.
  * 队列容量为Integer.MAX_VALUE
  */</span>
@@ -850,12 +849,12 @@ Bl">
     <span class="token punctuation">}</span> <span class="token keyword">finally</span> <span class="token punctuation">{</span>
         putLock<span class="token punctuation">.</span><span class="token function">unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">}</span></code></pre>
 <p>构造完之后，LinkedBlockingQueue的初始化结构如下</p>
 <p><img src="LinkedBlockingQueue%E5%88%9D%E5%A7%8B%E5%8C%96%E7%BB%93%E6%9E%84.png" alt=""></p>
 <p>插入元素之后，LinkedBlockingQueue的结构如下</p>
 <p><img src="LinkedBlockingQueue%E6%8F%92%E5%85%A5%E5%85%83%E7%B4%A0%E7%BB%93%E6%9E%84.png" alt=""></p>
-<h3 id="尾部插入-1"><a href="#尾部插入-1" class="headerlink" title="尾部插入"></a>尾部插入</h3><pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">offer</span><span class="token punctuation">(</span>E e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<h3 id="尾部插入-1"><a href="#尾部插入-1" class="headerlink" title="尾部插入"></a>尾部插入</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">offer</span><span class="token punctuation">(</span>E e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>e <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">NullPointerException</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//不能插入null元素</span>
     <span class="token keyword">final</span> AtomicInteger count <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>count<span class="token punctuation">;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>count<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> capacity<span class="token punctuation">)</span>    <span class="token comment" spellcheck="true">//队列已满，返回false</span>
@@ -934,8 +933,8 @@ Bl">
     <span class="token comment" spellcheck="true">// assert putLock.isHeldByCurrentThread();</span>
     <span class="token comment" spellcheck="true">// assert last.next == null;</span>
     last <span class="token operator">=</span> last<span class="token punctuation">.</span>next <span class="token operator">=</span> node<span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//在尾节点插入数据</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="头部删除-1"><a href="#头部删除-1" class="headerlink" title="头部删除"></a>头部删除</h3><pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> E <span class="token function">poll</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<span class="token punctuation">}</span></code></pre>
+<h3 id="头部删除-1"><a href="#头部删除-1" class="headerlink" title="头部删除"></a>头部删除</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> E <span class="token function">poll</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">final</span> AtomicInteger count <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>count<span class="token punctuation">;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>count<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>    <span class="token comment" spellcheck="true">//如果队列为空，返回null</span>
         <span class="token keyword">return</span> null<span class="token punctuation">;</span>
@@ -1015,7 +1014,7 @@ Bl">
      E x <span class="token operator">=</span> first<span class="token punctuation">.</span>item<span class="token punctuation">;</span>
      first<span class="token punctuation">.</span>item <span class="token operator">=</span> null<span class="token punctuation">;</span>
      <span class="token keyword">return</span> x<span class="token punctuation">;</span>
- <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+ <span class="token punctuation">}</span></code></pre>
 <h2 id="ArrayBlockingQueue与LinkedBlockingQueue对比"><a href="#ArrayBlockingQueue与LinkedBlockingQueue对比" class="headerlink" title="ArrayBlockingQueue与LinkedBlockingQueue对比"></a>ArrayBlockingQueue与LinkedBlockingQueue对比</h2><table>
 <thead>
 <tr>

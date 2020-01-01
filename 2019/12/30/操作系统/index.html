@@ -418,82 +418,13 @@
 <p><strong>临界资源：</strong>需要进程互斥的访问的计算机资源，进程通过互斥的方式对资源进行共享，例如打印机</p>
 <p><strong>临界区：</strong>每个进程访问临界资源的那段代码</p>
 <p>同步机制遵循的规则：<strong>空闲让等，忙则等待，有限等待，让权等待</strong></p>
-<h3 id="同步经典例子"><a href="#同步经典例子" class="headerlink" title="同步经典例子"></a>同步经典例子</h3><pre><code>P:
-wait(S){
-    S = S-1;
-    if(S&lt;0)
-        挂起
-}
-
-V:
-signal(S){
-    S = S+1;
-    if(S&lt;=0)
-        唤醒
-}
-</code></pre><p>PV操作中互斥量设置为1，同步信号量若期望的消息尚未产生，则对应的初值应为0，若期望的消息已经存在，则信号量初值设置为存在的数目。</p>
+<h3 id="同步经典例子"><a href="#同步经典例子" class="headerlink" title="同步经典例子"></a>同步经典例子</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">P:</span><br><span class="line">wait(S)&#123;</span><br><span class="line">	S &#x3D; S-1;</span><br><span class="line">	if(S&lt;0)</span><br><span class="line">		挂起</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">V:</span><br><span class="line">signal(S)&#123;</span><br><span class="line">	S &#x3D; S+1;</span><br><span class="line">	if(S&lt;&#x3D;0)</span><br><span class="line">		唤醒</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>PV操作中互斥量设置为1，同步信号量若期望的消息尚未产生，则对应的初值应为0，若期望的消息已经存在，则信号量初值设置为存在的数目。</p>
 <p>生产者消费者问题</p>
-<pre><code>参数：
-    empty表示缓冲区是否为空，初值为n；
-    full表示缓冲区是否为满，初值为0;
-    互斥信号量mutex=1
-生产者：
-producer()
-{
-    while(1){
-        生产一个产品；
-        P(empty);
-        P(mutex);
-        将产品放入缓冲区
-        V(mutex);
-        V(full);
-    }
-}
-
-消费者：
-consumer()
-{
-    while(1){
-        P(full);
-        P(mutex);
-        将产品从缓冲区读出
-        V(mutex);
-        V(empty);
-        消费产品
-    }
-}
-</code></pre><p>读者-写者问题（当写者发起请求时，后续读者都只能在队列中等待，直到写者完成）</p>
-<pre><code>参数：
-    readcount记录读者数量，初始为0；
-    mutex为互斥信号量，用于保护更新readcount变量时的互斥；
-    rw为读写互斥信号量；
-    canoperate为可进入文件进行操作的互斥信号量；
-
-读者：
-begin
-    P(canoperate);
-    P(mutex);
-    readcount++;
-    if(readcount == 1)
-        P(rw);
-    V(mutex);
-    P(canoperate);
-    读文件
-    P(mutex)
-    readcount--;
-    if(readcount == 0)
-        V(rw);
-    V(mutex);
-end;
-
-写者：
-begin
-    P(canoperate);
-    P(rw);
-    V(canoperate);
-    写文件
-    V(rw);
-</code></pre><h3 id="进程的调度"><a href="#进程的调度" class="headerlink" title="进程的调度"></a>进程的调度</h3><h4 id="调度的层次"><a href="#调度的层次" class="headerlink" title="调度的层次"></a>调度的层次</h4><ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">参数：</span><br><span class="line">	empty表示缓冲区是否为空，初值为n；</span><br><span class="line">	full表示缓冲区是否为满，初值为0;</span><br><span class="line">	互斥信号量mutex&#x3D;1</span><br><span class="line">生产者：</span><br><span class="line">producer()</span><br><span class="line">&#123;</span><br><span class="line">	while(1)&#123;</span><br><span class="line">		生产一个产品；</span><br><span class="line">		P(empty);</span><br><span class="line">		P(mutex);</span><br><span class="line">		将产品放入缓冲区</span><br><span class="line">		V(mutex);</span><br><span class="line">		V(full);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">消费者：</span><br><span class="line">consumer()</span><br><span class="line">&#123;</span><br><span class="line">	while(1)&#123;</span><br><span class="line">		P(full);</span><br><span class="line">		P(mutex);</span><br><span class="line">		将产品从缓冲区读出</span><br><span class="line">		V(mutex);</span><br><span class="line">		V(empty);</span><br><span class="line">		消费产品</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>读者-写者问题（当写者发起请求时，后续读者都只能在队列中等待，直到写者完成）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">参数：</span><br><span class="line">	readcount记录读者数量，初始为0；</span><br><span class="line">	mutex为互斥信号量，用于保护更新readcount变量时的互斥；</span><br><span class="line">	rw为读写互斥信号量；</span><br><span class="line">	canoperate为可进入文件进行操作的互斥信号量；</span><br><span class="line"></span><br><span class="line">读者：</span><br><span class="line">begin</span><br><span class="line">	P(canoperate);</span><br><span class="line">	P(mutex);</span><br><span class="line">	readcount++;</span><br><span class="line">	if(readcount &#x3D;&#x3D; 1)</span><br><span class="line">		P(rw);</span><br><span class="line">	V(mutex);</span><br><span class="line">	P(canoperate);</span><br><span class="line">	读文件</span><br><span class="line">	P(mutex)</span><br><span class="line">	readcount--;</span><br><span class="line">	if(readcount &#x3D;&#x3D; 0)</span><br><span class="line">		V(rw);</span><br><span class="line">	V(mutex);</span><br><span class="line">end;</span><br><span class="line"></span><br><span class="line">写者：</span><br><span class="line">begin</span><br><span class="line">	P(canoperate);</span><br><span class="line">	P(rw);</span><br><span class="line">	V(canoperate);</span><br><span class="line">	写文件</span><br><span class="line">	V(rw);</span><br></pre></td></tr></table></figure>
+<h3 id="进程的调度"><a href="#进程的调度" class="headerlink" title="进程的调度"></a>进程的调度</h3><h4 id="调度的层次"><a href="#调度的层次" class="headerlink" title="调度的层次"></a>调度的层次</h4><ul>
 <li>高级调度：作业调度或者长程调度，以作业为单位从外存调入内存</li>
 <li>中级调度：内存与外存对换区交换内容，从存储器资源的角度，将进程的部分或全部内容换出到外存上，将当前进程所需部分内容换入到内存</li>
 <li>低级调度：从就绪队列中选择一个等待CPU的进程并分配CPU给它</li>

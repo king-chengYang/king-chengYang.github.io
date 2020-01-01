@@ -657,30 +657,8 @@
 <li>存储器地址寄存器MAR：保存当前CPU所访问的主存单元地址</li>
 </ul>
 <p>CPU执行流程：</p>
-<pre><code>以ADD R1,(R2)为例：R1 &lt;- (R1)+((R2))
-最后再将R1中数据放回内存
-取指：
-    T1:PC -&gt; MAR            //读取地址
-    T2:1 -&gt; READ            //发出读命令
-       M(MAR) -&gt; MDR        //读取数据
-    T3:MDR -&gt; IR            //读出的数据放在
-    T4:PC+1 -&gt; PC             //PC+1
-取数：
-    T1:R2 -&gt; MAR
-    T2:1 -&gt; READ
-       M(MAR) -&gt; MDR
-    T3:MDR -&gt; B
-    T4:R1 -&gt; A
-运算：
-    A+B -&gt; AC
-    AC -&gt; R1
-写回：
-    T1: R1 -&gt; MDR
-    T2: PC -&gt; MAR
-    T3: 1 -&gt; WRITE
-        MDR-&gt;M(MAR)
-    T4: PC+1 -&gt; PC
-</code></pre><h3 id="单周期处理器"><a href="#单周期处理器" class="headerlink" title="单周期处理器"></a>单周期处理器</h3><p>所有指令执行周期为固定为单一时钟周期，即CPI=1.采用<strong>哈弗体系结构</strong>（指令和数据采用不同存储器）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">以ADD R1,(R2)为例：R1 &lt;- (R1)+((R2))</span><br><span class="line">最后再将R1中数据放回内存</span><br><span class="line">取指：</span><br><span class="line">	T1:PC -&gt; MAR			&#x2F;&#x2F;读取地址</span><br><span class="line">	T2:1 -&gt; READ			&#x2F;&#x2F;发出读命令</span><br><span class="line">	   M(MAR) -&gt; MDR		&#x2F;&#x2F;读取数据</span><br><span class="line">	T3:MDR -&gt; IR			&#x2F;&#x2F;读出的数据放在</span><br><span class="line">	T4:PC+1 -&gt; PC 			&#x2F;&#x2F;PC+1</span><br><span class="line">取数：</span><br><span class="line">	T1:R2 -&gt; MAR</span><br><span class="line">	T2:1 -&gt; READ</span><br><span class="line">	   M(MAR) -&gt; MDR</span><br><span class="line">	T3:MDR -&gt; B</span><br><span class="line">	T4:R1 -&gt; A</span><br><span class="line">运算：</span><br><span class="line">	A+B -&gt; AC</span><br><span class="line">	AC -&gt; R1</span><br><span class="line">写回：</span><br><span class="line">	T1: R1 -&gt; MDR</span><br><span class="line">	T2: PC -&gt; MAR</span><br><span class="line">	T3: 1 -&gt; WRITE</span><br><span class="line">	    MDR-&gt;M(MAR)</span><br><span class="line">	T4: PC+1 -&gt; PC</span><br></pre></td></tr></table></figure>
+<h3 id="单周期处理器"><a href="#单周期处理器" class="headerlink" title="单周期处理器"></a>单周期处理器</h3><p>所有指令执行周期为固定为单一时钟周期，即CPI=1.采用<strong>哈弗体系结构</strong>（指令和数据采用不同存储器）。</p>
 <h4 id="单周期数据通路设计"><a href="#单周期数据通路设计" class="headerlink" title="单周期数据通路设计"></a>单周期数据通路设计</h4><ol>
 <li><p>取指和PC自增数据通路</p>
 <p>功能描述：</p>
@@ -727,8 +705,8 @@
 </ul>
 <p>改进方法：改变m每种指令类型所用的时钟数，采用多周期实现</p>
 <h3 id="多周期处理器"><a href="#多周期处理器" class="headerlink" title="多周期处理器"></a>多周期处理器</h3><p>为什么不使用单周期实现方式</p>
-<pre><code>单周期设计中，时钟周期对所有指令等长，而时钟周期由计算机中可能的最长执行时间的指令决定，一般为取数指令。因此一些较短执行时间的指令会浪费一段时间
-</code></pre><p>多周期方案（采用普林斯顿结构，指令和数据采用一个存储器）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">单周期设计中，时钟周期对所有指令等长，而时钟周期由计算机中可能的最长执行时间的指令决定，一般为取数指令。因此一些较短执行时间的指令会浪费一段时间</span><br></pre></td></tr></table></figure>
+<p>多周期方案（采用普林斯顿结构，指令和数据采用一个存储器）</p>
 <ul>
 <li>将指令分为多个步骤执行，每一个步骤一个时钟周期，则指令执行周期为多个周期，不同指令的指令周期包含时钟周期不一样。</li>
 <li>优点：<ul>
@@ -775,14 +753,14 @@
 <p>IF阶段和MEM阶段都涉及内存访问，访问内存使用的总线是共享资源，无法同时进行。（若依曼架构）</p>
 <p>第一条指令为load或者save指令的第四个周期，会与第四条指令的第一个周期发生冲突。</p>
 <p>解决方法：使用哈弗架构</p>
-<pre><code>将指令用的内存和数据用的内存分别设置，即可解决构造冒险。CPU直接访问的缓存基本上都分为指令用和数据用两种，称为指令缓存和数据缓存
-</code></pre></li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">将指令用的内存和数据用的内存分别设置，即可解决构造冒险。CPU直接访问的缓存基本上都分为指令用和数据用两种，称为指令缓存和数据缓存</span><br></pre></td></tr></table></figure>
+</li>
 <li><p>寄存器访问造成构造冒险</p>
 <p>WB阶段写回寄存器和ID阶段读取寄存器，寄存器无法读写同时进行</p>
 <p>第一条指令为load或者R型指令第五个周期，会与第四条指令第二个周期发生冲突。</p>
 <p>解决办法：分割寄存器堆的访问周期</p>
-<pre><code>时钟周期前半段写，后半段读
-</code></pre></li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">时钟周期前半段写，后半段读</span><br></pre></td></tr></table></figure>
+</li>
 </ol>
 <h4 id="数据冒险-1"><a href="#数据冒险-1" class="headerlink" title="数据冒险"></a>数据冒险</h4><p>数据冒险指，由于指令所需要的数据还未准备好所引起的冒险情况。当即将执行的指令依赖于还未完成的数据时，会导致指令无法立刻开始执行，引起数据冒险。</p>
 <ol>
@@ -791,16 +769,13 @@
 </li>
 </ol>
 <p>解决方法：使用<strong>直通的方法</strong>，或者两个nop</p>
-<pre><code>R型指令原本回写运算结果是在WB阶段，而实际上决定运算结果的是在EX阶段。直通方法就是指，在运算结果确定的EX阶段，将数据直接传递给下一个指令的ALU阶段
-EX/MEM.RegisterRd = ID/EX.RegisterRs = r1
-在EX/MEM与ID/EX中间加一个转发单元
-</code></pre><ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">R型指令原本回写运算结果是在WB阶段，而实际上决定运算结果的是在EX阶段。直通方法就是指，在运算结果确定的EX阶段，将数据直接传递给下一个指令的ALU阶段</span><br><span class="line">EX&#x2F;MEM.RegisterRd &#x3D; ID&#x2F;EX.RegisterRs &#x3D; r1</span><br><span class="line">在EX&#x2F;MEM与ID&#x2F;EX中间加一个转发单元</span><br></pre></td></tr></table></figure>
+<ol>
 <li><p>数据冒险与阻塞</p>
 <p>当一条指令读取一个寄存器而其前一条指令是load指令（需要将内存中的数据写回寄存器），并且该load指令写入的是同一个寄存器，则直通方法无法解决。原因：load指令写回的数据在MEM阶段完成后产生</p>
 <p>解决方法：阻塞流水线</p>
-<pre><code>当load指令后紧跟着一个需要其结果的指令时，必须采用相应的机制阻塞流水线。
-除了转发单元，还要将第二条指令阻塞一个周期，使用nop指令（没有任何效果），如果没有转发单元，需要两个nop指令
-</code></pre></li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">当load指令后紧跟着一个需要其结果的指令时，必须采用相应的机制阻塞流水线。</span><br><span class="line">除了转发单元，还要将第二条指令阻塞一个周期，使用nop指令（没有任何效果），如果没有转发单元，需要两个nop指令</span><br></pre></td></tr></table></figure>
+</li>
 </ol>
 <p>还可以调整指令的执行顺序。</p>
 <h4 id="控制冒险"><a href="#控制冒险" class="headerlink" title="控制冒险"></a>控制冒险</h4><p>控制冒险指，无法确定下一条指令而引发的冒险情况。</p>

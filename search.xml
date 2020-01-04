@@ -96,6 +96,33 @@
     
     
     <entry>
+      <title>数据库索引</title>
+      <link href="/2019/01/05/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95/"/>
+      <url>/2019/01/05/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95/</url>
+      
+        <content type="html"><![CDATA[<h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><p>索引的目的在于提高查询效率，可以类比字典，如果要查“mysql”这个单词，我们肯定需要定位到m字母，然后从下往下找到y字母，再找到剩下的sql。而如果没有索引，那么可能需要把所有单词看一遍才能找到，这个过程是非常耗费时间的。</p><h2 id="聚集索引与非聚集索引"><a href="#聚集索引与非聚集索引" class="headerlink" title="聚集索引与非聚集索引"></a>聚集索引与非聚集索引</h2><h3 id="区别与联系"><a href="#区别与联系" class="headerlink" title="区别与联系"></a>区别与联系</h3><p>根本区别</p><ul><li>聚集索引和非聚集索引的根本区别是表记录的排列顺序和与索引的排列顺序是否一致。</li></ul><p>区别与联系</p><ul><li>两个索引底层均是由B+树实现</li><li>聚集索引叶子即数据，非聚集索引叶子存放指向数据的指针</li></ul><h3 id="聚集索引"><a href="#聚集索引" class="headerlink" title="聚集索引"></a>聚集索引</h3><p>数据行的物理顺序与列值的逻辑顺序相同，一个表中只能拥有一个聚集索引。</p><ul><li>查询效率快，只要找到第一个索引值记录，其余就连续性的记录在物理也一样连续存放</li><li>修改慢，因为为了保证表中记录的物理和索引顺序一致，在记录插入的时候，会对数据页重新排序</li></ul><p>类似于字典的拼音索引，拼音的顺序与字典中汉字实际的顺序一致，当查两个读音一致的词时，找到第一个词后直接向后寻找即可找到第二个词。</p><p>Mysql创建聚集索引</p><pre class=" language-mysql"><code class="language-mysql">create CLUSTERED INDEX 索引名称 ON 表名(字段名)</code></pre><h3 id="非聚集索引"><a href="#非聚集索引" class="headerlink" title="非聚集索引"></a>非聚集索引</h3><p>该索引中索引的逻辑顺序与磁盘上行的物理存储顺序不同，一个表中可以拥有多个非聚集索引。</p><ul><li><p>不会造成数据的重排</p></li><li><p>相对聚集索引可能会慢一些（二次查询造成查询变慢：非聚集索引叶子存放指向数据的指针，当查询列中包含了该索引没有覆盖的列，那么就必须访问该叶子节点指向的数据块查询对应的数据行的数据。）</p><p>二次查询例子：</p><table><thead><tr><th>name</th><th>class</th><th align="left">socre</th></tr></thead><tbody><tr><td>张一</td><td>数学</td><td align="left">100</td></tr><tr><td>张二</td><td>语文</td><td align="left">99</td></tr><tr><td>张三</td><td>英语</td><td align="left">98</td></tr><tr><td>张四</td><td>物理</td><td align="left">97</td></tr></tbody></table><p>建立非聚集索引（class）</p><pre class=" language-mysql"><code class="language-mysql">//叶子节点中包好class信息，所以查询到叶子节点即可查到信息select class from table1 where class <> '数学';//叶子节点不包含name，socre信息，所以必须查询结点select name, socre from table1 where class = '数学'</code></pre></li></ul><p>类似于字典的笔画索引，笔画的顺序与字典中汉字实际顺序不一致，当查找两个笔画一样的词时，需要分别查询两个词的位置（两个词一般不会挨着）</p><p>Mysql创建非聚集索引</p><pre class=" language-mysql"><code class="language-mysql">create NONCLUSTERED INDEX 索引名称 ON 表名(字段名)</code></pre><h2 id="建立索引的原则"><a href="#建立索引的原则" class="headerlink" title="建立索引的原则"></a>建立索引的原则</h2><ol><li><p><strong>最左前缀匹配原则</strong>，mysql会一直向右匹配索引直到遇到范围查询(&gt;、&lt;、between、like)就停止匹配，比如a = 1 and b = 2 and c &gt; 3 and d = 4 如果建立(a,b,c,d)顺序的索引，d是用不到索引的，如果建立(a,b,d,c)的索引则都可以用到，a,b,d的顺序可以任意调整。</p></li><li><p>=和in可以乱序，比如a = 1 and b = 2 and c = 3 建立(a,b,c)索引可以任意顺序，mysql的查询优化器会帮你优化成索引可以识别的形式。</p></li><li><p><strong>尽量选择区分度高的列作为索引</strong>，区分度的公式是count(distinct col) / count(*)，表示字段不重复的比例，比例越大我们扫描的记录数越少，唯一键的区分度是1，而一些状态、性别字段可能在大数据面前区分度就是0，一般需要join的字段我们都要求是0.1以上，即平均1条扫描10条记录。</p></li><li><p><strong>索引列不能参与计算</strong>，保持列“干净”，比如from_unixtime(create_time) = ’2014-05-29’就不能使用到索引，原因很简单，b+树中存的都是数据表中的字段值，但进行检索时，需要把所有元素都应用函数才能比较，显然成本太大。所以语句应该写成create_time = unix_timestamp(’2014-05-29’)。</p></li><li><p>尽量的扩展索引，不要新建索引。比如表中已经有a的索引，现在要加(a,b)的索引，那么只需要修改原来的索引即可。</p></li></ol><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://blog.csdn.net/m0_37683670/article/details/85858846" target="_blank" rel="noopener">https://blog.csdn.net/m0_37683670/article/details/85858846</a></p><p><a href="https://tech.meituan.com/2014/06/30/mysql-index.html" target="_blank" rel="noopener">https://tech.meituan.com/2014/06/30/mysql-index.html</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 数据库 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 数据库 </tag>
+            
+            <tag> mysql </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>数据库三范式</title>
       <link href="/2019/01/04/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%89%E8%8C%83%E5%BC%8F/"/>
       <url>/2019/01/04/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%89%E8%8C%83%E5%BC%8F/</url>

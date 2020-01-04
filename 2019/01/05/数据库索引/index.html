@@ -4,8 +4,9 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="Hello World, 成">
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hex">
+    <meta name="keywords" content="数据库索引, 成">
+    <meta name="description" content="索引索引的目的在于提高查询效率，可以类比字典，如果要查“mysql”这个单词，我们肯定需要定位到m字母，然后从下往下找到y字母，再找到剩下的sql。而如果没有索引，那么可能需要把所有单词看一遍才能找到，这个过程是非常耗费时间的。
+聚集索引与">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -13,7 +14,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Hello World | 成</title>
+    <title>数据库索引 | 成</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -174,12 +175,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Hello World</h1>
+                    <h1 class="description center-align post-title">数据库索引</h1>
                 </div>
             </div>
         </div>
@@ -294,12 +295,29 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
+                                <span class="chip bg-color">数据库</span>
+                            </a>
+                        
+                            <a href="/tags/mysql/">
+                                <span class="chip bg-color">mysql</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
+                                数据库
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -308,7 +326,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-12-25
+                    2019-01-05
                 </div>
                 
 
@@ -317,7 +335,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    73
+                    1.1k
                 </div>
                 
 
@@ -335,15 +353,84 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class=" language-bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span></code></pre>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class=" language-bash"><code class="language-bash">$ hexo server</code></pre>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class=" language-bash"><code class="language-bash">$ hexo generate</code></pre>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class=" language-bash"><code class="language-bash">$ hexo deploy</code></pre>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+                <h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><p>索引的目的在于提高查询效率，可以类比字典，如果要查“mysql”这个单词，我们肯定需要定位到m字母，然后从下往下找到y字母，再找到剩下的sql。而如果没有索引，那么可能需要把所有单词看一遍才能找到，这个过程是非常耗费时间的。</p>
+<h2 id="聚集索引与非聚集索引"><a href="#聚集索引与非聚集索引" class="headerlink" title="聚集索引与非聚集索引"></a>聚集索引与非聚集索引</h2><h3 id="区别与联系"><a href="#区别与联系" class="headerlink" title="区别与联系"></a>区别与联系</h3><p>根本区别</p>
+<ul>
+<li>聚集索引和非聚集索引的根本区别是表记录的排列顺序和与索引的排列顺序是否一致。</li>
+</ul>
+<p>区别与联系</p>
+<ul>
+<li>两个索引底层均是由B+树实现</li>
+<li>聚集索引叶子即数据，非聚集索引叶子存放指向数据的指针</li>
+</ul>
+<h3 id="聚集索引"><a href="#聚集索引" class="headerlink" title="聚集索引"></a>聚集索引</h3><p>数据行的物理顺序与列值的逻辑顺序相同，一个表中只能拥有一个聚集索引。</p>
+<ul>
+<li>查询效率快，只要找到第一个索引值记录，其余就连续性的记录在物理也一样连续存放</li>
+<li>修改慢，因为为了保证表中记录的物理和索引顺序一致，在记录插入的时候，会对数据页重新排序</li>
+</ul>
+<p>类似于字典的拼音索引，拼音的顺序与字典中汉字实际的顺序一致，当查两个读音一致的词时，找到第一个词后直接向后寻找即可找到第二个词。</p>
+<p>Mysql创建聚集索引</p>
+<pre class=" language-mysql"><code class="language-mysql">create CLUSTERED INDEX 索引名称 ON 表名(字段名)</code></pre>
+<h3 id="非聚集索引"><a href="#非聚集索引" class="headerlink" title="非聚集索引"></a>非聚集索引</h3><p>该索引中索引的逻辑顺序与磁盘上行的物理存储顺序不同，一个表中可以拥有多个非聚集索引。</p>
+<ul>
+<li><p>不会造成数据的重排</p>
+</li>
+<li><p>相对聚集索引可能会慢一些（二次查询造成查询变慢：非聚集索引叶子存放指向数据的指针，当查询列中包含了该索引没有覆盖的列，那么就必须访问该叶子节点指向的数据块查询对应的数据行的数据。）</p>
+<p>二次查询例子：</p>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>class</th>
+<th align="left">socre</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>张一</td>
+<td>数学</td>
+<td align="left">100</td>
+</tr>
+<tr>
+<td>张二</td>
+<td>语文</td>
+<td align="left">99</td>
+</tr>
+<tr>
+<td>张三</td>
+<td>英语</td>
+<td align="left">98</td>
+</tr>
+<tr>
+<td>张四</td>
+<td>物理</td>
+<td align="left">97</td>
+</tr>
+</tbody></table>
+<p>建立非聚集索引（class）</p>
+<pre class=" language-mysql"><code class="language-mysql">//叶子节点中包好class信息，所以查询到叶子节点即可查到信息
+select class from table1 where class <> '数学';
+
+//叶子节点不包含name，socre信息，所以必须查询结点
+select name, socre from table1 where class = '数学'</code></pre>
+</li>
+</ul>
+<p>类似于字典的笔画索引，笔画的顺序与字典中汉字实际顺序不一致，当查找两个笔画一样的词时，需要分别查询两个词的位置（两个词一般不会挨着）</p>
+<p>Mysql创建非聚集索引</p>
+<pre class=" language-mysql"><code class="language-mysql">create NONCLUSTERED INDEX 索引名称 ON 表名(字段名)</code></pre>
+<h2 id="建立索引的原则"><a href="#建立索引的原则" class="headerlink" title="建立索引的原则"></a>建立索引的原则</h2><ol>
+<li><p><strong>最左前缀匹配原则</strong>，mysql会一直向右匹配索引直到遇到范围查询(&gt;、&lt;、between、like)就停止匹配，比如a = 1 and b = 2 and c &gt; 3 and d = 4 如果建立(a,b,c,d)顺序的索引，d是用不到索引的，如果建立(a,b,d,c)的索引则都可以用到，a,b,d的顺序可以任意调整。</p>
+</li>
+<li><p>=和in可以乱序，比如a = 1 and b = 2 and c = 3 建立(a,b,c)索引可以任意顺序，mysql的查询优化器会帮你优化成索引可以识别的形式。</p>
+</li>
+<li><p><strong>尽量选择区分度高的列作为索引</strong>，区分度的公式是count(distinct col) / count(*)，表示字段不重复的比例，比例越大我们扫描的记录数越少，唯一键的区分度是1，而一些状态、性别字段可能在大数据面前区分度就是0，一般需要join的字段我们都要求是0.1以上，即平均1条扫描10条记录。</p>
+</li>
+<li><p><strong>索引列不能参与计算</strong>，保持列“干净”，比如from_unixtime(create_time) = ’2014-05-29’就不能使用到索引，原因很简单，b+树中存的都是数据表中的字段值，但进行检索时，需要把所有元素都应用函数才能比较，显然成本太大。所以语句应该写成create_time = unix_timestamp(’2014-05-29’)。</p>
+</li>
+<li><p>尽量的扩展索引，不要新建索引。比如表中已经有a的索引，现在要加(a,b)的索引，那么只需要修改原来的索引即可。</p>
+</li>
+</ol>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://blog.csdn.net/m0_37683670/article/details/85858846" target="_blank" rel="noopener">https://blog.csdn.net/m0_37683670/article/details/85858846</a></p>
+<p><a href="https://tech.meituan.com/2014/06/30/mysql-index.html" target="_blank" rel="noopener">https://tech.meituan.com/2014/06/30/mysql-index.html</a></p>
 
             </div>
             <hr/>
@@ -356,7 +443,15 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
+                                    <span class="chip bg-color">数据库</span>
+                                </a>
+                            
+                                <a href="/tags/mysql/">
+                                    <span class="chip bg-color">mysql</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -396,52 +491,32 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2019/12/30/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">
+                <a href="/2019/12/25/hello-world/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="计算机组成原理">
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
                         
-                        <span class="card-title">计算机组成原理</span>
+                        <span class="card-title">Hello World</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            一. 计算机系统概述计算机性能指标硬件性能参数
-
-计算机字长：CPU字长，指CPU一次能处理数据的二进制位数
-机器主频：时钟脉冲的频率
-主存容量：计算机能够存放的最大的二进制位数bit，B，KB，MB
-
-计算机性能指标
-
-响应时间：计算机完
+                            Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hex
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2019-12-30
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-12-25
                         </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/" class="post-category">
-                                    期末复习
-                                </a>
-                            
+                            <i class="fas fa-user fa-fw"></i>
+                            yzc
                             
                         </span>
                     </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">
-                        <span class="chip bg-color">计算机组成原理</span>
-                    </a>
-                    
                 </div>
                 
             </div>
@@ -453,25 +528,30 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/01/05/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95/">
+                <a href="/2019/01/04/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%89%E8%8C%83%E5%BC%8F/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="数据库索引">
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="数据库三范式">
                         
-                        <span class="card-title">数据库索引</span>
+                        <span class="card-title">数据库三范式</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            索引索引的目的在于提高查询效率，可以类比字典，如果要查“mysql”这个单词，我们肯定需要定位到m字母，然后从下往下找到y字母，再找到剩下的sql。而如果没有索引，那么可能需要把所有单词看一遍才能找到，这个过程是非常耗费时间的。
-聚集索引与
+                            三范式第一范式(1NF)数据表中的每一列（每个字段）必须是不可拆分的最小单元，也就是确保每一列的原子性
+
+第一范式的目标是确保每列的原子性
+如果每一列的都是不可再分的最小数据单元，则满足第一范式
+
+例如：
+每一个人可能有一个公司座机，有一个
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-01-05
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-01-04
                             </span>
                         <span class="publish-author">
                             

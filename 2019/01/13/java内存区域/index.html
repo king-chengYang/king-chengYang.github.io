@@ -4,8 +4,14 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="Hello World, 成">
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hex">
+    <meta name="keywords" content="Java内存区域, 成">
+    <meta name="description" content="Java内存区域JDK7的内存区域如下
+
+线程私有：虚拟机栈，本地方法栈，程序计数器
+线程共享：堆内存，方法区
+
+
+程序计数器虚拟机中的程序计数器和计算机的程序计数器(PC)作用类似，可以看成当前线程所执行的字节码的行号指示器，用来记录下一">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -13,7 +19,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Hello World | 成</title>
+    <title>Java内存区域 | 成</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -174,12 +180,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Hello World</h1>
+                    <h1 class="description center-align post-title">Java内存区域</h1>
                 </div>
             </div>
         </div>
@@ -294,12 +300,29 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/java/">
+                                <span class="chip bg-color">java</span>
+                            </a>
+                        
+                            <a href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/">
+                                <span class="chip bg-color">虚拟机</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/java/" class="post-category">
+                                java
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -308,7 +331,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-12-25
+                    2019-01-13
                 </div>
                 
 
@@ -317,7 +340,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    73
+                    710
                 </div>
                 
 
@@ -335,15 +358,50 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class=" language-bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span></code></pre>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class=" language-bash"><code class="language-bash">$ hexo server</code></pre>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class=" language-bash"><code class="language-bash">$ hexo generate</code></pre>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class=" language-bash"><code class="language-bash">$ hexo deploy</code></pre>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+                <h2 id="Java内存区域"><a href="#Java内存区域" class="headerlink" title="Java内存区域"></a>Java内存区域</h2><p>JDK7的内存区域如下</p>
+<ul>
+<li>线程私有：虚拟机栈，本地方法栈，程序计数器</li>
+<li>线程共享：堆内存，方法区</li>
+</ul>
+<p><img src="java7%E5%86%85%E5%AD%98.png" alt=""></p>
+<h4 id="程序计数器"><a href="#程序计数器" class="headerlink" title="程序计数器"></a>程序计数器</h4><p>虚拟机中的程序计数器和计算机的程序计数器(PC)作用类似，可以看成当前线程所执行的字节码的行号指示器，用来记录下一条要执行的指令。</p>
+<p>该区域没有规定任何OutMemeryError情况</p>
+<h4 id="虚拟机栈"><a href="#虚拟机栈" class="headerlink" title="虚拟机栈"></a>虚拟机栈</h4><p>虚拟机栈用来描述<strong>java方法</strong>执行的内存模型，每个方法在执行的同时会创建一个栈帧。</p>
+<p>栈帧中存放局部变量表，操作数栈，动态链接，方法出口</p>
+<p>其中局部变量表存放编译器可知的各种数据类型，对象引用，returnAddress类型(执行下一条指令)，局部变量表所需要的内存空间在编译期间完成分配</p>
+<p><img src="%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%A0%88.png" alt=""></p>
+<h4 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h4><p>堆中存放所有的对象实例以及数组</p>
+<p>堆内部也进行了分块划分，如下，这个划分会在垃圾回收时使用。</p>
+<p><img src="%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A0%86.png" alt=""></p>
+<h4 id="方法区"><a href="#方法区" class="headerlink" title="方法区"></a>方法区</h4><p>方法区存储已被虚拟机加载的<strong>类信息</strong>，<strong>常量</strong>，<strong>静态常量</strong>，<strong>即时编译器编译的代码</strong>，该区域通常被称为“永久代”</p>
+<h4 id="运行时常量池"><a href="#运行时常量池" class="headerlink" title="运行时常量池"></a>运行时常量池</h4><p>运行时常量池时方法区的一部分，用于存放编译期生成的各种字面量和符号的引用</p>
+<h3 id="jdk1-8的变化"><a href="#jdk1-8的变化" class="headerlink" title="jdk1.8的变化"></a>jdk1.8的变化</h3><ol>
+<li>将方法区除运行时常量池部分移动到了直接内存</li>
+<li>将运行时常量池部分移动到了堆中</li>
+</ol>
+<p><img src="%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%86%85%E5%AD%98%E7%A9%BA%E9%97%B4.png" alt=""></p>
+<h2 id="java的对象"><a href="#java的对象" class="headerlink" title="java的对象"></a>java的对象</h2><h3 id="对象的创建"><a href="#对象的创建" class="headerlink" title="对象的创建"></a>对象的创建</h3><p>当虚拟机遇到一个new指令时</p>
+<p><img src="java%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1.png" alt=""></p>
+<ul>
+<li><p>检查类是否已经加载</p>
+<p>判断该类是否已被加载，解析，初始化，若没有的话，必须先执行类加载过程</p>
+</li>
+<li><p>为对象分配内存</p>
+<p>对象所需要的内存大小在类加载完成之后便可完全确定。在类加载检查通过后，虚拟机将为对象分配内存。</p>
+</li>
+<li><p>初始化零值</p>
+<p>内存分配完之后，虚拟机将分配到的内存空间都初始化为零值。这一步保证对象的实例字段在java代码中可以不赋初始值就可以直接使用，程序能访问这些字段的数据类型所对应的零值</p>
+</li>
+<li><p>对象头信息设置</p>
+<p>虚拟机堆对对象进行必要的设置，例如对象是哪个类的实例，如何找到类的元数据信息，对象的哈希码等等，这些信息都在对象头之中</p>
+</li>
+<li><p>执行init方法</p>
+<p>最后一步即把对象按照程序员的意愿进行初始化</p>
+</li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>《深入理解Java虚拟机第二版》</p>
+<p><a href="https://blog.csdn.net/bruce128/article/details/79357870" target="_blank" rel="noopener">https://blog.csdn.net/bruce128/article/details/79357870</a></p>
+<p><a href="https://juejin.im/post/5a14de6751882555cc417df7" target="_blank" rel="noopener">https://juejin.im/post/5a14de6751882555cc417df7</a></p>
 
             </div>
             <hr/>
@@ -356,7 +414,15 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/java/">
+                                    <span class="chip bg-color">java</span>
+                                </a>
+                            
+                                <a href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/">
+                                    <span class="chip bg-color">虚拟机</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -396,52 +462,32 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2019/12/30/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">
+                <a href="/2019/12/25/hello-world/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="计算机组成原理">
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
                         
-                        <span class="card-title">计算机组成原理</span>
+                        <span class="card-title">Hello World</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            一. 计算机系统概述计算机性能指标硬件性能参数
-
-计算机字长：CPU字长，指CPU一次能处理数据的二进制位数
-机器主频：时钟脉冲的频率
-主存容量：计算机能够存放的最大的二进制位数bit，B，KB，MB
-
-计算机性能指标
-
-响应时间：计算机完
+                            Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hex
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2019-12-30
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-12-25
                         </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/" class="post-category">
-                                    期末复习
-                                </a>
-                            
+                            <i class="fas fa-user fa-fw"></i>
+                            yzc
                             
                         </span>
                     </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">
-                        <span class="chip bg-color">计算机组成原理</span>
-                    </a>
-                    
                 </div>
                 
             </div>
@@ -453,30 +499,24 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/01/13/java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F/">
+                <a href="/2019/01/12/HashMap%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="Java内存区域">
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="HashMap源码阅读">
                         
-                        <span class="card-title">Java内存区域</span>
+                        <span class="card-title">HashMap源码阅读</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Java内存区域JDK7的内存区域如下
-
-线程私有：虚拟机栈，本地方法栈，程序计数器
-线程共享：堆内存，方法区
-
-
-程序计数器虚拟机中的程序计数器和计算机的程序计数器(PC)作用类似，可以看成当前线程所执行的字节码的行号指示器，用来记录下一
+                            HashMap简介Hashmap存储键值对，其根据键的hashCode值存储数据，大多数情况下可以直接定位到它的值，因而具有很快的访问速度，遍历顺序与插入顺序不一致。 HashMap最多只允许一条记录的键为null，允许多条记录的值为nul
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-01-13
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-01-12
                             </span>
                         <span class="publish-author">
                             
@@ -497,8 +537,8 @@
                         <span class="chip bg-color">java</span>
                     </a>
                     
-                    <a href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/">
-                        <span class="chip bg-color">虚拟机</span>
+                    <a href="/tags/%E9%9B%86%E5%90%88/">
+                        <span class="chip bg-color">集合</span>
                     </a>
                     
                 </div>
@@ -636,6 +676,13 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
 
 </main>
 
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
 
 
     <footer class="page-footer bg-color">

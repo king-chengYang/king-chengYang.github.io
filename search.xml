@@ -96,6 +96,33 @@
     
     
     <entry>
+      <title>Java内存区域</title>
+      <link href="/2019/01/13/java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F/"/>
+      <url>/2019/01/13/java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F/</url>
+      
+        <content type="html"><![CDATA[<h2 id="Java内存区域"><a href="#Java内存区域" class="headerlink" title="Java内存区域"></a>Java内存区域</h2><p>JDK7的内存区域如下</p><ul><li>线程私有：虚拟机栈，本地方法栈，程序计数器</li><li>线程共享：堆内存，方法区</li></ul><p><img src="java7%E5%86%85%E5%AD%98.png" alt=""></p><h4 id="程序计数器"><a href="#程序计数器" class="headerlink" title="程序计数器"></a>程序计数器</h4><p>虚拟机中的程序计数器和计算机的程序计数器(PC)作用类似，可以看成当前线程所执行的字节码的行号指示器，用来记录下一条要执行的指令。</p><p>该区域没有规定任何OutMemeryError情况</p><h4 id="虚拟机栈"><a href="#虚拟机栈" class="headerlink" title="虚拟机栈"></a>虚拟机栈</h4><p>虚拟机栈用来描述<strong>java方法</strong>执行的内存模型，每个方法在执行的同时会创建一个栈帧。</p><p>栈帧中存放局部变量表，操作数栈，动态链接，方法出口</p><p>其中局部变量表存放编译器可知的各种数据类型，对象引用，returnAddress类型(执行下一条指令)，局部变量表所需要的内存空间在编译期间完成分配</p><p><img src="%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%A0%88.png" alt=""></p><h4 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h4><p>堆中存放所有的对象实例以及数组</p><p>堆内部也进行了分块划分，如下，这个划分会在垃圾回收时使用。</p><p><img src="%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A0%86.png" alt=""></p><h4 id="方法区"><a href="#方法区" class="headerlink" title="方法区"></a>方法区</h4><p>方法区存储已被虚拟机加载的<strong>类信息</strong>，<strong>常量</strong>，<strong>静态常量</strong>，<strong>即时编译器编译的代码</strong>，该区域通常被称为“永久代”</p><h4 id="运行时常量池"><a href="#运行时常量池" class="headerlink" title="运行时常量池"></a>运行时常量池</h4><p>运行时常量池时方法区的一部分，用于存放编译期生成的各种字面量和符号的引用</p><h3 id="jdk1-8的变化"><a href="#jdk1-8的变化" class="headerlink" title="jdk1.8的变化"></a>jdk1.8的变化</h3><ol><li>将方法区除运行时常量池部分移动到了直接内存</li><li>将运行时常量池部分移动到了堆中</li></ol><p><img src="%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%86%85%E5%AD%98%E7%A9%BA%E9%97%B4.png" alt=""></p><h2 id="java的对象"><a href="#java的对象" class="headerlink" title="java的对象"></a>java的对象</h2><h3 id="对象的创建"><a href="#对象的创建" class="headerlink" title="对象的创建"></a>对象的创建</h3><p>当虚拟机遇到一个new指令时</p><p><img src="java%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1.png" alt=""></p><ul><li><p>检查类是否已经加载</p><p>判断该类是否已被加载，解析，初始化，若没有的话，必须先执行类加载过程</p></li><li><p>为对象分配内存</p><p>对象所需要的内存大小在类加载完成之后便可完全确定。在类加载检查通过后，虚拟机将为对象分配内存。</p></li><li><p>初始化零值</p><p>内存分配完之后，虚拟机将分配到的内存空间都初始化为零值。这一步保证对象的实例字段在java代码中可以不赋初始值就可以直接使用，程序能访问这些字段的数据类型所对应的零值</p></li><li><p>对象头信息设置</p><p>虚拟机堆对对象进行必要的设置，例如对象是哪个类的实例，如何找到类的元数据信息，对象的哈希码等等，这些信息都在对象头之中</p></li><li><p>执行init方法</p><p>最后一步即把对象按照程序员的意愿进行初始化</p></li></ul><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>《深入理解Java虚拟机第二版》</p><p><a href="https://blog.csdn.net/bruce128/article/details/79357870" target="_blank" rel="noopener">https://blog.csdn.net/bruce128/article/details/79357870</a></p><p><a href="https://juejin.im/post/5a14de6751882555cc417df7" target="_blank" rel="noopener">https://juejin.im/post/5a14de6751882555cc417df7</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> java </tag>
+            
+            <tag> 虚拟机 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>HashMap源码阅读</title>
       <link href="/2019/01/12/HashMap%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/"/>
       <url>/2019/01/12/HashMap%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/</url>

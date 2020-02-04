@@ -4,9 +4,12 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="数据库分库分表, 成">
-    <meta name="description" content="垂直拆分垂直拆分是将一个包含了很多表的数据库,根据表的功能的不同,拆分为多个小的数据库,每个库中包含部分表。
-比如大型的电商项目平台是由不同的子项目模块构成的如订单系统，账户系统，商品管理系统等等，这些个独立的模块都可以拆分成独立的服务与独">
+    <meta name="keywords" content="Java关键字, 成">
+    <meta name="description" content="finalfinal可以修饰类，方法和变量（局部变量和成员变量）
+
+当用final修饰一个类时，表明这个类不能被继承。
+当用final修饰一个方法时，子类无法覆盖该方法
+对于一个final变量，如果是基本数据类型的变量，则其数值一旦在初始化">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -14,7 +17,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>数据库分库分表 | 成</title>
+    <title>Java关键字 | 成</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -175,12 +178,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">数据库分库分表</h1>
+                    <h1 class="description center-align post-title">Java关键字</h1>
                 </div>
             </div>
         </div>
@@ -297,12 +300,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
-                                <span class="chip bg-color">数据库</span>
-                            </a>
-                        
-                            <a href="/tags/mysql/">
-                                <span class="chip bg-color">mysql</span>
+                            <a href="/tags/java/">
+                                <span class="chip bg-color">java</span>
                             </a>
                         
                     </div>
@@ -313,8 +312,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
-                                数据库
+                            <a href="/categories/java/" class="post-category">
+                                java
                             </a>
                         
                     </div>
@@ -326,7 +325,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-01-11
+                    2020-02-04
                 </div>
                 
 
@@ -335,7 +334,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.1k
+                    1.8k
                 </div>
                 
 
@@ -353,77 +352,83 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="垂直拆分"><a href="#垂直拆分" class="headerlink" title="垂直拆分"></a>垂直拆分</h2><p><strong>垂直拆分是将一个包含了很多表的数据库,根据表的功能的不同,拆分为多个小的数据库,每个库中包含部分表。</strong></p>
-<p>比如大型的电商项目平台是由不同的子项目模块构成的如订单系统，账户系统，商品管理系统等等，这些个独立的模块都可以拆分成独立的服务与独立的数据库。</p>
-<p>优点</p>
+                <h2 id="final"><a href="#final" class="headerlink" title="final"></a>final</h2><p>final可以修饰类，方法和变量（局部变量和成员变量）</p>
 <ul>
-<li>拆分后业务清晰，拆分规则明确。</li>
+<li>当用final修饰一个类时，表明这个类不能被继承。</li>
+<li>当用final修饰一个方法时，子类无法覆盖该方法</li>
+<li>对于一个final变量，如果是基本数据类型的变量，则其数值一旦在初始化之后便不能更改；如果是引用类型的变量，则在对其初始化之后便不能再让其指向另一个对象。</li>
 </ul>
-<ol start="2">
-<li>系统之间整合或扩展容易。</li>
-<li>数据维护简单。</li>
-</ol>
-<p>缺点</p>
+<h2 id="try-catch-finally"><a href="#try-catch-finally" class="headerlink" title="try catch finally"></a>try catch finally</h2><p><strong>try+catch</strong></p>
+<p>运行流程：运行到try块中，如果有异常抛出，则转到catch块去处理，如果没有异常，执行catch块后面的语句</p>
+<p>*<em>try+catch+finally *</em></p>
+<p>运行流程：运行到try块中，如果有异常抛出，则转到catch块,catch块执行完毕后，执行finally块的代码，再执行finally块后面的代码。如果没有异常抛出，执行完try块，再执行finally块的代码，然后执行finally块后面的语句 </p>
+<p> *<em>try+finally *</em></p>
+<p>运行流程：运行到try块中,如果有异常抛出的话，程序转向执行finally块的代码，然后方法就以抛出异常的方式退出。 </p>
+<p><strong>try和finally中return问题</strong></p>
+<p>try中的return语句调用的函数先于finally中调用的函数执行，也就是说return语句先执行，finally语句后执行。Return并不是让函数马上返回，而是return语句执行后，将把返回结果放置进函数栈中，此时函数并不是马上返回，它要执行finally语句后才真正开始返回，因此当finally中有return语句时，会覆盖try中的return结果</p>
+<h2 id="static"><a href="#static" class="headerlink" title="static"></a>static</h2><p>static修饰的成员变量和成员方法习惯上称为静态变量和静态方法，可以直接通过类名来访问</p>
+<p>static可以修饰方法，变量，代码块</p>
 <ul>
-<li>存在单表数据量过大的问题（需要水平切分）</li>
-<li>部分业务表无法join，只能通过接口方式解决，提高了系统复杂度</li>
+<li>修饰变量：所有类的对象共有，即类的变量，对于静态变量在内存中只有一个拷贝，JVM只为静态变量分配一次内存，在加载类的过程中完成静态变量的内存分配</li>
+<li>修饰方法：所有类对象共有，即类的方法，静态方法中不能用this和super关键字，不能直接访问所属类的实例变量和实例方法(就是不带static的成员变量和成员成员方法)，只能访问所属类的静态成员变量和成员方法。</li>
+<li>修饰代码块：static代码块也叫静态代码块，是在类中独立于类成员的static语句块，可以有多个，位置可以随便放，它不在任何的方法体内，JVM加载类时会执行这些静态的代码块，如果static代码块有多个，JVM将按照它们在类中出现的先后顺序依次执行它们，每个代码块只会被执行一次。</li>
 </ul>
-<h2 id="水平拆分"><a href="#水平拆分" class="headerlink" title="水平拆分"></a>水平拆分</h2><p>当一个应用难以再细粒度的垂直切分，或切分后数据量行数巨大，存在单库读写、存储性能瓶颈，这时候就需要进行水平切分了。<strong>水平切分分为库内分表和分库分表，是根据表内数据内在的逻辑关系，将同一个表按不同的条件分散到多个数据库或多个表中，每个表中只包含一部分数据，从而使得单个表的数据量变小，达到分布式的效果。</strong></p>
-<p>比如存放大量用户购物信息的购物表，可以按照下单时间拆分成多个表，每一个表就可以只存放少量的数据，再将这些表存在不同的数据库中，即可解决单库读写，存储性能瓶颈问题。</p>
-<p>优点</p>
-<ul>
-<li>单表大小可控</li>
-<li>便于扩展，如果要对集群扩容，只需要添加节点，无需对其他节点进行数据迁移</li>
-</ul>
-<p>缺点</p>
-<ul>
-<li>热点数据成为性能瓶颈。例如订单系统，近一段的订单可能会被频繁读写，而很早的历史订单则会很少读取。</li>
-</ul>
-<p>水平拆分的三种情况，以students表，db数据库为例</p>
-<ul>
-<li><p>只分表，将一个表水平拆分存储在一个数据库中</p>
-<p>例如，db中存放students1和students2两个表</p>
-</li>
-<li><p>只分库，在多个数据库中分别存放一个表</p>
-<p>例如，db1存放了一个students表，db2也存放了一个students表</p>
-</li>
-<li><p>分库分表，在多个数据库中存放多个相同的表（<strong>可以解决数据库IO瓶颈，数据库连接压力，CPU，网络，内存等等的瓶颈问题。</strong>）</p>
-<p>例如，db1存放了students1和students2两个表；db2也存放了students1和students2两个表</p>
-</li>
-</ul>
-<h2 id="主从复制读写分离"><a href="#主从复制读写分离" class="headerlink" title="主从复制读写分离"></a>主从复制读写分离</h2><p><strong>在实际的生产环境中，对数据库的读和写都在同一个数据库服务器中，很多情况下是不能满足实际需求的，通过主从复制的方式来同步数据保证数据不丢失，再通过读写分离来提升数据库的并发负载能力减轻服务器的压力</strong></p>
-<h3 id="主从复制"><a href="#主从复制" class="headerlink" title="主从复制"></a>主从复制</h3><p><img src="%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6.png" alt=""></p>
-<p>过程</p>
+<h2 id="synchronized"><a href="#synchronized" class="headerlink" title="synchronized"></a>synchronized</h2><p>synchronized可以修饰代码块，方法，静态方法，类</p>
 <ol>
-<li>在每个事务更新数据完成之前，master在二进制日志进行记录，记录之后，master通知存储引擎提交事务。</li>
-<li>Slave将master的binary log复制到其中继日志</li>
-<li>Slave的线程从中继日志读取事件日志，然后更新slave数据，使其与master中的数据一致</li>
+<li><p>修饰一个代码块，作用的对象是调用这个代码块的对象</p>
+<p>当两个并发线程(thread1和thread2)访问同一个对象(syncThread)中的synchronized代码块时，在同一时刻只能有一个线程得到执行，另一个线程阻塞，必须等待当前线程执行完这个代码块以后才能执行该代码块。</p>
+</li>
+<li><p>修饰一个方法，其作用的范围是整个方法，作用的对象是调用这个方法的对象；</p>
+<p>当两个并发线程(thread1和thread2)访问同一个对象(syncThread)中的synchronized方法时，再同一时刻只有一个线程得到执行，另一个线程阻塞，必须等待当前线程执行完这个方法以后才能执行该方法。</p>
+</li>
+<li><p>修改一个静态的方法，其作用的范围是整个静态方法，作用的对象是这个类的所有对象；</p>
+</li>
+<li><p>修改一个类，其作用的范围是synchronized后面括号括起来的部分，作用主的对象是这个类的所有对象。</p>
+</li>
 </ol>
-<h3 id="读写分离"><a href="#读写分离" class="headerlink" title="读写分离"></a>读写分离</h3><p><img src="%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB.png" alt=""></p>
-<p>读写分离就是在主服务器上修改，数据会同步到从服务器，从服务器只能提供读取数据，不能写入，实现备份的同时也减轻了主服务器的压力。</p>
+<p>synchronized可以保证原子性，可见性，有序性。</p>
+<h2 id="transient"><a href="#transient" class="headerlink" title="transient"></a>transient</h2><p>transient关键字只能修饰变量，而不能修饰方法和类</p>
 <ul>
-<li>主库，提供数据库写服务</li>
-<li>从库，提供数据库读服务</li>
+<li>被transient修饰的变量，该变量无法序列化</li>
+<li>transient修饰的变量如果是自定义变量，则该类需要实现Serializable接口</li>
+<li>静态变量不论是否使用transient修饰，均不能序列化</li>
 </ul>
-<h2 id="分库分表比较"><a href="#分库分表比较" class="headerlink" title="分库分表比较"></a>分库分表比较</h2><p>读写分离主要解决数据库读性能瓶颈，水平拆分主要解决数据库数据量大的问题，垂直拆分是实现业务解耦</p>
-<p>数据库拆分原则</p>
+<h2 id="volatile"><a href="#volatile" class="headerlink" title="volatile"></a>volatile</h2><p>volatile修饰变量时有两个重要的特性</p>
+<ul>
+<li>保证此变量对所有线程的可见性，即当一条线程修改了这个变量的值，新值对于其他下次你哼来说时可以立即得到的。普通变量的值再线程间传递均需要通过主内存完成。</li>
+<li>禁止指令重排优化，普通变量仅仅会保证在该方法的执行过程所有依赖赋值结果的地方能获得正确的结果，而不能保证变量赋值操作的顺序与程序代码的执行顺序一致</li>
+</ul>
+<p>即valatile可以实现的可见性，有序性，不能实现原子性</p>
+<h2 id="interface与abstract"><a href="#interface与abstract" class="headerlink" title="interface与abstract"></a>interface与abstract</h2><h3 id="interface"><a href="#interface" class="headerlink" title="interface"></a>interface</h3><p>interface只能修饰类，有如下特点</p>
+<ul>
+<li>接口中方法，变量的默认为public abstract类型</li>
+<li>不能实例化对象</li>
+<li>无构造方法</li>
+<li>所有的方法必须是抽象的</li>
+<li>无静态代码和静态方法</li>
+</ul>
+<h3 id="abstract"><a href="#abstract" class="headerlink" title="abstract"></a>abstract</h3><p>abstract可以修饰类和方法，具有如下特点</p>
 <ol>
-<li><p>优先考虑缓存降低对数据库的读操作。</p>
-</li>
-<li><p>再考虑读写分离，降低数据库写操作。</p>
-</li>
-<li><p>最后开始数据拆分,切分模式： <strong>首先垂直（纵向）拆分、再次水平拆分</strong>。</p>
-</li>
-<li><p>首先考虑按照业务垂直拆分。</p>
-</li>
-<li><p>再考虑水平拆分：先分库(设置数据路由规则，把数据分配到不同的库中)</p>
-</li>
-<li><p>最后再考虑分表，单表拆分到数据1000万以内。</p>
-</li>
+<li>abstract class不能创建实例对象</li>
+<li>含有abstract方法的类必须定义为abstract class，但abstract class类中的可以包含非抽象类</li>
+<li>abstract类中定义的抽象方法必须在具体子类中实现，所以不能有抽象的构造方法和抽象的静态方法</li>
+<li>如果子类没有实现父类的abstract方法，那么子类也必须定义为abstract类型</li>
 </ol>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://www.qingtingip.com/h_186509.html" target="_blank" rel="noopener">https://www.qingtingip.com/h_186509.html</a></p>
-<p><a href="https://blog.csdn.net/shiyong1949/article/details/59586773" target="_blank" rel="noopener">https://blog.csdn.net/shiyong1949/article/details/59586773</a></p>
-<p><a href="https://blog.csdn.net/worn_xiao/article/details/83963932" target="_blank" rel="noopener">https://blog.csdn.net/worn_xiao/article/details/83963932</a></p>
+<h3 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h3><p>（1）抽象类可以有构造方法，但接口不能有构造方法；</p>
+<p>（2）抽象类可以有普通成员变量，但接口没有普通成员变量；</p>
+<p>（3）抽象类中可以包含非抽象的普通方法，而接口中的方法必须都是抽象的、不能有非抽象的方法；</p>
+<p>（4）抽象类中的抽象方法的访问类型可以是public、protected，但接口中的抽象方法只能是public类型且默认为public abstract类型；</p>
+<p>（5）抽象类中可以包含静态方法，而接口中不能包含静态方法；</p>
+<p>（6）抽象类和接口都可以包含静态成员变量，抽象类的静态成员变量的访问类型可以任意，但接口中定义的变量只能是public static final类型，并且默认为public static final类型；</p>
+<p>（7）一个类可以实现多个接口，但只能继承一个抽象类；</p>
+<h3 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h3><ul>
+<li>子类拥有父类非 private 的属性、方法。默认的属性和方法无法访问</li>
+<li>子类可以访问父类中protected的方法</li>
+<li>子类可以拥有自己的属性和方法，即子类可以对父类进行扩展</li>
+<li>子类可以以自己的方式实现父类的方法</li>
+<li>final 关键字声明类可以把类定义为不能继承的，即最终类；或者用于修饰方法，该方法不能被子类重写</li>
+<li>子类不能缩小父类方法的访问权限</li>
+</ul>
 
             </div>
             <hr/>
@@ -437,12 +442,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
-                                    <span class="chip bg-color">数据库</span>
-                                </a>
-                            
-                                <a href="/tags/mysql/">
-                                    <span class="chip bg-color">mysql</span>
+                                <a href="/tags/java/">
+                                    <span class="chip bg-color">java</span>
                                 </a>
                             
                         </div>
@@ -480,51 +481,52 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2019/01/12/MapReduce%E5%8E%9F%E7%90%86/">
+                <a href="/2020/02/04/java%E5%85%B3%E9%94%AE%E5%AD%97/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="MapReduce原理">
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="Java关键字">
                         
-                        <span class="card-title">MapReduce原理</span>
+                        <span class="card-title">Java关键字</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            MapReduce介绍Hadoop Map/Reduce是一个使用简易的软件框架，基于它写出来的应用程序能够运行在由上千个商用机器组成的大型集群上，并以一种可靠容错的方式并行处理上T级别的数据集。
-一个Map/Reduce 作业（job） 
+                            finalfinal可以修饰类，方法和变量（局部变量和成员变量）
+
+当用final修饰一个类时，表明这个类不能被继承。
+当用final修饰一个方法时，子类无法覆盖该方法
+对于一个final变量，如果是基本数据类型的变量，则其数值一旦在初始化
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2019-01-12
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-02-04
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Hadoop/" class="post-category">
-                                    Hadoop
+                            <a href="/categories/java/" class="post-category">
+                                    java
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Hadoop/">
-                        <span class="chip bg-color">Hadoop</span>
-                    </a>
-                    
-                    <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/">
-                        <span class="chip bg-color">大数据</span>
+                    <a href="/tags/java/">
+                        <span class="chip bg-color">java</span>
                     </a>
                     
                 </div>
@@ -538,32 +540,32 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/01/05/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95/">
+                <a href="/2020/02/04/java%E7%9A%84%E9%94%81%E6%9C%BA%E5%88%B6/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="数据库索引">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="Java的锁机制">
                         
-                        <span class="card-title">数据库索引</span>
+                        <span class="card-title">Java的锁机制</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            索引索引的目的在于提高查询效率，可以类比字典，如果要查“mysql”这个单词，我们肯定需要定位到m字母，然后从下往下找到y字母，再找到剩下的sql。而如果没有索引，那么可能需要把所有单词看一遍才能找到，这个过程是非常耗费时间的。
-聚集索引与
+                            乐观锁 悲观锁悲观锁：认为自己使用数据时一定有别的线程修改数据，因此在获取数据前一定会加锁，确保数据不会被别的线程修改，例如synchronized关键字
+乐观锁：认为自己使用数据时不会有别的线程修改数据，在获取数据时不会加锁，而在更新数据
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-01-05
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-02-04
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
-                                    数据库
+                            <a href="/categories/java/" class="post-category">
+                                    java
                                 </a>
                             
                             
@@ -573,12 +575,12 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
-                        <span class="chip bg-color">数据库</span>
+                    <a href="/tags/java/">
+                        <span class="chip bg-color">java</span>
                     </a>
                     
-                    <a href="/tags/mysql/">
-                        <span class="chip bg-color">mysql</span>
+                    <a href="/tags/%E5%90%8C%E6%AD%A5%E9%97%AE%E9%A2%98/">
+                        <span class="chip bg-color">同步问题</span>
                     </a>
                     
                 </div>
@@ -716,6 +718,13 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
 
 </main>
 
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
 
 
     <footer class="page-footer bg-color">

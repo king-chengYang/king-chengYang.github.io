@@ -4,9 +4,9 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="数据库分库分表, 成">
-    <meta name="description" content="垂直拆分垂直拆分是将一个包含了很多表的数据库,根据表的功能的不同,拆分为多个小的数据库,每个库中包含部分表。
-比如大型的电商项目平台是由不同的子项目模块构成的如订单系统，账户系统，商品管理系统等等，这些个独立的模块都可以拆分成独立的服务与独">
+    <meta name="keywords" content="Java的锁机制, 成">
+    <meta name="description" content="乐观锁 悲观锁悲观锁：认为自己使用数据时一定有别的线程修改数据，因此在获取数据前一定会加锁，确保数据不会被别的线程修改，例如synchronized关键字
+乐观锁：认为自己使用数据时不会有别的线程修改数据，在获取数据时不会加锁，而在更新数据">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -14,7 +14,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>数据库分库分表 | 成</title>
+    <title>Java的锁机制 | 成</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -175,12 +175,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">数据库分库分表</h1>
+                    <h1 class="description center-align post-title">Java的锁机制</h1>
                 </div>
             </div>
         </div>
@@ -297,12 +297,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
-                                <span class="chip bg-color">数据库</span>
+                            <a href="/tags/java/">
+                                <span class="chip bg-color">java</span>
                             </a>
                         
-                            <a href="/tags/mysql/">
-                                <span class="chip bg-color">mysql</span>
+                            <a href="/tags/%E5%90%8C%E6%AD%A5%E9%97%AE%E9%A2%98/">
+                                <span class="chip bg-color">同步问题</span>
                             </a>
                         
                     </div>
@@ -313,8 +313,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
-                                数据库
+                            <a href="/categories/java/" class="post-category">
+                                java
                             </a>
                         
                     </div>
@@ -326,7 +326,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-01-11
+                    2020-02-04
                 </div>
                 
 
@@ -335,7 +335,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.1k
+                    1.4k
                 </div>
                 
 
@@ -353,77 +353,47 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="垂直拆分"><a href="#垂直拆分" class="headerlink" title="垂直拆分"></a>垂直拆分</h2><p><strong>垂直拆分是将一个包含了很多表的数据库,根据表的功能的不同,拆分为多个小的数据库,每个库中包含部分表。</strong></p>
-<p>比如大型的电商项目平台是由不同的子项目模块构成的如订单系统，账户系统，商品管理系统等等，这些个独立的模块都可以拆分成独立的服务与独立的数据库。</p>
-<p>优点</p>
+                <h2 id="乐观锁-悲观锁"><a href="#乐观锁-悲观锁" class="headerlink" title="乐观锁 悲观锁"></a>乐观锁 悲观锁</h2><p><strong>悲观锁：</strong>认为自己使用数据时一定有别的线程修改数据，因此在获取数据前一定会加锁，确保数据不会被别的线程修改，例如synchronized关键字</p>
+<p><strong>乐观锁：</strong>认为自己使用数据时不会有别的线程修改数据，在获取数据时不会加锁，而在更新数据时会判断之前有没有别的线程更新了这个数据。如果没有被更新，则修改数据；如果更新了，可根据不同情况执行不同操作，例如CAS算法</p>
+<p><img src="%E4%B9%90%E8%A7%82%E9%94%81%E6%82%B2%E8%A7%82%E9%94%81.png" alt=""></p>
+<p>应用场景</p>
 <ul>
-<li>拆分后业务清晰，拆分规则明确。</li>
+<li>悲观锁适合写操作多的场景</li>
+<li>乐观锁适合读操作多的场景</li>
 </ul>
-<ol start="2">
-<li>系统之间整合或扩展容易。</li>
-<li>数据维护简单。</li>
-</ol>
-<p>缺点</p>
+<h3 id="CAS算法"><a href="#CAS算法" class="headerlink" title="CAS算法"></a>CAS算法</h3><p>CAS算法涉及三个操作数</p>
 <ul>
-<li>存在单表数据量过大的问题（需要水平切分）</li>
-<li>部分业务表无法join，只能通过接口方式解决，提高了系统复杂度</li>
+<li>内存中的数据A</li>
+<li>需要更新的数据B</li>
+<li>需要比较的数据C</li>
 </ul>
-<h2 id="水平拆分"><a href="#水平拆分" class="headerlink" title="水平拆分"></a>水平拆分</h2><p>当一个应用难以再细粒度的垂直切分，或切分后数据量行数巨大，存在单库读写、存储性能瓶颈，这时候就需要进行水平切分了。<strong>水平切分分为库内分表和分库分表，是根据表内数据内在的逻辑关系，将同一个表按不同的条件分散到多个数据库或多个表中，每个表中只包含一部分数据，从而使得单个表的数据量变小，达到分布式的效果。</strong></p>
-<p>比如存放大量用户购物信息的购物表，可以按照下单时间拆分成多个表，每一个表就可以只存放少量的数据，再将这些表存在不同的数据库中，即可解决单库读写，存储性能瓶颈问题。</p>
-<p>优点</p>
+<p>CAS算法步骤：读取内存中数据A，将A与需要比较的数C比较，如果A与C相等，更新内存数据为B，否则不更新</p>
+<p>CAS算法涉及的问题</p>
 <ul>
-<li>单表大小可控</li>
-<li>便于扩展，如果要对集群扩容，只需要添加节点，无需对其他节点进行数据迁移</li>
+<li><strong>ABA问题：</strong>内存中的数先由A改为B，再由B改回A，实际上操作数已经被改变了，但只对比数据会更新数据。解决方法是可以加上版本号</li>
+<li><strong>只能保证一个共享变量的原子操作</strong></li>
+<li><strong>循环时间长开销大：</strong>CAS操作如果长时间不成功，会导致其一直自旋，给CPU带来非常大的开销。</li>
 </ul>
-<p>缺点</p>
+<h2 id="自旋锁-适应性自旋锁"><a href="#自旋锁-适应性自旋锁" class="headerlink" title="自旋锁 适应性自旋锁"></a>自旋锁 适应性自旋锁</h2><p>互斥同步对性能最大的影响是阻塞的实现，挂起线程和恢复线程都需要转入内核态完成，这些操作给系统的并发性能带来很大压力。</p>
+<p>为了让线程等待，我们可以让线程执行一个忙循环（自旋），即线程不满足条件时在while循环中等待，满足条件了再执行自己的代码。自旋等待避免了线程切换的开销，但它会占用处理器的时间。因此，如果锁被占用的时间很短，则会提高性能，如果锁占用时间很长，则自旋会白白浪费处理器资源。</p>
+<p>自适应的自旋锁，其自旋的时间不再固定，而是由前一次再同一个锁上的自旋时间及锁的拥有者的状态决定。</p>
+<h2 id="无锁-偏向锁-轻量级锁-重量级锁"><a href="#无锁-偏向锁-轻量级锁-重量级锁" class="headerlink" title="无锁 偏向锁 轻量级锁 重量级锁"></a>无锁 偏向锁 轻量级锁 重量级锁</h2><p>这四种锁是指锁的状态，专门针对synchronized的。</p>
+<h4 id="无锁"><a href="#无锁" class="headerlink" title="无锁"></a>无锁</h4><p>无锁没有对资源进行锁定，所有的线程都能访问并修改同一个资源，但同时只有一个线程能修改成功。CAS就是无锁的实现。</p>
+<h4 id="偏向锁"><a href="#偏向锁" class="headerlink" title="偏向锁"></a>偏向锁</h4><p>偏向锁是指一段同步代码一直被一个线程所访问，那么该线程会自动获取锁，降低获取锁的代价。其目标就是在只有一个线程执行同步代码块时能够提高性能。</p>
+<h4 id="轻量级锁"><a href="#轻量级锁" class="headerlink" title="轻量级锁"></a>轻量级锁</h4><p>锁是偏向锁的时候，被另外的线程所访问，偏向锁就会升级为轻量级锁，其他线程会通过自旋的形式尝试获取锁，不会阻塞，从而提高性能。</p>
+<h4 id="重量级锁"><a href="#重量级锁" class="headerlink" title="重量级锁"></a>重量级锁</h4><p>若当前只有一个等待线程，则该线程通过自旋进行等待。但是当自旋超过一定的次数，或者一个线程在持有锁，一个在自旋，又有第三个来访时，轻量级锁升级为重量级锁。</p>
+<p><img src="%E9%94%81%E7%8A%B6%E6%80%81.png" alt=""></p>
 <ul>
-<li>热点数据成为性能瓶颈。例如订单系统，近一段的订单可能会被频繁读写，而很早的历史订单则会很少读取。</li>
+<li>无锁可以利用CAS操作实现加锁</li>
+<li>偏向锁是记录线程id判断是否是一个线程访问解决加锁问题</li>
+<li>轻量级锁通过CAS和自旋解决加锁问题</li>
+<li>重量级锁是将除了拥有锁的线程以外的线程都阻塞。</li>
 </ul>
-<p>水平拆分的三种情况，以students表，db数据库为例</p>
-<ul>
-<li><p>只分表，将一个表水平拆分存储在一个数据库中</p>
-<p>例如，db中存放students1和students2两个表</p>
-</li>
-<li><p>只分库，在多个数据库中分别存放一个表</p>
-<p>例如，db1存放了一个students表，db2也存放了一个students表</p>
-</li>
-<li><p>分库分表，在多个数据库中存放多个相同的表（<strong>可以解决数据库IO瓶颈，数据库连接压力，CPU，网络，内存等等的瓶颈问题。</strong>）</p>
-<p>例如，db1存放了students1和students2两个表；db2也存放了students1和students2两个表</p>
-</li>
-</ul>
-<h2 id="主从复制读写分离"><a href="#主从复制读写分离" class="headerlink" title="主从复制读写分离"></a>主从复制读写分离</h2><p><strong>在实际的生产环境中，对数据库的读和写都在同一个数据库服务器中，很多情况下是不能满足实际需求的，通过主从复制的方式来同步数据保证数据不丢失，再通过读写分离来提升数据库的并发负载能力减轻服务器的压力</strong></p>
-<h3 id="主从复制"><a href="#主从复制" class="headerlink" title="主从复制"></a>主从复制</h3><p><img src="%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6.png" alt=""></p>
-<p>过程</p>
-<ol>
-<li>在每个事务更新数据完成之前，master在二进制日志进行记录，记录之后，master通知存储引擎提交事务。</li>
-<li>Slave将master的binary log复制到其中继日志</li>
-<li>Slave的线程从中继日志读取事件日志，然后更新slave数据，使其与master中的数据一致</li>
-</ol>
-<h3 id="读写分离"><a href="#读写分离" class="headerlink" title="读写分离"></a>读写分离</h3><p><img src="%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB.png" alt=""></p>
-<p>读写分离就是在主服务器上修改，数据会同步到从服务器，从服务器只能提供读取数据，不能写入，实现备份的同时也减轻了主服务器的压力。</p>
-<ul>
-<li>主库，提供数据库写服务</li>
-<li>从库，提供数据库读服务</li>
-</ul>
-<h2 id="分库分表比较"><a href="#分库分表比较" class="headerlink" title="分库分表比较"></a>分库分表比较</h2><p>读写分离主要解决数据库读性能瓶颈，水平拆分主要解决数据库数据量大的问题，垂直拆分是实现业务解耦</p>
-<p>数据库拆分原则</p>
-<ol>
-<li><p>优先考虑缓存降低对数据库的读操作。</p>
-</li>
-<li><p>再考虑读写分离，降低数据库写操作。</p>
-</li>
-<li><p>最后开始数据拆分,切分模式： <strong>首先垂直（纵向）拆分、再次水平拆分</strong>。</p>
-</li>
-<li><p>首先考虑按照业务垂直拆分。</p>
-</li>
-<li><p>再考虑水平拆分：先分库(设置数据路由规则，把数据分配到不同的库中)</p>
-</li>
-<li><p>最后再考虑分表，单表拆分到数据1000万以内。</p>
-</li>
-</ol>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://www.qingtingip.com/h_186509.html" target="_blank" rel="noopener">https://www.qingtingip.com/h_186509.html</a></p>
-<p><a href="https://blog.csdn.net/shiyong1949/article/details/59586773" target="_blank" rel="noopener">https://blog.csdn.net/shiyong1949/article/details/59586773</a></p>
-<p><a href="https://blog.csdn.net/worn_xiao/article/details/83963932" target="_blank" rel="noopener">https://blog.csdn.net/worn_xiao/article/details/83963932</a></p>
+<h2 id="公平锁-非公平锁"><a href="#公平锁-非公平锁" class="headerlink" title="公平锁 非公平锁"></a>公平锁 非公平锁</h2><p><strong>公平锁</strong>是指多个线程按照申请锁的顺序来获取锁，即先来先获得锁，线程直接进入队列中排队，队列中的第一个线程才能获得锁。公平锁的优点是等待锁的线程不会饿死。缺点是整体吞吐效率相对非公平锁要低，等待队列中除第一个线程以外的所有线程都会阻塞，CPU唤醒阻塞线程的开销比非公平锁大。</p>
+<p><strong>非公平锁</strong>是多个线程加锁时直接尝试获取锁，获取不到才会到等待队列的队尾等待。但如果此时锁刚好可用，那么这个线程可以无需阻塞直接获取到锁，所以非公平锁有可能出现后申请锁的线程先获取锁的场景。非公平锁的优点是可以减少唤起线程的开销，整体的吞吐效率高，因为线程有几率不阻塞直接获得锁，CPU不必唤醒所有线程。缺点是处于等待队列中的线程可能会饿死，或者等很久才会获得锁。</p>
+<h2 id="可重入锁-不可重入锁"><a href="#可重入锁-不可重入锁" class="headerlink" title="可重入锁 不可重入锁"></a>可重入锁 不可重入锁</h2><p>可重入锁又名递归锁，是指在同一个线程在外层方法获取锁的时候，再进入该线程的内层方法会自动获取锁（前提锁对象得是同一个对象或者class），不会因为之前已经获取过还没释放而阻塞。Java中ReentrantLock和synchronized都是可重入锁。</p>
+<h2 id="独享锁-共享锁"><a href="#独享锁-共享锁" class="headerlink" title="独享锁 共享锁"></a>独享锁 共享锁</h2><p>独享锁也叫排他锁，是指该锁一次只能被一个线程所持有。例如ReentrantReadWriteLock中的写锁</p>
+<p>共享锁是指该锁可被多个线程所持有。例如ReentrantReadWriteLock中的读锁</p>
 
             </div>
             <hr/>
@@ -437,12 +407,12 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
-                                    <span class="chip bg-color">数据库</span>
+                                <a href="/tags/java/">
+                                    <span class="chip bg-color">java</span>
                                 </a>
                             
-                                <a href="/tags/mysql/">
-                                    <span class="chip bg-color">mysql</span>
+                                <a href="/tags/%E5%90%8C%E6%AD%A5%E9%97%AE%E9%A2%98/">
+                                    <span class="chip bg-color">同步问题</span>
                                 </a>
                             
                         </div>
@@ -484,32 +454,35 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2019/01/12/MapReduce%E5%8E%9F%E7%90%86/">
+                <a href="/2020/02/04/java%E5%85%B3%E9%94%AE%E5%AD%97/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="MapReduce原理">
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="Java关键字">
                         
-                        <span class="card-title">MapReduce原理</span>
+                        <span class="card-title">Java关键字</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            MapReduce介绍Hadoop Map/Reduce是一个使用简易的软件框架，基于它写出来的应用程序能够运行在由上千个商用机器组成的大型集群上，并以一种可靠容错的方式并行处理上T级别的数据集。
-一个Map/Reduce 作业（job） 
+                            finalfinal可以修饰类，方法和变量（局部变量和成员变量）
+
+当用final修饰一个类时，表明这个类不能被继承。
+当用final修饰一个方法时，子类无法覆盖该方法
+对于一个final变量，如果是基本数据类型的变量，则其数值一旦在初始化
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2019-01-12
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-02-04
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Hadoop/" class="post-category">
-                                    Hadoop
+                            <a href="/categories/java/" class="post-category">
+                                    java
                                 </a>
                             
                             
@@ -519,12 +492,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Hadoop/">
-                        <span class="chip bg-color">Hadoop</span>
-                    </a>
-                    
-                    <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/">
-                        <span class="chip bg-color">大数据</span>
+                    <a href="/tags/java/">
+                        <span class="chip bg-color">java</span>
                     </a>
                     
                 </div>
@@ -538,32 +507,32 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/01/05/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95/">
+                <a href="/2020/02/04/java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="数据库索引">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="Java内存模型">
                         
-                        <span class="card-title">数据库索引</span>
+                        <span class="card-title">Java内存模型</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            索引索引的目的在于提高查询效率，可以类比字典，如果要查“mysql”这个单词，我们肯定需要定位到m字母，然后从下往下找到y字母，再找到剩下的sql。而如果没有索引，那么可能需要把所有单词看一遍才能找到，这个过程是非常耗费时间的。
-聚集索引与
+                            Java内存模型Java内存模型（JMM）是Java虚拟机定义的，试图屏蔽掉各种硬件和操作系统的内存访问差异，以实现让Java程序在各平台下都能达到一致的内存访问效果。
+主内存与工作内存Java内存模型的主要目标是定义程序中各个变量的访问规
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-01-05
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-02-04
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
-                                    数据库
+                            <a href="/categories/java/" class="post-category">
+                                    java
                                 </a>
                             
                             
@@ -573,12 +542,12 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
-                        <span class="chip bg-color">数据库</span>
+                    <a href="/tags/java/">
+                        <span class="chip bg-color">java</span>
                     </a>
                     
-                    <a href="/tags/mysql/">
-                        <span class="chip bg-color">mysql</span>
+                    <a href="/tags/jvm/">
+                        <span class="chip bg-color">jvm</span>
                     </a>
                     
                 </div>
@@ -716,6 +685,13 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
 
 </main>
 
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
 
 
     <footer class="page-footer bg-color">

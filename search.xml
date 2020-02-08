@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>Hbase模式设计</title>
+      <link href="/2020/02/08/Hbase%E6%A8%A1%E5%BC%8F%E8%AE%BE%E8%AE%A1/"/>
+      <url>/2020/02/08/Hbase%E6%A8%A1%E5%BC%8F%E8%AE%BE%E8%AE%A1/</url>
+      
+        <content type="html"><![CDATA[<hr><p>title Hbase模式设计<br>date 2019-1-19 92500<br>author 成<br>mathjax true<br>categories HBase<br>tags</p><ul><li>HBase</li><li>大数据</li></ul><hr><h2 id="模式设计"><a href="#模式设计" class="headerlink" title="模式设计"></a>模式设计</h2><p>行键在HBase中充当表的一级索引，而且HBase本身没有提供二级索引机制，因此对行键的设计优化对实时查询尤为重要。</p><p>HBase系统架构通过写内存，排序，顺序写磁盘提高写性能，但是以牺牲读性能为代价，因为内存中的数据最终会刷为StoreFile，有很多个StoreFile来存储数据，读取数据时可能需要读取多个StoreFile来查找所需要的数据。</p><h3 id="行键设计"><a href="#行键设计" class="headerlink" title="行键设计"></a>行键设计</h3><p>HBase数据按照行键字典序自然排序，这对扫描操作是一个优化。行键也是HBase最有效的索引，且不支持二级索引。HBase行键设计的原则：</p><ul><li><strong>唯一原则</strong>：行键对应关系型数据库的唯一键（主键），系统设计之处必须考虑有足够的唯一行键去支持业务的数据量</li><li><strong>长度原则</strong>：长度适中，建议使用定长，方便从行键提取所需数据，而无需查询出数据内容以节省网络开销</li><li><strong>散列原则</strong>：避免递增，否则读写负载均衡会集中在某个热点分区，降低性能，甚至引起分区服务器过载而宕机</li></ul><h3 id="规避热点区间"><a href="#规避热点区间" class="headerlink" title="规避热点区间"></a>规避热点区间</h3><p>生产环境下用户ID的生成规则通常是一个递增的数字（用户系统一般基于关系型数据库，用户ID一般MySql等数据库提供的自增主键）。因此会出现一些热点问题：</p><ul><li>新注册的用户一般比较活跃，而新注册的用户根据用户ID分区会分到一个分区上，当新用户产生比较多的日志数据时，分区服务器会承受较大的读写压力。</li></ul><p>再例如订单系统使用时间戳作为分区依据，则旧订单可能会很少访问，而新订单的访问会很多，则新订单服务器会有很大的读写压力。</p><p>下面是两种常见的避免热点区间的方法</p><ul><li><strong>加盐</strong>：在行键前面加上随机数字或者字母，使得数据随机分配到不同的分区。而这种方法的缺点就是，当插入数据再读取数据时，需要在插入时保存一个原始业务行键与添加的随机数的映射关系，或者使用某种散列函数计算原始业务行键的散列值，然后将该散列值的随机数作为行键的前缀。使用这种行键设计的应用通常只是用来做一些分析统计，因此一般实时在线系统不建议使用该行键设计方式</li><li><strong>反转补齐</strong>：将用户ID反转（如123装为321）可以将变化最多的部分放在行键前面，这样的数据的写入也能够顺序地流入各个分区而使得集群负载比较均衡。反转补齐是避免热点区间常用的方法。因为用户ID一般都使用关系型数据库的自增主键，长度一般为20个数字，所以为了使得行键保持定长以方便排序以及可以从行键反推出用户ID，通常会将用户ID反转后在末尾加0补齐20个数字。如果使用时间戳作为行键的一部分，则可以使用“Long.MAX_VALUE-时间戳”，这样最新时间戳的数据行键值较小，数据行能够排在数据存储前列。</li></ul><h3 id="高表与宽表"><a href="#高表与宽表" class="headerlink" title="高表与宽表"></a>高表与宽表</h3><table><thead><tr><th></th><th>高表</th><th>宽表</th></tr></thead><tbody><tr><td>定义</td><td>数据每行包含的列比较少而行比较多的表</td><td>数据每行包含的列比较多而行比较少的表</td></tr><tr><td>查询性能对比</td><td>√</td><td></td></tr><tr><td>负载均衡对比</td><td>√</td><td></td></tr><tr><td>元数据对比</td><td></td><td>√</td></tr><tr><td>事务支持对比</td><td></td><td>√</td></tr></tbody></table><ul><li>查询性能：由于行键是HBase最有效的索引，而高表行比较多，行键比较多，过滤效果更好，并且每行数据更少，因此读取每个数据块可以包含更多的行，并且块缓存或者堆外缓存也可以缓存更多的行</li><li>负载均衡：HBase分区由行键区间决定，更多行可以使得区间粒度更细，分区大小更合适，负载更均衡</li><li>元数据：高表分区更多会导致元数据更多，HBase元数据表更大，可能会给HBase集群主节点HMaster与HBase客户端带来更大压力</li><li>事务支持：HBase只支持行级事务，因此对宽表的一行数据变更操作能够提供事务保证，而高表对多行数据变更无事务支持</li></ul>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Java内存模型</title>
       <link href="/2020/02/04/java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/"/>
       <url>/2020/02/04/java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/</url>
@@ -162,6 +175,33 @@
     
     
     <entry>
+      <title>HDFS简介</title>
+      <link href="/2019/01/19/HDFS%E7%AE%80%E4%BB%8B/"/>
+      <url>/2019/01/19/HDFS%E7%AE%80%E4%BB%8B/</url>
+      
+        <content type="html"><![CDATA[<h2 id="HDFS简介"><a href="#HDFS简介" class="headerlink" title="HDFS简介"></a>HDFS简介</h2><h3 id="数据块"><a href="#数据块" class="headerlink" title="数据块"></a>数据块</h3><p>HDFS上的文件被划分为块大小的多个分块，作为独立的存储单元，默认大小128M，并且不到一个块大小的文件不会占用多余的空间，比如10M的文件，只会占用10M的大小，而且一个块的大小。</p><p>分布式文件系统抽象为块有如下好处</p><ul><li>一个文件的大小可以大于网络上任意一个磁盘的容量，文件可以不存放在一个磁盘上</li><li>简化了存储子系统的设计，例如可以简化管理</li><li>适合用于数据备份进而提供数据容错能力和提高可用性</li></ul><h3 id="namenode和datanode"><a href="#namenode和datanode" class="headerlink" title="namenode和datanode"></a>namenode和datanode</h3><p>HDFS集群有两类节点以管理节点-工作节点模式运行，即一个namenode和多个datanode。</p><h4 id="namenode"><a href="#namenode" class="headerlink" title="namenode"></a>namenode</h4><ul><li>namenode管理文件系统的命名空间，它维护着文件系统树及整棵树内所有的文件和目录。这些信息以命名空间镜像文件和编辑日志文件两个文件形式永久保存在本地磁盘上。</li><li>namenode在内存中保存文件系统中每个文件和每个数据块的引用关系。</li><li>namenode负责管理文件系统的名字空间以及客户端对文件的访问</li><li>namenode全权管理数据块的复制，它周期性得从集群中每个Datanode接收心跳信号（存活的象征）和块状态报告（节点上所有数据块的列表）。</li><li>跟文件内容相关的数据流不经过namenode，只会询问它跟哪个datanode联系</li><li>目录作为元数据保存在namenode中</li></ul><h5 id="datanode"><a href="#datanode" class="headerlink" title="datanode"></a>datanode</h5><ul><li>datanode是文件系统的工作结点。它们根据需要存储并检索数据块，并定期向namenode发送它们所存储的块的列表。</li><li>datanode启动后向namenode注册，通过后，定期向NameNode上报信息</li><li>心跳是每秒3次，心跳返回结果会带有复制数据，删除数据等命令。如果超过10分钟没有收到某个datanode的心跳，则认为该节点不可用</li></ul><h5 id="数据损坏的处理"><a href="#数据损坏的处理" class="headerlink" title="数据损坏的处理"></a>数据损坏的处理</h5><ol><li>当datanode读取block时，会计算checksum</li><li>如果计算的checksum与block创建时值不一样，说明block已坏，Client读取其他datanode上的block</li><li>namenode标记该块已经损坏，然后复制block达到预期设置的文件备份数</li><li>datanode在其文件创建三周后验证其checksum</li></ol><h3 id="namenode的容错与高可用"><a href="#namenode的容错与高可用" class="headerlink" title="namenode的容错与高可用"></a>namenode的容错与高可用</h3><p>当namenode服务器毁坏，文件系统上所有的文件会丢失，因此对namenode的容错很重要</p><ul><li>备份组成文件系统元数据持久状态的文件，使namenode在多个文件系统上保存元数据的持久状态</li><li>运行一个辅助namenode，可以定期合并编辑日志和命名空间镜像文件，并且会在namenode发生故障时启用。</li><li>活动-备用namenode，当活动namenode失效，备用namenode会接管它的任务并开始接收客户端的请求，不会有明显中断（实现namenode的高可用）<ul><li>namenode之间需要通过高可用共享存储实现编辑日志的共享。当备用namenode接管工作之后，可以通读共享编辑日志直至末尾，以实现活动namenode的状态同步</li><li>datanode需要同时向两个namenode发送数据块处理报告，数据块的映射信息存储在namenode的内存中</li><li>辅助namenode的角色被备用namenode所包含，备用namenode为活动的namenode命名空间设置周期性检查点</li></ul></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> Hadoop </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Hadoop </tag>
+            
+            <tag> 大数据 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>排序算法</title>
       <link href="/2019/01/16/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/"/>
       <url>/2019/01/16/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</url>
@@ -203,9 +243,9 @@
       
         <tags>
             
-            <tag> HBase </tag>
-            
             <tag> 大数据 </tag>
+            
+            <tag> HBase </tag>
             
         </tags>
       
@@ -311,9 +351,9 @@
       
         <tags>
             
-            <tag> 大数据 </tag>
-            
             <tag> Hadoop </tag>
+            
+            <tag> 大数据 </tag>
             
         </tags>
       

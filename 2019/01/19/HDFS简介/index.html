@@ -4,9 +4,11 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="MapReduce原理, 成">
-    <meta name="description" content="MapReduce介绍Hadoop Map/Reduce是一个使用简易的软件框架，基于它写出来的应用程序能够运行在由上千个商用机器组成的大型集群上，并以一种可靠容错的方式并行处理上T级别的数据集。
-一个Map/Reduce 作业（job） ">
+    <meta name="keywords" content="HDFS简介, 成">
+    <meta name="description" content="HDFS简介数据块HDFS上的文件被划分为块大小的多个分块，作为独立的存储单元，默认大小128M，并且不到一个块大小的文件不会占用多余的空间，比如10M的文件，只会占用10M的大小，而且一个块的大小。
+分布式文件系统抽象为块有如下好处
+
+一">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -14,7 +16,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>MapReduce原理 | 成</title>
+    <title>HDFS简介 | 成</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -175,12 +177,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">MapReduce原理</h1>
+                    <h1 class="description center-align post-title">HDFS简介</h1>
                 </div>
             </div>
         </div>
@@ -326,7 +328,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-01-12
+                    2019-01-19
                 </div>
                 
 
@@ -335,7 +337,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.1k
+                    890
                 </div>
                 
 
@@ -353,99 +355,44 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="MapReduce介绍"><a href="#MapReduce介绍" class="headerlink" title="MapReduce介绍"></a>MapReduce介绍</h2><p>Hadoop Map/Reduce是一个使用简易的软件框架，基于它写出来的应用程序能够运行在由上千个商用机器组成的大型集群上，并以一种可靠容错的方式并行处理上T级别的数据集。</p>
-<p>一个Map/Reduce <em>作业（job）</em> 通常会把输入的数据集切分为若干独立的数据块，由 <em>map任务（task）</em>以完全并行的方式处理它们。框架会对map的输出先进行排序， 然后把结果输入给<em>reduce任务</em>。通常作业的输入和输出都会被存储在文件系统中。 整个框架负责任务的调度和监控，以及重新执行已经失败的任务。</p>
-<h2 id="MapReduce原理"><a href="#MapReduce原理" class="headerlink" title="MapReduce原理"></a>MapReduce原理</h2><p>MapReduce通常由三个操作组成</p>
+                <h2 id="HDFS简介"><a href="#HDFS简介" class="headerlink" title="HDFS简介"></a>HDFS简介</h2><h3 id="数据块"><a href="#数据块" class="headerlink" title="数据块"></a>数据块</h3><p>HDFS上的文件被划分为块大小的多个分块，作为独立的存储单元，默认大小128M，并且不到一个块大小的文件不会占用多余的空间，比如10M的文件，只会占用10M的大小，而且一个块的大小。</p>
+<p>分布式文件系统抽象为块有如下好处</p>
 <ul>
-<li>map操作：map操作是一类将输入记录集转换为中间格式记录集的独立任务，其应用于本地数据。</li>
-<li>shuffle操作：工作节点根据输出键（由 map 函数生成）重新分配数据，对数据映射排序、分组、拷贝，目的是属于一个键的所有数据都位于同一个工作节点上。</li>
-<li>reduce操作：Reduce操作将与一个key关联的一组中间数值集归约（reduce）为一个更小的数值集。</li>
+<li>一个文件的大小可以大于网络上任意一个磁盘的容量，文件可以不存放在一个磁盘上</li>
+<li>简化了存储子系统的设计，例如可以简化管理</li>
+<li>适合用于数据备份进而提供数据容错能力和提高可用性</li>
 </ul>
-<p><img src="MapReduce%E6%B5%81%E7%A8%8B.png" alt=""></p>
-<p>其中map阶段与reduce阶段之间的关系如下，而shuffle阶段就是将map输出的键相同的值汇聚在一起以供reduce处理</p>
-<p><img src="Map%E4%B8%8EReduce%E7%9A%84%E5%85%B3%E7%B3%BB.png" alt=""></p>
-<h3 id="Map阶段"><a href="#Map阶段" class="headerlink" title="Map阶段"></a>Map阶段</h3><p> Map在输入的数据中获取一个键值对，然后返回一个键值对的列表：</p>
-<pre class=" language-java"><code class="language-java"><span class="token function">Map</span><span class="token punctuation">(</span>k1<span class="token punctuation">,</span>v1<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token function">list</span><span class="token punctuation">(</span>k2<span class="token punctuation">,</span>v2<span class="token punctuation">)</span></code></pre>
-<p>Map函数会被并行调用，应用于输入数据集中的每个键值对（keyed by K1），然后每个调用返回一个键值对（keyed by K2）列表。</p>
-<p>以计算词频为例，Map阶段如下</p>
-<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
- * 继承的Mapper类中
- *    第一个参数：LongWritable是输入的键，此处表示一行的起始偏移量
- *    第二个参数：Text是输入的值，此处表示一行的文本内容
- *    第三个参数：Text是输出的键，此处表示每一个单词
- *    第四个参数：IntWritable是输出的值，此处表示每个单词的数量都是1(不管重复不重复)
- */</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">WordCountMapper</span> <span class="token keyword">extends</span> <span class="token class-name">Mapper</span><span class="token operator">&lt;</span>LongWritable<span class="token punctuation">,</span> Text<span class="token punctuation">,</span> Text<span class="token punctuation">,</span> IntWritable<span class="token operator">></span><span class="token punctuation">{</span>
-
-    <span class="token comment" spellcheck="true">/*
-     * map方法是提供给map task进程来调用的，map task进程是每读取一行文本来调用一次自定义的map方法
-     * map task在调用map方法时，传递的参数：
-     *         一行的起始偏移量LongWritable作为key
-     *         一行的文本内容Text作为value
-     */</span>
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">map</span><span class="token punctuation">(</span>LongWritable key<span class="token punctuation">,</span> Text value<span class="token punctuation">,</span>Context context<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException<span class="token punctuation">,</span> InterruptedException <span class="token punctuation">{</span>
-        <span class="token comment" spellcheck="true">//拿到一行文本内容，转换成String 类型</span>
-        String line <span class="token operator">=</span> value<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment" spellcheck="true">//将这行文本切分成单词</span>
-        String<span class="token punctuation">[</span><span class="token punctuation">]</span> words<span class="token operator">=</span>line<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        <span class="token comment" spellcheck="true">//输出&lt;单词，1></span>
-        <span class="token keyword">for</span><span class="token punctuation">(</span>String word<span class="token operator">:</span>words<span class="token punctuation">)</span><span class="token punctuation">{</span>
-            context<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Text</span><span class="token punctuation">(</span>word<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">IntWritable</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
-<h3 id="Shuffle阶段"><a href="#Shuffle阶段" class="headerlink" title="Shuffle阶段"></a>Shuffle阶段</h3><p>shuffle阶段是承接map和reduce，其也可以分为map shuffle和reduce shuffle</p>
-<h4 id="map-shuffle"><a href="#map-shuffle" class="headerlink" title="map shuffle"></a>map shuffle</h4><p>在Map端的shuffle过程是对Map的结果进行分区、排序、分割，然后将属于同一划分（分区）的输出合并在一起并写在磁盘上，最终得到一个分区有序的文件，分区有序的含义是map输出的键值对按分区进行排列，具有相同partition值的键值对存储在一起，每个分区里面的键值对又按key值进行升序排列（默认），其流程大致如下：<br><img src="MapShuffle.png" alt=""></p>
-<h5 id="partition"><a href="#partition" class="headerlink" title="partition"></a>partition</h5><p>对于map输出的每一键值对，系统会定一个partition，partition值默认是通过计算key的hash值后对Reduce task的数量取模获得。</p>
-<p>默认情况下只能每一个partition是有序的，但是将所有Reduce的输出合并在一起并非是全局有序的。如果想要做到全局有序，可以只定义一个reduce task，或者自定义Partitioner将数据按序分到每一个分区上。而自定义需要注意数据的倾斜(不能将大量数据放在一个分区)，还要保证同一个键的数据分到一个分区上。</p>
-<h5 id="collector"><a href="#collector" class="headerlink" title="collector"></a>collector</h5><p>Map的输出结果是由collector处理，每Map任务不断得将键值对输出到内存中构造的一个环形数据结构中。这个数据结构其实就是字节数组，叫kvbuffer，同时存放数据和数据的索引。</p>
-<p>当kvbuffer使用到一定程度时，则触发spill。默认的spill门限为0.8，即空间使用了80%的时候，这样可以使Map的输出进程和spill进程并发进行</p>
-<h5 id="sort"><a href="#sort" class="headerlink" title="sort"></a>sort</h5><p>当spill触发后，会先将kvbuffer中的数据按照partition值和key两个关键字升序排序，只移动数据的索引，排序结果是将索引数据按照partition为单位聚集在一起，同一个partition中按照key有序</p>
-<h5 id="spill"><a href="#spill" class="headerlink" title="spill"></a>spill</h5><p>spill的过程就是将数据写入到本地的过程，Spill线程根据排过序的Kvmeta挨个partition的把数据吐到这个文件中。</p>
-<p>在这个过程中如果用户配置了combiner类，那么在写之前会先调用combineAndSpill()，对结果进行进一步合并后再写出。Combiner会优化MapReduce的中间结果，Combiner的输出是Reducer的输入，Combiner绝不能改变最终的计算结果。一般combiner类指定为Reduce，因此combiner适合用于Reduce的输入key/value与输出key/value类型完全一致，且不影响最终结果的场景。</p>
-<h5 id="merge"><a href="#merge" class="headerlink" title="merge"></a>merge</h5><p>Map任务如果输出数据量很大，可能会进行好几次Spill，输出的文件会产生很多，分布在不同的磁盘上。merge过程就是将这些文件合并成一个大文件。</p>
-<h4 id="reduce-shuffle"><a href="#reduce-shuffle" class="headerlink" title="reduce shuffle"></a>reduce shuffle</h4><p>在Reduce端，shuffle主要分为复制Map输出、排序合并两个阶段。</p>
-<h5 id="copy"><a href="#copy" class="headerlink" title="copy"></a>copy</h5><p>Reduce任务通过HTTP向各个Map任务拖取它所需要的数据。Map任务成功完成后，会通知父TaskTracker状态已经更新，TaskTracker进而通知JobTracker（这些通知在心跳机制中进行）。所以，对于指定作业来说，JobTracker能记录Map输出和TaskTracker的映射关系。Reduce会定期向JobTracker获取Map的输出位置，一旦拿到输出位置，Reduce任务就会从此输出对应的TaskTracker上复制输出到本地，而不会等到所有的Map任务结束。</p>
-<h5 id="merge-sort"><a href="#merge-sort" class="headerlink" title="merge sort"></a>merge sort</h5><p>Copy过来的数据会先放入内存缓冲区中，如果内存缓冲区中能放得下这次数据的话就直接把数据写到内存中，即<strong>内存到内存merge</strong>。Reduce要向每个Map去拖取数据，在内存中每个Map对应一块数据，当内存缓存区中存储的Map数据占用空间达到一定程度的时候，开始启动内存中merge，把内存中的数据merge输出到磁盘上一个文件中，即<strong>内存到磁盘merge</strong>。</p>
-<h3 id="Reduce阶段"><a href="#Reduce阶段" class="headerlink" title="Reduce阶段"></a>Reduce阶段</h3><p>Reduce 是对一个列表的元素进行适当的合并，将map阶段的键值对处理成我们想要的结果</p>
-<pre class=" language-java"><code class="language-java"><span class="token function">Reduce</span><span class="token punctuation">(</span>k2<span class="token punctuation">,</span> <span class="token function">list</span> <span class="token punctuation">(</span>v2<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token function">list</span><span class="token punctuation">(</span>v3<span class="token punctuation">)</span></code></pre>
-<p>以计算词频为例，Reduce阶段如下</p>
-<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
- * 继承的Reducer类中
- *    第一个参数：Text是输入的键,和Map阶段的输出键一样，此处表示每个单词
- *    第二个参数：IntWritable是输入的值，和Map阶段的输出值一样，此处表示每个单词的数量是1
- *    第三个参数：Text是输出的键，此处表示不重复的单词
- *    第四个参数：IntWritable是输出的值，此处表示每个单词的数量（不重复）
- */</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">WordCountReducer</span> <span class="token keyword">extends</span> <span class="token class-name">Reducer</span><span class="token operator">&lt;</span>Text<span class="token punctuation">,</span> IntWritable<span class="token punctuation">,</span> Text<span class="token punctuation">,</span> IntWritable<span class="token operator">></span><span class="token punctuation">{</span>
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token comment" spellcheck="true">/*
-     * reduce方法提供给reduce task进程来调用
-     * 
-     * reduce task会将shuffle阶段分发过来的大量kv数据对进行聚合，聚合的机制是相同key的kv对聚合为一组
-     * 然后reduce task对每一组聚合kv调用一次我们自定义的reduce方法
-     * 比如：&lt;hello,1>&lt;hello,1>&lt;hello,1>&lt;tom,1>&lt;tom,1>&lt;tom,1>
-     *  hello组会调用一次reduce方法进行处理，tom组也会调用一次reduce方法进行处理
-     *  调用时传递的参数：
-     *          key：一组kv中的key
-     *          values：一组kv中所有value的迭代器
-     */</span>
-    <span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">reduce</span><span class="token punctuation">(</span>Text key<span class="token punctuation">,</span> Iterable<span class="token operator">&lt;</span>IntWritable<span class="token operator">></span> values<span class="token punctuation">,</span>Context context<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException<span class="token punctuation">,</span> InterruptedException <span class="token punctuation">{</span>
-        <span class="token comment" spellcheck="true">//定义一个计数器</span>
-        <span class="token keyword">int</span> count <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-        <span class="token comment" spellcheck="true">//通过value这个迭代器，遍历这一组kv中所有的value，进行累加</span>
-        <span class="token keyword">for</span><span class="token punctuation">(</span>IntWritable value<span class="token operator">:</span>values<span class="token punctuation">)</span><span class="token punctuation">{</span>
-            count<span class="token operator">+=</span>value<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-
-        <span class="token comment" spellcheck="true">//输出这个单词的统计结果</span>
-        context<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">IntWritable</span><span class="token punctuation">(</span>count<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://juejin.im/post/5bb59f87f265da0aeb7118f2" target="_blank" rel="noopener">https://juejin.im/post/5bb59f87f265da0aeb7118f2</a></p>
-<p><a href="https://hadoop.apache.org/docs/r1.0.4/cn/mapred_tutorial.html" target="_blank" rel="noopener">https://hadoop.apache.org/docs/r1.0.4/cn/mapred_tutorial.html</a></p>
+<h3 id="namenode和datanode"><a href="#namenode和datanode" class="headerlink" title="namenode和datanode"></a>namenode和datanode</h3><p>HDFS集群有两类节点以管理节点-工作节点模式运行，即一个namenode和多个datanode。</p>
+<h4 id="namenode"><a href="#namenode" class="headerlink" title="namenode"></a>namenode</h4><ul>
+<li>namenode管理文件系统的命名空间，它维护着文件系统树及整棵树内所有的文件和目录。这些信息以命名空间镜像文件和编辑日志文件两个文件形式永久保存在本地磁盘上。</li>
+<li>namenode在内存中保存文件系统中每个文件和每个数据块的引用关系。</li>
+<li>namenode负责管理文件系统的名字空间以及客户端对文件的访问</li>
+<li>namenode全权管理数据块的复制，它周期性得从集群中每个Datanode接收心跳信号（存活的象征）和块状态报告（节点上所有数据块的列表）。</li>
+<li>跟文件内容相关的数据流不经过namenode，只会询问它跟哪个datanode联系</li>
+<li>目录作为元数据保存在namenode中</li>
+</ul>
+<h5 id="datanode"><a href="#datanode" class="headerlink" title="datanode"></a>datanode</h5><ul>
+<li>datanode是文件系统的工作结点。它们根据需要存储并检索数据块，并定期向namenode发送它们所存储的块的列表。</li>
+<li>datanode启动后向namenode注册，通过后，定期向NameNode上报信息</li>
+<li>心跳是每秒3次，心跳返回结果会带有复制数据，删除数据等命令。如果超过10分钟没有收到某个datanode的心跳，则认为该节点不可用</li>
+</ul>
+<h5 id="数据损坏的处理"><a href="#数据损坏的处理" class="headerlink" title="数据损坏的处理"></a>数据损坏的处理</h5><ol>
+<li>当datanode读取block时，会计算checksum</li>
+<li>如果计算的checksum与block创建时值不一样，说明block已坏，Client读取其他datanode上的block</li>
+<li>namenode标记该块已经损坏，然后复制block达到预期设置的文件备份数</li>
+<li>datanode在其文件创建三周后验证其checksum</li>
+</ol>
+<h3 id="namenode的容错与高可用"><a href="#namenode的容错与高可用" class="headerlink" title="namenode的容错与高可用"></a>namenode的容错与高可用</h3><p>当namenode服务器毁坏，文件系统上所有的文件会丢失，因此对namenode的容错很重要</p>
+<ul>
+<li>备份组成文件系统元数据持久状态的文件，使namenode在多个文件系统上保存元数据的持久状态</li>
+<li>运行一个辅助namenode，可以定期合并编辑日志和命名空间镜像文件，并且会在namenode发生故障时启用。</li>
+<li>活动-备用namenode，当活动namenode失效，备用namenode会接管它的任务并开始接收客户端的请求，不会有明显中断（实现namenode的高可用）<ul>
+<li>namenode之间需要通过高可用共享存储实现编辑日志的共享。当备用namenode接管工作之后，可以通读共享编辑日志直至末尾，以实现活动namenode的状态同步</li>
+<li>datanode需要同时向两个namenode发送数据块处理报告，数据块的映射信息存储在namenode的内存中</li>
+<li>辅助namenode的角色被备用namenode所包含，备用namenode为活动的namenode命名空间设置周期性检查点</li>
+</ul>
+</li>
+</ul>
 
             </div>
             <hr/>
@@ -506,31 +453,39 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2019/01/12/HashMap%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/">
+                <a href="/2019/12/30/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="HashMap源码阅读">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="计算机组成原理">
                         
-                        <span class="card-title">HashMap源码阅读</span>
+                        <span class="card-title">计算机组成原理</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            HashMap简介Hashmap存储键值对，其根据键的hashCode值存储数据，大多数情况下可以直接定位到它的值，因而具有很快的访问速度，遍历顺序与插入顺序不一致。 HashMap最多只允许一条记录的键为null，允许多条记录的值为nul
+                            一. 计算机系统概述计算机性能指标硬件性能参数
+
+计算机字长：CPU字长，指CPU一次能处理数据的二进制位数
+机器主频：时钟脉冲的频率
+主存容量：计算机能够存放的最大的二进制位数bit，B，KB，MB
+
+计算机性能指标
+
+响应时间：计算机完
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2019-01-12
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-12-30
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/java/" class="post-category">
-                                    java
+                            <a href="/categories/%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/" class="post-category">
+                                    期末复习
                                 </a>
                             
                             
@@ -540,12 +495,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/java/">
-                        <span class="chip bg-color">java</span>
-                    </a>
-                    
-                    <a href="/tags/%E9%9B%86%E5%90%88/">
-                        <span class="chip bg-color">集合</span>
+                    <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">
+                        <span class="chip bg-color">计算机组成原理</span>
                     </a>
                     
                 </div>
@@ -559,32 +510,34 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/01/11/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%88%86%E5%BA%93%E5%88%86%E8%A1%A8/">
+                <a href="/2019/01/16/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="数据库分库分表">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="排序算法">
                         
-                        <span class="card-title">数据库分库分表</span>
+                        <span class="card-title">排序算法</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            垂直拆分垂直拆分是将一个包含了很多表的数据库,根据表的功能的不同,拆分为多个小的数据库,每个库中包含部分表。
-比如大型的电商项目平台是由不同的子项目模块构成的如订单系统，账户系统，商品管理系统等等，这些个独立的模块都可以拆分成独立的服务与独
+                            选择排序时间复杂度：$O(n^2)$
+方法：依次找到数组中第一小，第二小，第三小…的数，并放置在对应的位置上
+每次排序后的结果：每次将未排序的数中的最小值排到正确的位置上
+public int[] selectionSort(int[] n
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-01-11
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-01-16
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
-                                    数据库
+                            <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
+                                    算法
                                 </a>
                             
                             
@@ -594,12 +547,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
-                        <span class="chip bg-color">数据库</span>
-                    </a>
-                    
-                    <a href="/tags/mysql/">
-                        <span class="chip bg-color">mysql</span>
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
                     </a>
                     
                 </div>

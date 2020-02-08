@@ -339,14 +339,8 @@
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                    
-title Hbase模式设计date 2019-1-19 92500author 成mathjax truecategories HBasetags
-
-HBase
-大数据
-
-
-模式设计行键在HBase中充当表的一级索引，而且HBase本
+                                    模式设计行键在HBase中充当表的一级索引，而且HBase本身没有提供二级索引机制，因此对行键的设计优化对实时查询尤为重要。
+HBase系统架构通过写内存，排序，顺序写磁盘提高写性能，但是以牺牲读性能为代价，因为内存中的数据最终会刷为Sto
                                 
                             </div>
                             <div class="publish-info">
@@ -355,13 +349,25 @@ HBase
                                 </span>
                                 <span class="publish-author">
                                     
-                                    <i class="fas fa-user fa-fw"></i>
-                                    yzc
+                                    <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                    
+                                    <a href="/categories/HBase/" class="post-category">
+                                    HBase
+                                    </a>
+                                    
                                     
                                 </span>
                             </div>
                         </div>
 
+                        
+                        <div class="card-action article-tags">
+                            
+                            <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"><span class="chip bg-color">大数据</span></a>
+                            
+                            <a href="/tags/HBase/"><span class="chip bg-color">HBase</span></a>
+                            
+                        </div>
                         
                     </div>
                 </div>

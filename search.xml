@@ -189,6 +189,33 @@
     
     
     <entry>
+      <title>Hbase Shell</title>
+      <link href="/2019/02/03/Hbase%20Shell/"/>
+      <url>/2019/02/03/Hbase%20Shell/</url>
+      
+        <content type="html"><![CDATA[<h2 id="Hbase-Shell"><a href="#Hbase-Shell" class="headerlink" title="Hbase Shell"></a>Hbase Shell</h2><p>HBase提供了一个非常方便的命令行交互工具HBase Shell。</p><p>以下表（s_behavior）为例</p><p><img src="%E8%A1%A8.png" alt=""></p><h3 id="数据定义语言"><a href="#数据定义语言" class="headerlink" title="数据定义语言"></a>数据定义语言</h3><p>数据定义语言（Data Definition Language，DDL），包括数据库表的创建，修改等语句。</p><h4 id="创建表"><a href="#创建表" class="headerlink" title="创建表"></a>创建表</h4><pre class=" language-mysql"><code class="language-mysql">create <table>, <NAME => 列族>create 's_behavior', {NAME => 'pc'},{NAME => 'ph'}</code></pre><h4 id="查看所有表"><a href="#查看所有表" class="headerlink" title="查看所有表"></a>查看所有表</h4><pre class=" language-mysql"><code class="language-mysql">list</code></pre><h4 id="查看建表"><a href="#查看建表" class="headerlink" title="查看建表"></a>查看建表</h4><pre class=" language-mysql"><code class="language-mysql">describe 's_behavior'</code></pre><p>表的属性解释</p><ul><li>DATA_BLOCK_ENCODING：数据块编码。用类似于压缩算法的编码形式来节省存储空间。</li><li>BLOOMFILTER：布隆过滤器。数据查询Scan操作的时候用来排除待扫描的StoreFile文件。</li><li>REPLICATION_SCOPE：集群间数据赋值开关。1表示开启赋值。</li><li>VERSIONS：HBase对表的数据行可以保留多个数据版本，以时间戳来区分。</li><li>COMPRESSION：压缩方式。HBase提供多种压缩方式用来在数据存储到磁盘之前压缩以减少存储空间。</li><li>TTL：  数据的有效时长，超过TTL的数据在主压缩时会被删除。</li><li>KEEP_DELETED_CELLS：保留了删除的数据，当主压缩后删除的数据才会被清理，如果开启集群间复制，则必须为true，否则会导致数据复制失败</li><li>BLOCKSIZE：HBase读取数据的最小单元，默认为64KB。</li></ul><h4 id="修改表"><a href="#修改表" class="headerlink" title="修改表"></a>修改表</h4><p>修改表需要先将表下线，然后执行修改命令，再上线</p><pre class=" language-mysql"><code class="language-mysql">disable 's_behavior' #下线alter 's_behavior', {NAME => "cf", REPLICATION_SCOPE => "1", KEEP_DELETED_CELLS => "TRUE"} #改变表enable 's_behavior' #上线</code></pre><h3 id="数据操作语言"><a href="#数据操作语言" class="headerlink" title="数据操作语言"></a>数据操作语言</h3><p>数据操作语言（Data Manipulation Language，DML），包括数据的修改，查询，删除等语句。</p><h3 id="PUT"><a href="#PUT" class="headerlink" title="PUT"></a>PUT</h3><p>put命令用来插入一行数据到HBase表</p><pre class=" language-mysql"><code class="language-mysql">put <table>, <rowkey>, <列族:列标识符>, <值>#插入pc值put 's_behavior', '12345_151692489001_1', 'pc:v', '1001'#插入ph值put 's_behavior', '12345_151692489001_1', 'ph:o', '1001'</code></pre><h3 id="GET"><a href="#GET" class="headerlink" title="GET"></a>GET</h3><p>get命令用来根据行键获取HBase表的一条记录</p><pre class=" language-mysql"><code class="language-mysql">get <table>, <rowkey>#获取一条数据get 's_behavior', '12345_151692489001_1'# 获取一条数据某时刻的镜像get 's_behavior', '12345_151692489001_1', {TIMESTAMP => '151692489001'}#获取多个版本的数据(get命令支持获取数据的多个版本，建表是指定VERSIONS属性即可)alter 's_behavior', NAME=>'pc', VERSIONS=>3 #改表put 's_behavior', '12345_151692489001_1', 'pc:v', '1002' #放一个新数据，之前已经有该键get 's_behavior', '12345_151692489001_1', {COLUMN => 'pc:v', VERSIONS => 2}</code></pre><h3 id="Scan"><a href="#Scan" class="headerlink" title="Scan"></a>Scan</h3><p>Scan命令用来扫描表的数据，Scan可以有多种用法</p><pre class=" language-mysql"><code class="language-mysql">scan <table>#扫描表scan 's_behavior'#获取时间区间内数据scan 's_behavior', {TIMERANGE => [151423996739,151513996739]}#获取多版本数据scan 's_behavior', {VERSIONS => 2}#获取用户(ID=12345)前5行数据scan 's_behavior', {FILTER => "PrefixFilter('12345_')", COLUMNS => ['pc'], LIMIT=>5}#获取用户(ID=12345)某个时间区间的PC端行为数据scan 's_behavior', {STARTROW => '12345_151423996739',STOPROW => '12345_151513996739', COLUMNS => ['pc']}#获取用户对商品(ID=1001)的行为数据scan 's_behavior', FILTER => "ValueFilter(=,'binary:1001')"#获用户对商品(ID包含1002)的行为数据scan 's_behavior', FILTER => "ValueFilter(=,'substring:1002')"</code></pre><h3 id="Delete"><a href="#Delete" class="headerlink" title="Delete"></a>Delete</h3><p>delete用来删除某列数据</p><pre class=" language-mysql"><code class="language-mysql">delete <table>, <roekey>, <列族:列标识符>, [<time stamp>]delete 's_behavior', '12345_151692489001_1', 'ph:o'</code></pre><h3 id="DeleteAll"><a href="#DeleteAll" class="headerlink" title="DeleteAll"></a>DeleteAll</h3><p>deleteall删除整行数据</p><pre class=" language-mysql"><code class="language-mysql">deleteall 's_behavior', '12345_151692489001_1'</code></pre><h3 id="truncate"><a href="#truncate" class="headerlink" title="truncate"></a>truncate</h3><p>truncate删除整个表</p><pre class=" language-mysql"><code class="language-mysql">truncate 's_behavior'</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> HBase </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 大数据 </tag>
+            
+            <tag> HBase </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>HDFS简介</title>
       <link href="/2019/01/19/HDFS%E7%AE%80%E4%BB%8B/"/>
       <url>/2019/01/19/HDFS%E7%AE%80%E4%BB%8B/</url>
@@ -268,6 +295,33 @@
     
     
     <entry>
+      <title>Hbase模式设计实例</title>
+      <link href="/2019/01/15/Hbase%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%AE%9E%E4%BE%8B/"/>
+      <url>/2019/01/15/Hbase%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%AE%9E%E4%BE%8B/</url>
+      
+        <content type="html"><![CDATA[<h2 id="用户行为日志系统"><a href="#用户行为日志系统" class="headerlink" title="用户行为日志系统"></a>用户行为日志系统</h2><h3 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h3><p><strong>数据类型</strong></p><ul><li>用户商品浏览记录</li><li>用户商品下单记录</li></ul><p><strong>统计需求</strong></p><ul><li>需要查询同一个用户一段时间内浏览过的商品，用来做用户商品推荐以提高转化率</li><li>需要统计某个商品在某天的转化率，用来分析各渠道或者营销方式的优劣</li></ul><p><strong>数据特征</strong></p><ul><li>数据一旦写入就不会被修改</li><li>越旧的数据使用越少，越新的数据使用越多</li><li>数据通常需要被大批量读取用作分析</li></ul><h3 id="行键设计"><a href="#行键设计" class="headerlink" title="行键设计"></a>行键设计</h3><h4 id="两个需求"><a href="#两个需求" class="headerlink" title="两个需求"></a>两个需求</h4><p><strong>查询同一个用户一段时间内浏览过的商品</strong></p><p>该需求有两个数据查询维度，第一个为用户，第二个为时间。</p><ul><li>为了提高查询性能，将同一个用户的数据聚簇地放在一起，因此将用户ID作为行键地开始</li><li>需要根据时间查询，类似Mysql中的聚集索引，可以将时间放在第二个位置，格式为：[用户ID]_[时间戳]</li><li>假设极端情况，用户同时打开多个商品，这些商品的时间戳可能相同，可以在行键最后加上一个序列号</li></ul><p>最后设计的行键：[用户ID]_ [时间戳]_[序列号]</p><p><strong>统计某个商品某天的专户率</strong></p><p>转化率的定义是商品下单数除以商品浏览数，需要三个维度的数据，第一个是商品，第二个是数据类型（0表示浏览，1表示记录），第三个是时间。</p><p>根据上一个例子，该行键可以设计为：[商品ID] _[数据类型] _[时间戳] _[序列号]</p><h4 id="行键与二级索引"><a href="#行键与二级索引" class="headerlink" title="行键与二级索引"></a>行键与二级索引</h4><p>如果一张表同时满足以上两个需求，可以考虑在用户维度构建行键存储数据，按商品维度建立二级索引满足商品维度统计需求。如下：</p><p><img src="%E7%94%A8%E6%88%B7%E8%A1%8C%E4%B8%BA%E8%A1%A8.png" alt=""></p><p>行键1：[用户ID]_ [时间戳]_ [序列号]，例如12345_1510720956000_1</p><p>行键2：[分区开始键]_ [索引名称] _[商品ID] _[数据类型] _[时间戳] _ [数据行键]，该行键是一个二级索引</p><ul><li>使用分区开始键作为行键的前缀是为了让索引和数据在同一个分区，这样读取索引和数据的请求会落在同一个分区服务器，否则可能需要在一个分区服务器读取索引后，再到另一个分区服务器读取数据</li><li>索引名称，就是给这个二级索引起一个名字</li><li>数据行键，指得是行键1，相当于就是二级索引。行键2过滤数据后再定位到行键1，再读取数据，多级索引</li><li>二级索引，一般会根据索引行键得到数据行键，再根据数据行键去查询数据</li></ul><p><strong>读取数据示例</strong></p><ul><li><p><strong>查询同一个用户一段时间内浏览过的商品</strong></p><p>扫描请求只需要指定该用户的最小行键和最大行键。例如，用户查询用户12345从2017年12月1日到2018年1月1日之间的浏览记录，只需要指定查询区间[12345_ 1512086400000，12345_1514764800000]</p></li><li><p><strong>统计某个商品某天的专户率</strong></p><p>利用二级索引查询。例如，查询2018年1月1日当天的1001的转化率，需要扫描的区间为[12345_idx1_1001_0_151476400000, 12345_idx1_1001_1_1514851200000]，并且只需要扫描索引索引行键，拿到所有的索引行键再根据数据类型过滤即可。</p></li></ul><h2 id="微信朋友圈"><a href="#微信朋友圈" class="headerlink" title="微信朋友圈"></a>微信朋友圈</h2><p>朋友圈的核心是每个用户各自拥有一个自己发布的相册和一个用户关注的好友的动态，称之为时间线。</p><p>假如：A发朋友圈，B是A的好友，B刷新朋友圈刷到A干刚刚发布的内容</p><ul><li>A发布一张朋友圈图片，该图片会上传到A最近的CDN缓存服务器，上传成功后返回一个图片引用地址</li><li>A的微信客户端将朋友圈的内容以及图片引用地址发布到微信服务器自己的相册</li><li>查找那些用户关注了A，将A发布的朋友圈内容以及图片插入到这些用户的TimeLine（时间线）</li><li>B刷新自己的朋友圈，直接从B的时间线表查询数据即可</li></ul><p>上诉过程一共设计到四张表的设计</p><ul><li><p>user表，记录用户ID与微信昵称的对应关系</p><p><img src="%E7%94%A8%E6%88%B7%E8%A1%A8.png" alt=""></p></li><li><p>好友表，记录用户之间是否关注</p><p>可以使用高表或者宽表记录，该表只能查询关注的用户，查询关注自己的用户，需要构建另一张与此类似的表</p><ul><li><p>宽表，用户ID为行键，一行的数据为该用户关注的所有用户</p><p><img src="%E7%94%A8%E6%88%B7%E5%85%B3%E7%B3%BB%E8%A1%A8-%E5%AE%BD%E8%A1%A8.png" alt=""></p></li><li><p>高表，用户ID和关注的用户混合行键</p><p><img src="%E7%94%A8%E6%88%B7%E5%85%B3%E7%B3%BB%E8%A1%A8-%E9%AB%98%E8%A1%A8.png" alt=""></p></li></ul></li><li><p>用户朋友圈表，记录用户发布的朋友圈内容</p><p><img src="%E7%94%A8%E6%88%B7%E6%9C%8B%E5%8F%8B%E5%9C%88.png" alt=""></p><ul><li>行键：用户ID_时间戳</li><li>t：朋友圈内容</li><li>p：图片链接</li></ul></li><li><p>用户时间线表，记录关注的好友发布的朋友圈内容</p><p><img src="%E6%97%B6%E9%97%B4%E7%BA%BF.png" alt=""></p><ul><li>行键：用户ID_时间戳 _发布者ID</li><li>t：朋友圈内容</li><li>p：图片链接</li><li>u：发布者个人基本信息（昵称头像）</li></ul></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> HBase </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 大数据 </tag>
+            
+            <tag> HBase </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>JavaAgent</title>
       <link href="/2019/01/15/JavaAgent/"/>
       <url>/2019/01/15/JavaAgent/</url>
@@ -287,6 +341,33 @@
             <tag> java </tag>
             
             <tag> RASP </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>读扩散写扩散</title>
+      <link href="/2019/01/15/%E8%AF%BB%E6%89%A9%E6%95%A3%E5%86%99%E6%89%A9%E6%95%A3/"/>
+      <url>/2019/01/15/%E8%AF%BB%E6%89%A9%E6%95%A3%E5%86%99%E6%89%A9%E6%95%A3/</url>
+      
+        <content type="html"><![CDATA[<p>在阅读HBase入门与实践这本书时，模式设计模块有一部分内容写到，微信朋友圈运用写扩散模型提高读的效率，即将一个用户发的朋友圈同步到该用户好友的时间线中。这次找到资料，稍微了解了解读扩散与写扩散。</p><h2 id="读扩散-VS-写扩散"><a href="#读扩散-VS-写扩散" class="headerlink" title="读扩散 VS 写扩散"></a>读扩散 VS 写扩散</h2><p>消息同步模型中，有写扩散和读扩散两种模型，讨论这两种模型涉及下面两个相关概念</p><ul><li>收件箱：该用户收到的消息</li><li>发件箱：该用户发出的消息</li></ul><h3 id="写扩散"><a href="#写扩散" class="headerlink" title="写扩散"></a>写扩散</h3><p>写扩散就是push模式，即每个消息都直接发送到该用户的收件箱中。</p><ul><li>优点：读优化，用户每次只需要去读取自己收件箱的消息即可</li><li>缺点：写很重，如果一条消息是群发消息，那么一个群成员发送出去的消息将拷贝到所有其余群成员的收件箱中</li></ul><p>朋友圈系统也是如此，将一个用户发的朋友圈内容同步到其所有好友的时间线中，当其好友刷新朋友圈时，直接到其好友的时间线中读取消息即可。</p><p><img src="%E5%86%99%E6%89%A9%E6%95%A3.png" alt=""></p><h3 id="读扩散"><a href="#读扩散" class="headerlink" title="读扩散"></a>读扩散</h3><p>读扩散就是pull模式，用户每次到消息发送者的发件箱去拉取信息</p><ul><li>优点：写优化，每次发送的消息只需要写到一个地方，由收件者自己拉取消息即可</li><li>缺点：读操作很重，假设用户重新登陆，要去其全部好友的发件箱读取消息</li></ul><p><img src="%E8%AF%BB%E6%89%A9%E6%95%A3.png" alt=""></p><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://www.codedump.info/post/20190608-im-msg-storage/" target="_blank" rel="noopener">https://www.codedump.info/post/20190608-im-msg-storage/</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 架构 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 架构 </tag>
+            
+            <tag> 分布式 </tag>
             
         </tags>
       

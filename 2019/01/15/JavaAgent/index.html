@@ -669,22 +669,31 @@ Can-Retransform-Classes: true
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2019/01/15/Hbase%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B/">
+                <a href="/2019/01/15/Hbase%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%AE%9E%E4%BE%8B/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="Hbase数据模型">
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="Hbase模式设计实例">
                         
-                        <span class="card-title">Hbase数据模型</span>
+                        <span class="card-title">Hbase模式设计实例</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Hbase很适合存储不确定列，不确定大小的半结构化数据
-逻辑模型Hbase是一个键值（key-value）型数据库。Hbase数据行列值可以是空白的，且这些空白行列值不占用存储空间，所以Hbase存储的数据是稀疏的。
+                            用户行为日志系统前提数据类型
 
-表（table）：类
+用户商品浏览记录
+用户商品下单记录
+
+统计需求
+
+需要查询同一个用户一段时间内浏览过的商品，用来做用户商品推荐以提高转化率
+需要统计某个商品在某天的转化率，用来分析各渠道或者营销方式的优劣
+
+数据特征
+
+数据
                         
                     </div>
                     <div class="publish-info">
@@ -725,37 +734,32 @@ Can-Retransform-Classes: true
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/01/13/java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F/">
+                <a href="/2019/01/15/%E8%AF%BB%E6%89%A9%E6%95%A3%E5%86%99%E6%89%A9%E6%95%A3/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="Java内存区域">
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="读扩散写扩散">
                         
-                        <span class="card-title">Java内存区域</span>
+                        <span class="card-title">读扩散写扩散</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Java内存区域JDK7的内存区域如下
-
-线程私有：虚拟机栈，本地方法栈，程序计数器
-线程共享：堆内存，方法区
-
-
-程序计数器虚拟机中的程序计数器和计算机的程序计数器(PC)作用类似，可以看成当前线程所执行的字节码的行号指示器，用来记录下一
+                            在阅读HBase入门与实践这本书时，模式设计模块有一部分内容写到，微信朋友圈运用写扩散模型提高读的效率，即将一个用户发的朋友圈同步到该用户好友的时间线中。这次找到资料，稍微了解了解读扩散与写扩散。
+读扩散 VS 写扩散消息同步模型中，有写扩
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-01-13
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-01-15
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/java/" class="post-category">
-                                    java
+                            <a href="/categories/%E6%9E%B6%E6%9E%84/" class="post-category">
+                                    架构
                                 </a>
                             
                             
@@ -765,12 +769,12 @@ Can-Retransform-Classes: true
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/java/">
-                        <span class="chip bg-color">java</span>
+                    <a href="/tags/%E6%9E%B6%E6%9E%84/">
+                        <span class="chip bg-color">架构</span>
                     </a>
                     
-                    <a href="/tags/jvm/">
-                        <span class="chip bg-color">jvm</span>
+                    <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/">
+                        <span class="chip bg-color">分布式</span>
                     </a>
                     
                 </div>

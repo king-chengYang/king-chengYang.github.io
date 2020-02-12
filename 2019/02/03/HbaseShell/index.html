@@ -337,7 +337,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    691
+                    871
                 </div>
                 
 
@@ -359,12 +359,9 @@
 <p>以下表（s_behavior）为例</p>
 <p><img src="%E8%A1%A8.png" alt=""></p>
 <h3 id="数据定义语言"><a href="#数据定义语言" class="headerlink" title="数据定义语言"></a>数据定义语言</h3><p>数据定义语言（Data Definition Language，DDL），包括数据库表的创建，修改等语句。</p>
-<h4 id="创建表"><a href="#创建表" class="headerlink" title="创建表"></a>创建表</h4><pre class=" language-mysql"><code class="language-mysql">create <table>, <NAME => 列族>
+<h4 id="创建表"><a href="#创建表" class="headerlink" title="创建表"></a>创建表</h4><pre><code>create &lt;table&gt;, &lt;NAME =&gt; 列族&gt;
 
-create 's_behavior', {NAME => 'pc'},{NAME => 'ph'}</code></pre>
-<h4 id="查看所有表"><a href="#查看所有表" class="headerlink" title="查看所有表"></a>查看所有表</h4><pre class=" language-mysql"><code class="language-mysql">list</code></pre>
-<h4 id="查看建表"><a href="#查看建表" class="headerlink" title="查看建表"></a>查看建表</h4><pre class=" language-mysql"><code class="language-mysql">describe 's_behavior'</code></pre>
-<p>表的属性解释</p>
+create &#39;s_behavior&#39;, {NAME =&gt; &#39;pc&#39;},{NAME =&gt; &#39;ph&#39;}</code></pre><h4 id="查看所有表"><a href="#查看所有表" class="headerlink" title="查看所有表"></a>查看所有表</h4><pre><code>list</code></pre><h4 id="查看建表"><a href="#查看建表" class="headerlink" title="查看建表"></a>查看建表</h4><pre><code>describe &#39;s_behavior&#39;</code></pre><p>表的属性解释</p>
 <ul>
 <li>DATA_BLOCK_ENCODING：数据块编码。用类似于压缩算法的编码形式来节省存储空间。</li>
 <li>BLOOMFILTER：布隆过滤器。数据查询Scan操作的时候用来排除待扫描的StoreFile文件。</li>
@@ -376,63 +373,56 @@ create 's_behavior', {NAME => 'pc'},{NAME => 'ph'}</code></pre>
 <li>BLOCKSIZE：HBase读取数据的最小单元，默认为64KB。</li>
 </ul>
 <h4 id="修改表"><a href="#修改表" class="headerlink" title="修改表"></a>修改表</h4><p>修改表需要先将表下线，然后执行修改命令，再上线</p>
-<pre class=" language-mysql"><code class="language-mysql">disable 's_behavior' #下线
-alter 's_behavior', {NAME => "cf", REPLICATION_SCOPE => "1", KEEP_DELETED_CELLS => "TRUE"} #改变表
-enable 's_behavior' #上线</code></pre>
-<h3 id="数据操作语言"><a href="#数据操作语言" class="headerlink" title="数据操作语言"></a>数据操作语言</h3><p>数据操作语言（Data Manipulation Language，DML），包括数据的修改，查询，删除等语句。</p>
+<pre><code>disable &#39;s_behavior&#39; #下线
+alter &#39;s_behavior&#39;, {NAME =&gt; &quot;cf&quot;, REPLICATION_SCOPE =&gt; &quot;1&quot;, KEEP_DELETED_CELLS =&gt; &quot;TRUE&quot;} #改变表
+enable &#39;s_behavior&#39; #上线</code></pre><h3 id="数据操作语言"><a href="#数据操作语言" class="headerlink" title="数据操作语言"></a>数据操作语言</h3><p>数据操作语言（Data Manipulation Language，DML），包括数据的修改，查询，删除等语句。</p>
 <h3 id="PUT"><a href="#PUT" class="headerlink" title="PUT"></a>PUT</h3><p>put命令用来插入一行数据到HBase表</p>
-<pre class=" language-mysql"><code class="language-mysql">put <table>, <rowkey>, <列族:列标识符>, <值>
+<pre><code>put &lt;table&gt;, &lt;rowkey&gt;, &lt;列族:列标识符&gt;, &lt;值&gt;
 
 #插入pc值
-put 's_behavior', '12345_151692489001_1', 'pc:v', '1001'
+put &#39;s_behavior&#39;, &#39;12345_151692489001_1&#39;, &#39;pc:v&#39;, &#39;1001&#39;
 
 #插入ph值
-put 's_behavior', '12345_151692489001_1', 'ph:o', '1001'</code></pre>
-<h3 id="GET"><a href="#GET" class="headerlink" title="GET"></a>GET</h3><p>get命令用来根据行键获取HBase表的一条记录</p>
-<pre class=" language-mysql"><code class="language-mysql">get <table>, <rowkey>
+put &#39;s_behavior&#39;, &#39;12345_151692489001_1&#39;, &#39;ph:o&#39;, &#39;1001&#39;</code></pre><h3 id="GET"><a href="#GET" class="headerlink" title="GET"></a>GET</h3><p>get命令用来根据行键获取HBase表的一条记录</p>
+<pre><code>get &lt;table&gt;, &lt;rowkey&gt;
 
 #获取一条数据
-get 's_behavior', '12345_151692489001_1'
+get &#39;s_behavior&#39;, &#39;12345_151692489001_1&#39;
 
 # 获取一条数据某时刻的镜像
-get 's_behavior', '12345_151692489001_1', {TIMESTAMP => '151692489001'}
+get &#39;s_behavior&#39;, &#39;12345_151692489001_1&#39;, {TIMESTAMP =&gt; &#39;151692489001&#39;}
 
 #获取多个版本的数据(get命令支持获取数据的多个版本，建表是指定VERSIONS属性即可)
-alter 's_behavior', NAME=>'pc', VERSIONS=>3 #改表
-put 's_behavior', '12345_151692489001_1', 'pc:v', '1002' #放一个新数据，之前已经有该键
-get 's_behavior', '12345_151692489001_1', {COLUMN => 'pc:v', VERSIONS => 2}</code></pre>
-<h3 id="Scan"><a href="#Scan" class="headerlink" title="Scan"></a>Scan</h3><p>Scan命令用来扫描表的数据，Scan可以有多种用法</p>
-<pre class=" language-mysql"><code class="language-mysql">scan <table>
+alter &#39;s_behavior&#39;, NAME=&gt;&#39;pc&#39;, VERSIONS=&gt;3 #改表
+put &#39;s_behavior&#39;, &#39;12345_151692489001_1&#39;, &#39;pc:v&#39;, &#39;1002&#39; #放一个新数据，之前已经有该键
+get &#39;s_behavior&#39;, &#39;12345_151692489001_1&#39;, {COLUMN =&gt; &#39;pc:v&#39;, VERSIONS =&gt; 2}</code></pre><h3 id="Scan"><a href="#Scan" class="headerlink" title="Scan"></a>Scan</h3><p>Scan命令用来扫描表的数据，Scan可以有多种用法</p>
+<pre><code>scan &lt;table&gt;
 
 #扫描表
-scan 's_behavior'
+scan &#39;s_behavior&#39;
 
 #获取时间区间内数据
-scan 's_behavior', {TIMERANGE => [151423996739,151513996739]}
+scan &#39;s_behavior&#39;, {TIMERANGE =&gt; [151423996739,151513996739]}
 
 #获取多版本数据
-scan 's_behavior', {VERSIONS => 2}
+scan &#39;s_behavior&#39;, {VERSIONS =&gt; 2}
 
 #获取用户(ID=12345)前5行数据
-scan 's_behavior', {FILTER => "PrefixFilter('12345_')", COLUMNS => ['pc'], LIMIT=>5}
+scan &#39;s_behavior&#39;, {FILTER =&gt; &quot;PrefixFilter(&#39;12345_&#39;)&quot;, COLUMNS =&gt; [&#39;pc&#39;], LIMIT=&gt;5}
 
 #获取用户(ID=12345)某个时间区间的PC端行为数据
-scan 's_behavior', {STARTROW => '12345_151423996739',STOPROW => '12345_151513996739', COLUMNS => ['pc']}
+scan &#39;s_behavior&#39;, {STARTROW =&gt; &#39;12345_151423996739&#39;,STOPROW =&gt; &#39;12345_151513996739&#39;, COLUMNS =&gt; [&#39;pc&#39;]}
 
 #获取用户对商品(ID=1001)的行为数据
-scan 's_behavior', FILTER => "ValueFilter(=,'binary:1001')"
+scan &#39;s_behavior&#39;, FILTER =&gt; &quot;ValueFilter(=,&#39;binary:1001&#39;)&quot;
 
 #获用户对商品(ID包含1002)的行为数据
-scan 's_behavior', FILTER => "ValueFilter(=,'substring:1002')"</code></pre>
-<h3 id="Delete"><a href="#Delete" class="headerlink" title="Delete"></a>Delete</h3><p>delete用来删除某列数据</p>
-<pre class=" language-mysql"><code class="language-mysql">delete <table>, <roekey>, <列族:列标识符>, [<time stamp>]
+scan &#39;s_behavior&#39;, FILTER =&gt; &quot;ValueFilter(=,&#39;substring:1002&#39;)&quot;</code></pre><h3 id="Delete"><a href="#Delete" class="headerlink" title="Delete"></a>Delete</h3><p>delete用来删除某列数据</p>
+<pre><code>delete &lt;table&gt;, &lt;roekey&gt;, &lt;列族:列标识符&gt;, [&lt;time stamp&gt;]
 
-delete 's_behavior', '12345_151692489001_1', 'ph:o'</code></pre>
-<h3 id="DeleteAll"><a href="#DeleteAll" class="headerlink" title="DeleteAll"></a>DeleteAll</h3><p>deleteall删除整行数据</p>
-<pre class=" language-mysql"><code class="language-mysql">deleteall 's_behavior', '12345_151692489001_1'</code></pre>
-<h3 id="truncate"><a href="#truncate" class="headerlink" title="truncate"></a>truncate</h3><p>truncate删除整个表</p>
-<pre class=" language-mysql"><code class="language-mysql">truncate 's_behavior'</code></pre>
-
+delete &#39;s_behavior&#39;, &#39;12345_151692489001_1&#39;, &#39;ph:o&#39;</code></pre><h3 id="DeleteAll"><a href="#DeleteAll" class="headerlink" title="DeleteAll"></a>DeleteAll</h3><p>deleteall删除整行数据</p>
+<pre><code>deleteall &#39;s_behavior&#39;, &#39;12345_151692489001_1&#39;</code></pre><h3 id="truncate"><a href="#truncate" class="headerlink" title="truncate"></a>truncate</h3><p>truncate删除整个表</p>
+<pre><code>truncate &#39;s_behavior&#39;</code></pre>
             </div>
             <hr/>
 

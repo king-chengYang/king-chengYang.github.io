@@ -4,11 +4,11 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="Hbase Shell, 成">
-    <meta name="description" content="Hbase ShellHBase提供了一个非常方便的命令行交互工具HBase Shell。
-以下表（s_behavior）为例
+    <meta name="keywords" content="数据库事务隔离级别, 成">
+    <meta name="description" content="事务事务是并发控制的基本单位，所谓事务，它是一个操作序列，这个操作要么都执行，要么都不执行，它是一个不可分割的工作单位，需要满足ACID原则。
 
-数据定义语言数据定义语言（Data Definition Language，DDL），包括数据库表的创建，修改">
+一致性：在事务开始之前和事务结束之后，数据库的完整性没有被破坏。
+原子性：一个事务中的所有操作">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -16,7 +16,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Hbase Shell | 成</title>
+    <title>数据库事务隔离级别 | 成</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -177,12 +177,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Hbase Shell</h1>
+                    <h1 class="description center-align post-title">数据库事务隔离级别</h1>
                 </div>
             </div>
         </div>
@@ -297,29 +297,12 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                    <div class="article-tag">
-                        
-                            <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/">
-                                <span class="chip bg-color">大数据</span>
-                            </a>
-                        
-                            <a href="/tags/HBase/">
-                                <span class="chip bg-color">HBase</span>
-                            </a>
-                        
-                    </div>
+                          <div class="article-tag">
+                            <span class="chip bg-color">无标签</span>
+                          </div>
                     
                 </div>
                 <div class="col s5 right-align">
-                    
-                    <div class="post-cate">
-                        <i class="fas fa-bookmark fa-fw icon-category"></i>
-                        
-                            <a href="/categories/HBase/" class="post-category">
-                                HBase
-                            </a>
-                        
-                    </div>
                     
                 </div>
             </div>
@@ -328,7 +311,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-02-03
+                    2020-02-12
                 </div>
                 
 
@@ -337,7 +320,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    691
+                    1.5k
                 </div>
                 
 
@@ -355,84 +338,295 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="Hbase-Shell"><a href="#Hbase-Shell" class="headerlink" title="Hbase Shell"></a>Hbase Shell</h2><p>HBase提供了一个非常方便的命令行交互工具HBase Shell。</p>
-<p>以下表（s_behavior）为例</p>
-<p><img src="%E8%A1%A8.png" alt=""></p>
-<h3 id="数据定义语言"><a href="#数据定义语言" class="headerlink" title="数据定义语言"></a>数据定义语言</h3><p>数据定义语言（Data Definition Language，DDL），包括数据库表的创建，修改等语句。</p>
-<h4 id="创建表"><a href="#创建表" class="headerlink" title="创建表"></a>创建表</h4><pre class=" language-mysql"><code class="language-mysql">create <table>, <NAME => 列族>
-
-create 's_behavior', {NAME => 'pc'},{NAME => 'ph'}</code></pre>
-<h4 id="查看所有表"><a href="#查看所有表" class="headerlink" title="查看所有表"></a>查看所有表</h4><pre class=" language-mysql"><code class="language-mysql">list</code></pre>
-<h4 id="查看建表"><a href="#查看建表" class="headerlink" title="查看建表"></a>查看建表</h4><pre class=" language-mysql"><code class="language-mysql">describe 's_behavior'</code></pre>
-<p>表的属性解释</p>
+                <h2 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h2><p>事务是并发控制的基本单位，所谓事务，它是一个操作序列，这个操作要么都执行，要么都不执行，它是一个不可分割的工作单位，需要满足ACID原则。</p>
 <ul>
-<li>DATA_BLOCK_ENCODING：数据块编码。用类似于压缩算法的编码形式来节省存储空间。</li>
-<li>BLOOMFILTER：布隆过滤器。数据查询Scan操作的时候用来排除待扫描的StoreFile文件。</li>
-<li>REPLICATION_SCOPE：集群间数据赋值开关。1表示开启赋值。</li>
-<li>VERSIONS：HBase对表的数据行可以保留多个数据版本，以时间戳来区分。</li>
-<li>COMPRESSION：压缩方式。HBase提供多种压缩方式用来在数据存储到磁盘之前压缩以减少存储空间。</li>
-<li>TTL：  数据的有效时长，超过TTL的数据在主压缩时会被删除。</li>
-<li>KEEP_DELETED_CELLS：保留了删除的数据，当主压缩后删除的数据才会被清理，如果开启集群间复制，则必须为true，否则会导致数据复制失败</li>
-<li>BLOCKSIZE：HBase读取数据的最小单元，默认为64KB。</li>
+<li>一致性：在事务开始之前和事务结束之后，数据库的完整性没有被破坏。</li>
+<li>原子性：一个事务中的所有操作，或者全部完成，或者全部不完成，不会结束在中间某个环节。事务在执行过程中发生错误，会被回滚到事务开始前的状态，就像这个事务没有执行过一样。即，事务不可分割，不可简约。</li>
+<li>隔离性：多个事务并发访问时，事务之间是隔离的，一个事务不应该影响其它事务运行效果。</li>
+<li>持久性：事务处理结束后，对数据的修改就是永久的，即便系统故障也不会丢失。</li>
 </ul>
-<h4 id="修改表"><a href="#修改表" class="headerlink" title="修改表"></a>修改表</h4><p>修改表需要先将表下线，然后执行修改命令，再上线</p>
-<pre class=" language-mysql"><code class="language-mysql">disable 's_behavior' #下线
-alter 's_behavior', {NAME => "cf", REPLICATION_SCOPE => "1", KEEP_DELETED_CELLS => "TRUE"} #改变表
-enable 's_behavior' #上线</code></pre>
-<h3 id="数据操作语言"><a href="#数据操作语言" class="headerlink" title="数据操作语言"></a>数据操作语言</h3><p>数据操作语言（Data Manipulation Language，DML），包括数据的修改，查询，删除等语句。</p>
-<h3 id="PUT"><a href="#PUT" class="headerlink" title="PUT"></a>PUT</h3><p>put命令用来插入一行数据到HBase表</p>
-<pre class=" language-mysql"><code class="language-mysql">put <table>, <rowkey>, <列族:列标识符>, <值>
+<p>对一致性的解释，以银行转钱为例：</p>
+<pre><code>数据库事务不能破坏关系数据的完整性以及业务逻辑上的一致性。
 
-#插入pc值
-put 's_behavior', '12345_151692489001_1', 'pc:v', '1001'
+假设A有200，B有200，现在A给B转100，不论事务成功还是失败，应该保证事务结束后，A和B得总金额为400元。</code></pre><h2 id="并发事务会产生的问题"><a href="#并发事务会产生的问题" class="headerlink" title="并发事务会产生的问题"></a>并发事务会产生的问题</h2><h3 id="丢失更新"><a href="#丢失更新" class="headerlink" title="丢失更新"></a>丢失更新</h3><p><strong>A事务撤销时，把已经提交的B事务的更新数据覆盖了</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">时间点</th>
+<th align="center">事务A</th>
+<th align="center">事务B</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">T1</td>
+<td align="center"><strong>事务开始</strong></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">T2</td>
+<td align="center"></td>
+<td align="center"><strong>事务开始</strong></td>
+</tr>
+<tr>
+<td align="center">T3</td>
+<td align="center">查询余额为100元</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">T4</td>
+<td align="center"></td>
+<td align="center">查询余额为100元</td>
+</tr>
+<tr>
+<td align="center">T5</td>
+<td align="center"></td>
+<td align="center">存入10元将余额改为110元</td>
+</tr>
+<tr>
+<td align="center">T6</td>
+<td align="center"></td>
+<td align="center"><strong>提交事务</strong></td>
+</tr>
+<tr>
+<td align="center">T7</td>
+<td align="center">取出10把余额改为90</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">T8</td>
+<td align="center"><strong>撤销事务</strong></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">T9</td>
+<td align="center">余额为100</td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<p><strong>A事务提交时，把已经提交的B事务的更新数据覆盖了</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">时间点</th>
+<th align="center">事务A</th>
+<th align="center">事务B</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">T1</td>
+<td align="center"><strong>事务开始</strong></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">T2</td>
+<td align="center"></td>
+<td align="center"><strong>事务开始</strong></td>
+</tr>
+<tr>
+<td align="center">T3</td>
+<td align="center">查询余额为100元</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">T4</td>
+<td align="center"></td>
+<td align="center">查询余额为100元</td>
+</tr>
+<tr>
+<td align="center">T5</td>
+<td align="center"></td>
+<td align="center">存入10元将余额改为110元</td>
+</tr>
+<tr>
+<td align="center">T6</td>
+<td align="center"></td>
+<td align="center"><strong>提交事务</strong></td>
+</tr>
+<tr>
+<td align="center">T7</td>
+<td align="center">取出10把余额改为90</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">T8</td>
+<td align="center"><strong>提交事务</strong></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">T9</td>
+<td align="center">余额为90</td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<h3 id="脏读"><a href="#脏读" class="headerlink" title="脏读"></a>脏读</h3><p><strong>读到未提交更新的数据</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">时间点</th>
+<th align="center">事务A</th>
+<th align="center">事务B</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">T1</td>
+<td align="center"><strong>事务开始</strong></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">T2</td>
+<td align="center"></td>
+<td align="center"><strong>事务开始</strong></td>
+</tr>
+<tr>
+<td align="center">T3</td>
+<td align="center"></td>
+<td align="center">查询余额为100元</td>
+</tr>
+<tr>
+<td align="center">T4</td>
+<td align="center"></td>
+<td align="center">存入10元将余额改为110元</td>
+</tr>
+<tr>
+<td align="center">T5</td>
+<td align="center">查询余额为110元</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">T6</td>
+<td align="center"></td>
+<td align="center"><strong>撤销事务，余额为100</strong></td>
+</tr>
+<tr>
+<td align="center">T7</td>
+<td align="center">存入100把余额改为210</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">T8</td>
+<td align="center"><strong>提交事务</strong></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<h3 id="不可重复读"><a href="#不可重复读" class="headerlink" title="不可重复读"></a>不可重复读</h3><p><strong>读到已经提交更新的数据，但一个事务范围内两个相同的查询却返回了不同数据</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">时间点</th>
+<th align="center">事务A</th>
+<th align="center">事务B</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">T1</td>
+<td align="center"><strong>事务开始</strong></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">T2</td>
+<td align="center"></td>
+<td align="center"><strong>事务开始</strong></td>
+</tr>
+<tr>
+<td align="center">T3</td>
+<td align="center"></td>
+<td align="center">查询余额为100元</td>
+</tr>
+<tr>
+<td align="center">T4</td>
+<td align="center">查询余额为100元</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">T5</td>
+<td align="center"></td>
+<td align="center">存入10元将余额改为110元</td>
+</tr>
+<tr>
+<td align="center">T6</td>
+<td align="center"></td>
+<td align="center"><strong>提交事务</strong></td>
+</tr>
+<tr>
+<td align="center">T7</td>
+<td align="center">查询余额为110元</td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<h3 id="幻读"><a href="#幻读" class="headerlink" title="幻读"></a>幻读</h3><p><strong>读到已提交插入数据，幻读与不可重复读类似，幻读是查询到了另一个事务已提交的新插入数据，而不可重复读是查询到了另一个事务已提交的更新数据</strong></p>
+<p><strong>不可重复读和幻读的区别：</strong> 简单来说，不可重复读是由于数据修改引起的，幻读是由数据插入或者删除引起的。</p>
+<table>
+<thead>
+<tr>
+<th align="center">时间点</th>
+<th align="center">事务A</th>
+<th align="center">事务B</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">T1</td>
+<td align="center"><strong>事务开始</strong></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">T2</td>
+<td align="center"></td>
+<td align="center"><strong>事务开始</strong></td>
+</tr>
+<tr>
+<td align="center">T3</td>
+<td align="center">查询交易记录为3条</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">T4</td>
+<td align="center"></td>
+<td align="center">查询余额为100元</td>
+</tr>
+<tr>
+<td align="center">T5</td>
+<td align="center"></td>
+<td align="center">存入10元将余额改为110元</td>
+</tr>
+<tr>
+<td align="center">T6</td>
+<td align="center"></td>
+<td align="center"><strong>提交事务</strong></td>
+</tr>
+<tr>
+<td align="center">T7</td>
+<td align="center">查询交易记录为4条</td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<h2 id="事务隔离级别"><a href="#事务隔离级别" class="headerlink" title="事务隔离级别"></a>事务隔离级别</h2><p>Mysql中事务的隔离级别一共分为四种，分别如下：</p>
+<ul>
+<li><p>序列化（SERIALIZABLE）    </p>
+<pre><code>如果隔离级别为序列化，则用户之间通过一个接一个顺序地执行当前的事务，这种隔离级别提供了事务之间最大限度的隔离。
 
-#插入ph值
-put 's_behavior', '12345_151692489001_1', 'ph:o', '1001'</code></pre>
-<h3 id="GET"><a href="#GET" class="headerlink" title="GET"></a>GET</h3><p>get命令用来根据行键获取HBase表的一条记录</p>
-<pre class=" language-mysql"><code class="language-mysql">get <table>, <rowkey>
+SERIALIZABLE 提供了事务之间最大限度的隔离，在这种隔离级别中，事务一个接一个顺序的执行，不会发生脏读、可不重复读以及幻象读问题。最安全。</code></pre></li>
+<li><p>可重复读（REAPETABLE　READ）</p>
+<pre><code>在可重复读在这一隔离级别上，事务不会被看成是一个序列。不过，当前正在执行事务的变化仍然不能被外部看到，也就是说，如果用户在另外一个事务中执行同条 SELECT 语句数次，结果总是相同的。（因为正在执行的事务所产生的数据变化不能被外部看到）。
 
-#获取一条数据
-get 's_behavior', '12345_151692489001_1'
+REPEATABLE READ 进一步解决了不可重复读的问题，但是幻象读则未解决。</code></pre></li>
+<li><p>提交读（READ　COMMITTED）</p>
+<pre><code>READ COMMITTED 隔离级别的安全性比 REPEATABLE READ 隔离级别的安全性要差。处于 READ COMMITTED 级别的事务可以看到其他事务对数据的修改。也就是说，在事务处理期间，如果其他事务修改了相应的表，那么同一个事务的多个 SELECT 语句可能返回不同的结果。
 
-# 获取一条数据某时刻的镜像
-get 's_behavior', '12345_151692489001_1', {TIMESTAMP => '151692489001'}
-
-#获取多个版本的数据(get命令支持获取数据的多个版本，建表是指定VERSIONS属性即可)
-alter 's_behavior', NAME=>'pc', VERSIONS=>3 #改表
-put 's_behavior', '12345_151692489001_1', 'pc:v', '1002' #放一个新数据，之前已经有该键
-get 's_behavior', '12345_151692489001_1', {COLUMN => 'pc:v', VERSIONS => 2}</code></pre>
-<h3 id="Scan"><a href="#Scan" class="headerlink" title="Scan"></a>Scan</h3><p>Scan命令用来扫描表的数据，Scan可以有多种用法</p>
-<pre class=" language-mysql"><code class="language-mysql">scan <table>
-
-#扫描表
-scan 's_behavior'
-
-#获取时间区间内数据
-scan 's_behavior', {TIMERANGE => [151423996739,151513996739]}
-
-#获取多版本数据
-scan 's_behavior', {VERSIONS => 2}
-
-#获取用户(ID=12345)前5行数据
-scan 's_behavior', {FILTER => "PrefixFilter('12345_')", COLUMNS => ['pc'], LIMIT=>5}
-
-#获取用户(ID=12345)某个时间区间的PC端行为数据
-scan 's_behavior', {STARTROW => '12345_151423996739',STOPROW => '12345_151513996739', COLUMNS => ['pc']}
-
-#获取用户对商品(ID=1001)的行为数据
-scan 's_behavior', FILTER => "ValueFilter(=,'binary:1001')"
-
-#获用户对商品(ID包含1002)的行为数据
-scan 's_behavior', FILTER => "ValueFilter(=,'substring:1002')"</code></pre>
-<h3 id="Delete"><a href="#Delete" class="headerlink" title="Delete"></a>Delete</h3><p>delete用来删除某列数据</p>
-<pre class=" language-mysql"><code class="language-mysql">delete <table>, <roekey>, <列族:列标识符>, [<time stamp>]
-
-delete 's_behavior', '12345_151692489001_1', 'ph:o'</code></pre>
-<h3 id="DeleteAll"><a href="#DeleteAll" class="headerlink" title="DeleteAll"></a>DeleteAll</h3><p>deleteall删除整行数据</p>
-<pre class=" language-mysql"><code class="language-mysql">deleteall 's_behavior', '12345_151692489001_1'</code></pre>
-<h3 id="truncate"><a href="#truncate" class="headerlink" title="truncate"></a>truncate</h3><p>truncate删除整个表</p>
-<pre class=" language-mysql"><code class="language-mysql">truncate 's_behavior'</code></pre>
-
+</code></pre></li>
+</ul>
+<p>  READ COMMITTED 主要解决了脏读的问题，对于不可重复读和幻象读则未解决。</p>
+<pre><code>
+* 未提交读（READ UNCOMMITTED）
+</code></pre><p>  READ UNCOMMITTED 提供了事务之间最小限度的隔离。除了容易产生虚幻的读操作和不能重复的读操作外，处于这个隔离级的事务可以读到其他事务还没有提交的数据，如果这个事务使用其他事务不提交的变化作为计算的基础，然后那些未提交的变化被它们的父事务撤销，这就导致了大量的数据变化。</p>
+<p>  存在脏读、不可重复读以及幻象读问题</p>
+<pre><code>
+| 隔离级别         | 脏读   | 不可重复读 | 幻想读 |
+| ---------------- | ------ | ---------- | ------ |
+| READ UNCOMMITTED | 允许   | 允许       | 允许   |
+| READ　COMMITTED  | 不允许 | 允许       | 允许   |
+| REAPETABLE　READ | 不允许 | 不允许     | 允许   |
+| SERIALIZABLE     | 不允许 | 不允许     | 不允许 |
+</code></pre>
             </div>
             <hr/>
 
@@ -444,15 +638,7 @@ delete 's_behavior', '12345_151692489001_1', 'ph:o'</code></pre>
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            
-                                <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/">
-                                    <span class="chip bg-color">大数据</span>
-                                </a>
-                            
-                                <a href="/tags/HBase/">
-                                    <span class="chip bg-color">HBase</span>
-                                </a>
-                            
+                            <span class="chip bg-color">无标签</span>
                         </div>
                     
                 </div>
@@ -488,54 +674,42 @@ delete 's_behavior', '12345_151692489001_1', 'ph:o'</code></pre>
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2019/02/10/%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6/">
+                <a href="/2020/02/12/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="类加载机制">
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="数据库事务隔离级别">
                         
-                        <span class="card-title">类加载机制</span>
+                        <span class="card-title">数据库事务隔离级别</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            概述虚拟机将描述类的数据从Class文件加载到内存，并对数据进行校验，转换解析和初始化，最终形成可以被虚拟机直接使用的Java类型，就是虚拟机的类加载机制。
-在Java语言中，类型的加载，连接和初始化过程都是在程序运行期间完成的，即动态加载
+                            事务事务是并发控制的基本单位，所谓事务，它是一个操作序列，这个操作要么都执行，要么都不执行，它是一个不可分割的工作单位，需要满足ACID原则。
+
+一致性：在事务开始之前和事务结束之后，数据库的完整性没有被破坏。
+原子性：一个事务中的所有操作
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2019-02-10
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-02-12
+                            </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/java/" class="post-category">
-                                    java
-                                </a>
-                            
+                            <i class="fas fa-user fa-fw"></i>
+                            yzc
                             
                         </span>
                     </div>
                 </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/java/">
-                        <span class="chip bg-color">java</span>
-                    </a>
-                    
-                    <a href="/tags/jvm/">
-                        <span class="chip bg-color">jvm</span>
-                    </a>
-                    
-                </div>
+
                 
             </div>
         </div>
@@ -546,34 +720,32 @@ delete 's_behavior', '12345_151692489001_1', 'ph:o'</code></pre>
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/01/19/HDFS%E7%AE%80%E4%BB%8B/">
+                <a href="/2020/02/08/Hbase%E6%A8%A1%E5%BC%8F%E8%AE%BE%E8%AE%A1/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="HDFS简介">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="Hbase模式设计">
                         
-                        <span class="card-title">HDFS简介</span>
+                        <span class="card-title">Hbase模式设计</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            HDFS简介数据块HDFS上的文件被划分为块大小的多个分块，作为独立的存储单元，默认大小128M，并且不到一个块大小的文件不会占用多余的空间，比如10M的文件，只会占用10M的大小，而且一个块的大小。
-分布式文件系统抽象为块有如下好处
-
-一
+                            模式设计行键在HBase中充当表的一级索引，而且HBase本身没有提供二级索引机制，因此对行键的设计优化对实时查询尤为重要。
+HBase系统架构通过写内存，排序，顺序写磁盘提高写性能，但是以牺牲读性能为代价，因为内存中的数据最终会刷为Sto
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-01-19
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-02-08
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Hadoop/" class="post-category">
-                                    Hadoop
+                            <a href="/categories/HBase/" class="post-category">
+                                    HBase
                                 </a>
                             
                             
@@ -583,12 +755,12 @@ delete 's_behavior', '12345_151692489001_1', 'ph:o'</code></pre>
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Hadoop/">
-                        <span class="chip bg-color">Hadoop</span>
-                    </a>
-                    
                     <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/">
                         <span class="chip bg-color">大数据</span>
+                    </a>
+                    
+                    <a href="/tags/HBase/">
+                        <span class="chip bg-color">HBase</span>
                     </a>
                     
                 </div>
@@ -726,13 +898,6 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
 
 </main>
 
-
-<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<script>
-    MathJax.Hub.Config({
-        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
-    });
-</script>
 
 
     <footer class="page-footer bg-color">

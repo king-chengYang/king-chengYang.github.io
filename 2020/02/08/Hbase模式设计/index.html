@@ -467,39 +467,55 @@ HBase系统架构通过写内存，排序，顺序写磁盘提高写性能，但
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2020/02/12/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/">
+                <a href="/2020/02/08/Hbase%E6%A8%A1%E5%BC%8F%E8%AE%BE%E8%AE%A1/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="数据库事务隔离级别">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="Hbase模式设计">
                         
-                        <span class="card-title">数据库事务隔离级别</span>
+                        <span class="card-title">Hbase模式设计</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            事务事务是并发控制的基本单位，所谓事务，它是一个操作序列，这个操作要么都执行，要么都不执行，它是一个不可分割的工作单位，需要满足ACID原则。
-
-一致性：在事务开始之前和事务结束之后，数据库的完整性没有被破坏。
-原子性：一个事务中的所有操作
+                            模式设计行键在HBase中充当表的一级索引，而且HBase本身没有提供二级索引机制，因此对行键的设计优化对实时查询尤为重要。
+HBase系统架构通过写内存，排序，顺序写磁盘提高写性能，但是以牺牲读性能为代价，因为内存中的数据最终会刷为Sto
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-02-12
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-02-08
+                            </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            yzc
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/HBase/" class="post-category">
+                                    HBase
+                                </a>
+                            
                             
                         </span>
                     </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/">
+                        <span class="chip bg-color">大数据</span>
+                    </a>
+                    
+                    <a href="/tags/HBase/">
+                        <span class="chip bg-color">HBase</span>
+                    </a>
+                    
                 </div>
                 
             </div>

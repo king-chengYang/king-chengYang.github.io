@@ -4,9 +4,12 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="数据仓库, 成">
-    <meta name="description" content="数据仓库数据仓库的定义：数据仓库是一个面向主题的，集成的，非易失的且随时间变化的数据集合，用来支持管理人员决策。
-特点面向主题的与传统数据库面向应用进行数据组织的特点相对应，数据仓库中的数据是面向主题进行组织的。在逻辑意义上，主题是对应企业">
+    <meta name="keywords" content="数据建模, 成">
+    <meta name="description" content="维度建模维度建模从分析决策的需求触发构建模型，为分析需求服务，因此它重点关注用户如何更快速地完成需求分析，同时具有较好的大规模复杂查询的响应性能。其设计分为以下几个步骤：
+
+选择需要进行分析决策的业务流程
+选择粒度，粒度是维度的一个组合
+识">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -14,7 +17,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>数据仓库 | 成</title>
+    <title>数据建模 | 成</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -175,12 +178,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">数据仓库</h1>
+                    <h1 class="description center-align post-title">数据建模</h1>
                 </div>
             </div>
         </div>
@@ -326,7 +329,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-02-05
+                    2019-02-06
                 </div>
                 
 
@@ -335,7 +338,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1k
+                    3.3k
                 </div>
                 
 
@@ -353,39 +356,135 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="数据仓库"><a href="#数据仓库" class="headerlink" title="数据仓库"></a>数据仓库</h2><p>数据仓库的定义：<strong>数据仓库是一个面向主题的，集成的，非易失的且随时间变化的数据集合，用来支持管理人员决策</strong>。</p>
-<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><h4 id="面向主题的"><a href="#面向主题的" class="headerlink" title="面向主题的"></a>面向主题的</h4><p><strong>与传统数据库面向应用进行数据组织的特点相对应，数据仓库中的数据是面向主题进行组织的。</strong>在逻辑意义上，主题是对应企业中某一宏观分析领域所涉及的分析对象。面向主题的数据组织方式，就是在较高层次上对分析对象的数据的一个完整，一致的描述，能完整，统一地刻画各个分析对象所涉及地企业各项数据。</p>
-<h4 id="集成的"><a href="#集成的" class="headerlink" title="集成的"></a>集成的</h4><p><strong>数据仓库的数据是从原有的分散的数据库数据抽取来的，数据仓库的重要数据来源是大量的、分散的面向应用的操作型环境</strong>。数据由面向应用的操作型环境进人数据仓库后，需要进行数据集成。将面向应用的数据转换为面向主题的数据仓库数据，本身就是一 种集成。</p>
-<h4 id="不可更新的"><a href="#不可更新的" class="headerlink" title="不可更新的"></a>不可更新的</h4><p><strong>数据仓库的数据主要供企业决策分析之用，所涉及的数据操作主要是数据查询，一般情况下并不进行修改操作。</strong>数据仓库的数据反映的是一段相当长的时间内历史数据的内容，是不同时点的数据库快照的集合，以及基于这些快照进行统计、综合和重组的导出数据，而不是联机处理的数据。</p>
-<h4 id="随时间变化的"><a href="#随时间变化的" class="headerlink" title="随时间变化的"></a>随时间变化的</h4><p>数据仓库的数据是随时间的变化而不断变化的</p>
+                <h2 id="维度建模"><a href="#维度建模" class="headerlink" title="维度建模"></a>维度建模</h2><p>维度建模从分析决策的需求触发构建模型，为分析需求服务，因此它重点关注用户如何更快速地完成需求分析，同时具有较好的大规模复杂查询的响应性能。其设计分为以下几个步骤：</p>
 <ul>
-<li>数据仓库随时间变化不断增加新的数据内容</li>
-<li>数据仓库随时间变化不断删去旧的数据内容</li>
-<li>数据仓库中包含有大量的综合数据，这些综合数据中很多跟时间有关，如数据经常按照时间段进行综合，或隔一定的时间片进行抽样等等</li>
+<li>选择需要进行分析决策的业务流程</li>
+<li>选择粒度，粒度是维度的一个组合</li>
+<li>识别维表</li>
+<li>选择事实，确定分析需要衡量的指标。</li>
 </ul>
-<h3 id="分层"><a href="#分层" class="headerlink" title="分层"></a>分层</h3><p>数据仓库可以分为三层，自下而上为：<strong>操作数据层（ODS，Operation Data Store），公共数据层（CMD，Common Data Model）和应用数据层（ADS，Application Data Service）</strong></p>
+<h2 id="维度设计"><a href="#维度设计" class="headerlink" title="维度设计"></a>维度设计</h2><h3 id="维度设计基础"><a href="#维度设计基础" class="headerlink" title="维度设计基础"></a>维度设计基础</h3><h4 id="维度的概念"><a href="#维度的概念" class="headerlink" title="维度的概念"></a>维度的概念</h4><p>维度是维度建模的基础，在维度建模中，度量称为“事实”，环境描述为“维度”，维度是用于分析事实所需要的多样环境。例如在分析交易过程时，可以通过卖家，买家，商品和交易时间等维度描述交易发生的环境。</p>
+<p>维度所包含的表示维度的列，称为维度属性。维度属性时查询约束条件，分组和表标签生成的基本来源。，</p>
+<p>维度使用主键表示其唯一性，主键也是确保与之相连的任何事实表之间存在引用完整性的基础。主键有两种，他们都是用于标识某维度的具体值：</p>
+<ul>
+<li>代理键：不具有业务含义的键，一般用于处理缓慢变化维</li>
+<li>自然键：具有业务含义的键</li>
+</ul>
+<h4 id="设计方法"><a href="#设计方法" class="headerlink" title="设计方法"></a>设计方法</h4><p>维度的设计过程就是确定维度属性的过程，如何生成维度属性，以及所生成的维度属性的优劣，决定了维度使用的方便性，以电商商品维度为例：</p>
 <ol>
-<li><p>操作数据层</p>
-<p><strong>将原始数据几乎无处理的存放在数据仓库系统，结构上与源系统基本保持一致，是数据仓库的数据准备区。</strong></p>
+<li>选择维度或新建维度，一定要保证维度的唯一性</li>
+<li>确定主维表，主维表一般是ODS表，直接与业务系统同步</li>
+<li>确定相关维表，根据业务，确定哪些表与主维表存在关联关系，并选择其中的某些表用于生成维度属性，比如商品与类目，卖家，店铺存在关联关系</li>
+<li>确定维度属性，包括从主维表中选择维度属性或生成新的维度属性，从相关维表中选择维度属性或生成新的维度属性</li>
+</ol>
+<p>确定维度属性的几点提示</p>
 <ul>
-<li>同步：结构化数据增量或全量同步到计算框架</li>
-<li>结构化：非架构化（日志）结构化处理并存储到计算框架</li>
-<li>累计历史，清洗：根据数据业务需求以及稽核和审计要求保存历史数据，清洗数据</li>
+<li><p>尽可能生成丰富的属性维度</p>
+</li>
+<li><p>尽可能多地给出包括一些富有意义地文字性描述</p>
+</li>
+<li><p>区分数值型属性和事实</p>
+<p>通常用于查询约束条件或分组统计作为维度属性；通常用于参与度量的计算作为事实</p>
+</li>
+<li><p>尽可能沉淀出通用的维度属性</p>
+</li>
+</ul>
+<h4 id="维度的层次结构"><a href="#维度的层次结构" class="headerlink" title="维度的层次结构"></a>维度的层次结构</h4><p><strong>度中的一些描述属性以层次方法或一对多相互关联，可以被理解为包含连续主从关系的属性层次。</strong>比如商品维度，有卖家，类目，品牌等。商品属于类目，类目属于行业，其中类目的最低级别是叶子类目，叶子类目属于二级类目，二级类目属于一级类目。</p>
+<h4 id="规范化与反规范化"><a href="#规范化与反规范化" class="headerlink" title="规范化与反规范化"></a>规范化与反规范化</h4><p>当属性层次被实例化为一系列列维度，而不是单一的维度时，被称为<strong>雪花模式</strong>。大多数联机事务处理系统（OLTP）的底层数据结构在设计时采用这种模式，通过规范化处理将重复属性移至自身所属的表中，删除冗余数据（和数据库三范式的第二范式类似，每一项都要都要于主键有关）</p>
+<p><img src="%E8%A7%84%E8%8C%83%E5%8C%96.png" alt=""></p>
+<p>而对于联机分析处理系统（OLAP），数据是稳定的。将维度的属性层次合并到单个维度中的操作称为反规范化。对于分析系统，采用雪花模式，用户在统计分析的过程中需要大量的关联操作，使用复杂度较高，同时查询性能很差；而采用反规范化方法，方便，易用且性能好。</p>
+<p><img src="%E5%8F%8D%E8%A7%84%E8%8C%83%E5%8C%96.png" alt=""></p>
+<p>采用雪花模式，除了可以节约一部分存储外，对于 OLAP 系统来说 没有其他效用 。 而现阶段存储的成本非常低,出于易用性和性能的考虑， 维表一般是很不规范化的。</p>
+<h4 id="一致性维度和交叉探查"><a href="#一致性维度和交叉探查" class="headerlink" title="一致性维度和交叉探查"></a>一致性维度和交叉探查</h4><p>数据仓库总线架构的重要基石之一就是一致性维度。在针对不同数 据域进行迭代构建或并行构建时，存在很多需求是对于不同数据域的业 务过程或者同一数据域的不同业务过程合并在一起观察。<strong>将不同数据域的商品的事实合并在一起进行数据探查，称为交叉检查。</strong></p>
+<p>如果不同数据域的计算过程使用的维度不一致，就会导致交叉探查存在问题；当存在重复维度，但维度属性或维度属性的值不一致时，会导致交叉探查无法进行或结果错误。</p>
+<p>维度一致性的变现形式如下</p>
+<ol>
+<li>共享维表。</li>
+<li>一致性上卷，其中一个维度属性是另一个维度属性的自己，且两个维度的公共维度属性结构和内容相同。</li>
+<li>交叉属性，两个维度具有部分相同的维度属性。</li>
+</ol>
+<h3 id="维度设计高级主题"><a href="#维度设计高级主题" class="headerlink" title="维度设计高级主题"></a>维度设计高级主题</h3><h4 id="维度整合"><a href="#维度整合" class="headerlink" title="维度整合"></a>维度整合</h4><p>数据仓库的重要数据来源是大量的、分散的面向应用的操作型环 境。不同的应用在设计过程中，可以自由决策，主要满足本应用的需求， 很少会考虑和其他系统进行数据集成。应用之间的差异具体表现在如下 几个方面：</p>
+<ul>
+<li>应用在编码，命名习惯，度量单位等方面存在较大差异</li>
+<li>应用出于性能和扩展性考虑，或者随技术架构演变，以及业务发展，采用不同的物理实现</li>
+</ul>
+<p>所以数据由面向应用操作型环境进入数据仓库后，需要进行数据集成。</p>
+<ul>
+<li>命名规范的统一</li>
+<li>字段类型的统一</li>
+<li>公共代码以及代码值得统一</li>
+<li>业务含义相同的表的统一<ul>
+<li>采用主从表设计，将两个b表或者多个表d都有的字段放在主表中，从属信息分表放在各自的从表中。</li>
+<li>直接合并，共享信息和个性信息都放在一个表中。如果表字段的重合度较低，则会出现d大量空值。</li>
+<li>不合并。因为源表的表结构以及主键等差异较大，无法合并</li>
 </ul>
 </li>
-<li><p>公共数据层</p>
-<p><strong>主要完成数据加工与整合，建立一致性的维度，构建可复用的面向分析和统计的明细事实表，以及汇总公共粒度的指标。</strong></p>
-<p>存放<strong>明细事实数据、维表数据及公共指标汇总数据</strong> ， 其中明细事实数据、维表数据一般根据 ODS 层数据加工 生成 ，公共指标汇总数据一般根据维表数据和明细事实数据加工生成。</p>
-<p>CDM层又可以细分为明细数据层（DWD层）和汇总数据层（DWS层）</p>
-<ul>
-<li>明细数据层：采用维度模型方法作为理论基础，更多地采用一些维度退化手法，将维度退化至事实表中，减少事实表和维表的关联，提高明细数据表的易用性 </li>
-<li>汇总数据层：加强指标的维度退化，采取更多的宽表化手段构建公共指标数据层，提升公共指标的复用性，减少重复加工。</li>
 </ul>
+<p>表级别的整合有两种表现形式</p>
+<ol>
+<li><p>垂直整合：不同的来源表包含相同的数据集，只是存储的信息不同</p>
+<p>比如，会员表中有会员基础信息表，会员扩展信息表，会员等价表，这些表都属于会员相关信息表，依据维度设计方法，尽量整合至会员维度模型</p>
 </li>
-<li><p>应用数据层</p>
-<p><strong>存放数据产品个性化的统计指标数据，根据CDM与ODS层加工生成。</strong></p>
+<li><p>水平整合：不同的来源表包含不同的数据集，不同子集之间无交叉，也可以存在部分交叉</p>
+<p>包含不同的数据集，先判断各个数据集有无交叉，如果有交叉，则需要去重；如果不存在交叉，则考虑自然键是否冲突，如果不冲突，则可以将各个子集的自然键作为整合后的表的联合主键。</p>
 </li>
 </ol>
+<h4 id="水平拆分"><a href="#水平拆分" class="headerlink" title="水平拆分"></a>水平拆分</h4><p>维度通常需要按照类别或类型进行细分，设计维度有如下两种方法</p>
+<ol>
+<li>方案一：将维度的不同分类实例化为不同的维度，同时在主维度中保存公共属性</li>
+<li>方案二：维护单一维度，包含所有可能的属性</li>
+</ol>
+<p>在设计过程中应该考虑以下三个原则</p>
+<ol>
+<li>扩展性</li>
+<li>效能：性能和成本方面取得平衡</li>
+<li>易用性：模型可l理解性高，访问复杂度低</li>
+</ol>
+<p>在维度进行水平拆分时，主要考虑如下两个依据</p>
+<ol>
+<li><p>维度的不同分类的属性差异情况</p>
+<p>当维度属性随类型变化较大时，将所有可能的属性建立在一个表中不切实际，建议采用方案一。定义一个主维度用于存放公共属性；同时定义多个子维度，其中除了包含公共属性外，还包括各自的特殊属性。</p>
+</li>
+<li><p>依据业务的关联程度</p>
+<p>两个相关性较低的业务，耦合在一起弊大于利，对模型的稳定性和易用性影响较大，可以采用方案二。</p>
+</li>
+</ol>
+<h4 id="垂直拆分"><a href="#垂直拆分" class="headerlink" title="垂直拆分"></a>垂直拆分</h4><p>由于维度分类的不同而存在特殊的维度属性，可以通过水平拆分解决该问题。</p>
+<p>对于某些维度属性的来源表产出时间较早，而某些维度属性的来源表产出时间较晚；或者某些维度属性的热度高，使用频繁，而某些维度属性比较稳定。处于扩展性，产出时间，易用性等方面考虑，设计主从维度，主维表存放未定，产出时间早，热度高的属性；在维表存放变化比较快，产生时间晚，热度低的属性。</p>
+<h3 id="维度变化"><a href="#维度变化" class="headerlink" title="维度变化"></a>维度变化</h3><h4 id="缓慢变化维"><a href="#缓慢变化维" class="headerlink" title="缓慢变化维"></a>缓慢变化维</h4><p>数据仓库的重要特点之一是反应历史变化。因为现实世界中，维度的属性并不是静态的，它会随着时间的流逝发生缓慢的变化，与数据增长较块的事实表相比，维度变化相对缓慢，这种缓慢变化的维度称为缓慢变化维。</p>
+<p>有三种处理缓慢变化维的方式</p>
+<ol>
+<li><p>重写维度值，不保留历史数据，始终取最新数据。</p>
+</li>
+<li><p>插入新的维度行，保留历史数据，维度变化前的事实和过去的维度值相关，维度变化后的事实与当前维度值关联</p>
+<p>该方式不能将变化前后记录的事实归一为变化前的维度或者归一为变化后的维度</p>
+</li>
+<li><p>添加维度列，该列存储旧的维度值</p>
+</li>
+</ol>
+<h4 id="快照维表"><a href="#快照维表" class="headerlink" title="快照维表"></a>快照维表</h4><p>一般使用代理键作为每个维表的主键，用于处理缓慢变化维。但对于分布式计算系统，不存在事务的概念，对于每个表的记录生成稳定（某条记录每次生成的代理键相同）的全局唯一的代理键难度较大。而且使用代理键会大大增加ETL（数据从来源端经过抽取（extract）、转换（transform）、加载（load）至目的端的过程）的复杂性，对ETL任务的开发和维护成本很高。</p>
+<p>处理缓慢变化维可以使用快照方式。数据仓库的计算周期一般是每天一次，基于此周期，处理缓慢变化维的方式就是每天保留一份全量快照数据。比如商品维度，每天保留一份全量商品快照数据，任意一天的事实均可以获取当天的商品信息，也可以获取最新的商品信息。（即每天的事实表对应每天的维度表）</p>
+<p>优点：</p>
+<ul>
+<li>简单有效，开发和维护成本低</li>
+<li>使用方便，理解性好</li>
+</ul>
+<p>弊端主要是存储的极大浪费。</p>
+<h4 id="极限存储"><a href="#极限存储" class="headerlink" title="极限存储"></a>极限存储</h4><p><strong>历史拉链</strong>是另一种处理缓慢变化维的方法。这种处理方法是通过新增两个时间戳字段，将所有以天为粒度的变更数据都记录下来。</p>
+<p>比如，如下表记录商品上架下架信息</p>
+<p><img src="%E5%95%86%E5%93%81%E4%B8%8A%E4%B8%8B%E6%9E%B6%E4%BF%A1%E6%81%AF.png" alt=""></p>
+<p>采用历史拉链存储，对于不变的数据，不再重复存储。</p>
+<p><img src="%E6%95%B0%E6%8D%AE%E6%8B%89%E9%93%BE.png" alt=""></p>
+<p>这种存储方式对下游使用存在一定的理解障碍，另外，这种存储方式用start_dt和end_dt做分区，随着时间推移，分区数量会极度膨胀。可以利用极限存储方式处理。</p>
+<p><strong>透明化</strong></p>
+<p>底层的数据还是使用历史拉链存储，但上层做一个视图操作，通过分析语句的分析树，把极限存储前的表的查询转换成对极限存储表的查询</p>
+<p><strong>分月做历史拉链</strong></p>
+<p>在每个月月初重新做历史拉链。</p>
+<p>该方法极大压缩了全量存储的成本，又可以对下游用户透明的效果。但其产出效率很低，并且对变化频率较高的数据并不能达到节约成本的效果。因此在实际生产中，做极限存储需要进行一些额外的处理</p>
+<ul>
+<li>在做极限存储前有一个全量存储表，全量存储表仅保留最近一段时间的全量分区数据，历史数据通过映射的方式关联到极限存储表。即用户只访问全量存储表，所以对用户来说极限存储是不可见的。</li>
+<li>对于部分变化频率频繁的字段需要过滤。</li>
+</ul>
 
             </div>
             <hr/>
@@ -446,23 +545,20 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2019/02/06/%E7%BB%B4%E5%BA%A6%E5%BB%BA%E6%A8%A1/">
+                <a href="/2019/02/06/%E5%85%83%E6%95%B0%E6%8D%AE/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="数据建模">
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="元数据">
                         
-                        <span class="card-title">数据建模</span>
+                        <span class="card-title">元数据</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            维度建模维度建模从分析决策的需求触发构建模型，为分析需求服务，因此它重点关注用户如何更快速地完成需求分析，同时具有较好的大规模复杂查询的响应性能。其设计分为以下几个步骤：
-
-选择需要进行分析决策的业务流程
-选择粒度，粒度是维度的一个组合
-识
+                            元数据概述元数据（Metadata）是关于数据的数据。元数据打通了源数据，数据仓库，数据应用，记录了数据从产生到消费的全过程。元数据主要记录数据仓库中模型的定义，各层级间的映射关系，监控数据仓库的数据状态以及ETL的任务运行状态。
+元数据按
                         
                     </div>
                     <div class="publish-info">
@@ -503,34 +599,32 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/02/03/HbaseShell/">
+                <a href="/2019/02/05/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="HbaseShell">
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="数据仓库">
                         
-                        <span class="card-title">HbaseShell</span>
+                        <span class="card-title">数据仓库</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Hbase ShellHBase提供了一个非常方便的命令行交互工具HBase Shell。
-以下表（s_behavior）为例
-
-数据定义语言数据定义语言（Data Definition Language，DDL），包括数据库表的创建，修改
+                            数据仓库数据仓库的定义：数据仓库是一个面向主题的，集成的，非易失的且随时间变化的数据集合，用来支持管理人员决策。
+特点面向主题的与传统数据库面向应用进行数据组织的特点相对应，数据仓库中的数据是面向主题进行组织的。在逻辑意义上，主题是对应企业
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-02-03
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-02-05
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/HBase/" class="post-category">
-                                    HBase
+                            <a href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/" class="post-category">
+                                    大数据
                                 </a>
                             
                             
@@ -544,8 +638,8 @@
                         <span class="chip bg-color">大数据</span>
                     </a>
                     
-                    <a href="/tags/HBase/">
-                        <span class="chip bg-color">HBase</span>
+                    <a href="/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93/">
+                        <span class="chip bg-color">数据仓库</span>
                     </a>
                     
                 </div>

@@ -20,9 +20,9 @@
       
         <tags>
             
-            <tag> 大数据 </tag>
-            
             <tag> HBase </tag>
+            
+            <tag> 大数据 </tag>
             
         </tags>
       
@@ -205,9 +205,9 @@
       
         <tags>
             
-            <tag> Hadoop </tag>
-            
             <tag> 大数据 </tag>
+            
+            <tag> Hadoop </tag>
             
         </tags>
       
@@ -367,9 +367,9 @@
       
         <tags>
             
-            <tag> 大数据 </tag>
-            
             <tag> HBase </tag>
+            
+            <tag> 大数据 </tag>
             
         </tags>
       
@@ -394,9 +394,9 @@
       
         <tags>
             
-            <tag> Hadoop </tag>
-            
             <tag> 大数据 </tag>
+            
+            <tag> Hadoop </tag>
             
         </tags>
       
@@ -421,9 +421,9 @@
       
         <tags>
             
-            <tag> Hadoop </tag>
-            
             <tag> 大数据 </tag>
+            
+            <tag> Hadoop </tag>
             
         </tags>
       
@@ -457,33 +457,6 @@
     
     
     <entry>
-      <title>Hbase数据模型</title>
-      <link href="/2019/01/15/Hbase%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B/"/>
-      <url>/2019/01/15/Hbase%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B/</url>
-      
-        <content type="html"><![CDATA[<p>Hbase很适合存储不确定列，不确定大小的半结构化数据</p><h2 id="逻辑模型"><a href="#逻辑模型" class="headerlink" title="逻辑模型"></a>逻辑模型</h2><p>Hbase是一个键值（key-value）型数据库。Hbase数据行列值可以是空白的，且这些空白行列值不占用存储空间，所以Hbase存储的数据是稀疏的。</p><ul><li><p>表（table）：类似于关系型数据库中的表，即数据行的集合。一个表可以包含一个或者多个分区（region）</p></li><li><p>行键（row key）：用来标识表中唯一的一行数据，类似于关系型数据库中表的主键（不同的是从底层储存来说，行键不能唯一标识一行数据，因为Hbase数据行可以有多个版本，版本用时间戳表示），表中的数据按行键的字典序排序</p></li><li><p>列族（column family）：<strong>Hbase是一个列式存储数据库</strong>，所谓的列式就是根据列族存储，每个列族有一个存储仓库（Store），每个Store有一个内存仓库（MemStore）和多个存储文件（StoreFile）</p></li><li><p>列限定符（column qualifier）：每个列族可以有任意个列限定符用来标识不同的列，这个列类似于关系型数据库中的一列，不同的是，列可以在表创建时不指定，在需要使用时动态插入</p></li><li><p>单元格（cell）：由<strong>行键，列族，列限定符，时间戳，类型</strong>唯一决定，是Hbase数据的存储单元，以字节码的形式存储</p></li><li><p>版本（version）：Hbase数据写入后无法被修改的，数据的PUT操作在写入预写入日志（write-ahead-log）（类似于redo log）后，先写入内存仓库（MemStore），同时在内存中按行键排序，最后再将MemStore中的数据刷新到磁盘的StoreFile文件。因为数据已经排序，所以只需要顺序写入磁盘，这样的顺序写入对磁盘来说效率很高。由于数据不会被修改，因此数据会有多个版本，这些数据都会有一个时间戳用来标识数据写入的时间</p></li><li><p>分区（region）：Hbase的分区时集群中高可用，动态扩展，负载均衡的最小单元。</p></li></ul><p>例如表</p><p><img src="%E8%A1%A8%E7%BB%93%E6%9E%84.png" alt=""></p><ul><li>行键可以定位到一行数据</li><li>列族用来定位到列族文件</li><li>列限定符定位到数据的某一列即某个键值对</li><li>时间戳定位到键值对的某一个时间版本数据</li></ul><h2 id="物理模型"><a href="#物理模型" class="headerlink" title="物理模型"></a>物理模型</h2><p>Hbase是一个列式存储数据库，数据按照列族聚簇存储再存储文件中，空白的列单元不会被存储。</p><ol><li>HBase中表按照行键的范围被划分为不同的分区，各个分区由分区服务器负责管理并提供数据读写服务，HBase主节点进程（HMaster）负责分区的分配以及在集群中的集群</li><li>一个分区同时有且仅有一个分区服务器提供服务，一个分区下的每个列族都会有一个存储仓库</li><li>每个Store（存储仓库）有且仅有一个MemStore（内存仓库），但是可以有多个存储文件，存储文件只会顺序写入，不支持修改</li><li>数据块（block）是Hbase中数据读取的最小单元，StoreFile由数据块组成，可以在建表时按列族指定表数据的数据块大小</li></ol><p>物理视图如下：</p><p><img src="%E7%89%A9%E7%90%86%E8%A7%86%E5%9B%BE.png" alt=""></p><p>HBase模块交互如下</p><p><img src="%E6%A8%A1%E5%9D%97%E4%BA%A4%E4%BA%92.png" alt=""></p><ul><li>HMaster：负责监控集群中所有的分区服务器进程（HRegionServer），负责所有数据的更新，负责分区在分区服务器中的负载均衡，在一个分布式环境中，HMaster进程通常与Hadoop的NameNode运行在同一个节点，每个集群中会部署至少两个HMaster节点，一个作为活跃节点提供服务，一个作为备用节点提供快速的灾备切换，保证集群高可用。</li><li>HRegionServer：管理其负责的分区，处理分区的读写请求，分区增大的拆分，以及分区的压缩。Hbase客户端对数据的读写直接与分区服务器交互，因此对分区的读写不会对HMater造成压力。HRegionServer通常与Hadoop的DataNode运行在一个节点，这样对数据的读写可以尽量做到本地读取，减少网络请求。</li><li>WAL：默认情况下一个分区服务器仅有一个WAL，Hbase客户端数据请求操作会先写入WAL文件再写入内存仓库MemStore，当MemStore到达配置大小或者集群中所有MemStore使用的总内存达到配置的阈值百分比时，MemStore会刷新一个StoreFile到磁盘。当服务器宕机时，可以用WAL来恢复分区服务器的状态。</li><li>MemStore：MemStore位于分区服务器的堆内存，数据再写入MemStore时候会按行键的字典序排序，Mem作为一个内存级缓存，能够提供对新写入数据的快速访问。</li></ul>]]></content>
-      
-      
-      <categories>
-          
-          <category> HBase </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 大数据 </tag>
-            
-            <tag> HBase </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Hbase模式设计实例</title>
       <link href="/2019/01/15/Hbase%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%AE%9E%E4%BE%8B/"/>
       <url>/2019/01/15/Hbase%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%AE%9E%E4%BE%8B/</url>
@@ -500,9 +473,36 @@
       
         <tags>
             
+            <tag> HBase </tag>
+            
             <tag> 大数据 </tag>
             
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Hbase数据模型</title>
+      <link href="/2019/01/15/Hbase%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B/"/>
+      <url>/2019/01/15/Hbase%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B/</url>
+      
+        <content type="html"><![CDATA[<p>Hbase很适合存储不确定列，不确定大小的半结构化数据</p><h2 id="逻辑模型"><a href="#逻辑模型" class="headerlink" title="逻辑模型"></a>逻辑模型</h2><p>Hbase是一个键值（key-value）型数据库。Hbase数据行列值可以是空白的，且这些空白行列值不占用存储空间，所以Hbase存储的数据是稀疏的。</p><ul><li><p>表（table）：类似于关系型数据库中的表，即数据行的集合。一个表可以包含一个或者多个分区（region）</p></li><li><p>行键（row key）：用来标识表中唯一的一行数据，类似于关系型数据库中表的主键（不同的是从底层储存来说，行键不能唯一标识一行数据，因为Hbase数据行可以有多个版本，版本用时间戳表示），表中的数据按行键的字典序排序</p></li><li><p>列族（column family）：<strong>Hbase是一个列式存储数据库</strong>，所谓的列式就是根据列族存储，每个列族有一个存储仓库（Store），每个Store有一个内存仓库（MemStore）和多个存储文件（StoreFile）</p></li><li><p>列限定符（column qualifier）：每个列族可以有任意个列限定符用来标识不同的列，这个列类似于关系型数据库中的一列，不同的是，列可以在表创建时不指定，在需要使用时动态插入</p></li><li><p>单元格（cell）：由<strong>行键，列族，列限定符，时间戳，类型</strong>唯一决定，是Hbase数据的存储单元，以字节码的形式存储</p></li><li><p>版本（version）：Hbase数据写入后无法被修改的，数据的PUT操作在写入预写入日志（write-ahead-log）（类似于redo log）后，先写入内存仓库（MemStore），同时在内存中按行键排序，最后再将MemStore中的数据刷新到磁盘的StoreFile文件。因为数据已经排序，所以只需要顺序写入磁盘，这样的顺序写入对磁盘来说效率很高。由于数据不会被修改，因此数据会有多个版本，这些数据都会有一个时间戳用来标识数据写入的时间</p></li><li><p>分区（region）：Hbase的分区时集群中高可用，动态扩展，负载均衡的最小单元。</p></li></ul><p>例如表</p><p><img src="%E8%A1%A8%E7%BB%93%E6%9E%84.png" alt=""></p><ul><li>行键可以定位到一行数据</li><li>列族用来定位到列族文件</li><li>列限定符定位到数据的某一列即某个键值对</li><li>时间戳定位到键值对的某一个时间版本数据</li></ul><h2 id="物理模型"><a href="#物理模型" class="headerlink" title="物理模型"></a>物理模型</h2><p>Hbase是一个列式存储数据库，数据按照列族聚簇存储再存储文件中，空白的列单元不会被存储。</p><ol><li>HBase中表按照行键的范围被划分为不同的分区，各个分区由分区服务器负责管理并提供数据读写服务，HBase主节点进程（HMaster）负责分区的分配以及在集群中的集群</li><li>一个分区同时有且仅有一个分区服务器提供服务，一个分区下的每个列族都会有一个存储仓库</li><li>每个Store（存储仓库）有且仅有一个MemStore（内存仓库），但是可以有多个存储文件，存储文件只会顺序写入，不支持修改</li><li>数据块（block）是Hbase中数据读取的最小单元，StoreFile由数据块组成，可以在建表时按列族指定表数据的数据块大小</li></ol><p>物理视图如下：</p><p><img src="%E7%89%A9%E7%90%86%E8%A7%86%E5%9B%BE.png" alt=""></p><p>HBase模块交互如下</p><p><img src="%E6%A8%A1%E5%9D%97%E4%BA%A4%E4%BA%92.png" alt=""></p><ul><li>HMaster：负责监控集群中所有的分区服务器进程（HRegionServer），负责所有数据的更新，负责分区在分区服务器中的负载均衡，在一个分布式环境中，HMaster进程通常与Hadoop的NameNode运行在同一个节点，每个集群中会部署至少两个HMaster节点，一个作为活跃节点提供服务，一个作为备用节点提供快速的灾备切换，保证集群高可用。</li><li>HRegionServer：管理其负责的分区，处理分区的读写请求，分区增大的拆分，以及分区的压缩。Hbase客户端对数据的读写直接与分区服务器交互，因此对分区的读写不会对HMater造成压力。HRegionServer通常与Hadoop的DataNode运行在一个节点，这样对数据的读写可以尽量做到本地读取，减少网络请求。</li><li>WAL：默认情况下一个分区服务器仅有一个WAL，Hbase客户端数据请求操作会先写入WAL文件再写入内存仓库MemStore，当MemStore到达配置大小或者集群中所有MemStore使用的总内存达到配置的阈值百分比时，MemStore会刷新一个StoreFile到磁盘。当服务器宕机时，可以用WAL来恢复分区服务器的状态。</li><li>MemStore：MemStore位于分区服务器的堆内存，数据再写入MemStore时候会按行键的字典序排序，Mem作为一个内存级缓存，能够提供对新写入数据的快速访问。</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> HBase </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
             <tag> HBase </tag>
+            
+            <tag> 大数据 </tag>
             
         </tags>
       
@@ -635,9 +635,9 @@
       
         <tags>
             
-            <tag> Hadoop </tag>
-            
             <tag> 大数据 </tag>
+            
+            <tag> Hadoop </tag>
             
         </tags>
       

@@ -334,7 +334,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.6k
+                    3.5k
                 </div>
                 
 
@@ -582,11 +582,7 @@ tab<span class="token punctuation">[</span>i <span class="token operator">=</spa
                         <span class="token punctuation">}</span>
                     <span class="token punctuation">}</span> <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>e <span class="token operator">=</span> next<span class="token punctuation">)</span> <span class="token operator">!=</span> null<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-                    <span class="token comment" spellcheck="true">//将上述的两个链表放在对应的桶中</span>
-                    <span class="token comment" spellcheck="true">/** 由老数组存放到链表中时，是从头到尾遍历存放
-                     *  而从链表存放到新数组中，是从尾到头逆序存放
-                     *  因此新数组相对于旧数组会逆序
-                     */</span> 
+                    <span class="token comment" spellcheck="true">//将上述的两个链表放在对应的桶中，并且不会改变数据的相对位置</span>
                     <span class="token comment" spellcheck="true">//多出一位为0的，在原位置不动</span>
                     <span class="token keyword">if</span> <span class="token punctuation">(</span>loTail <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
                         loTail<span class="token punctuation">.</span>next <span class="token operator">=</span> null<span class="token punctuation">;</span>

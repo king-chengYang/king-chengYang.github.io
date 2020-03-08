@@ -4,14 +4,10 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="Java内存区域, 成">
-    <meta name="description" content="Java内存区域JDK7的内存区域如下
-
-线程私有：虚拟机栈，本地方法栈，程序计数器
-线程共享：堆内存，方法区
-
-
-程序计数器虚拟机中的程序计数器和计算机的程序计数器(PC)作用类似，可以看成当前线程所执行的字节码的行号指示器，用来记录下一">
+    <meta name="keywords" content="Mysql技术内幕阅读笔记(一), 成">
+    <meta name="description" content="Mysql体系结构和存储引擎数据库与实例
+数据库：数据库是文件的集合，是依照某种数据模型组织起来并存放于存储器中的数据集合
+实例：数据库实例是程序，是位于用户和操作系统之间的一层数据管理软件，用户对数据库中的数据做任何的操作，包括数据定义、">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +15,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Java内存区域 | 成</title>
+    <title>Mysql技术内幕阅读笔记(一) | 成</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -180,12 +176,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Java内存区域</h1>
+                    <h1 class="description center-align post-title">Mysql技术内幕阅读笔记(一)</h1>
                 </div>
             </div>
         </div>
@@ -302,12 +298,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/java/">
-                                <span class="chip bg-color">java</span>
+                            <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
+                                <span class="chip bg-color">数据库</span>
                             </a>
                         
-                            <a href="/tags/jvm/">
-                                <span class="chip bg-color">jvm</span>
+                            <a href="/tags/mysql/">
+                                <span class="chip bg-color">mysql</span>
                             </a>
                         
                     </div>
@@ -318,8 +314,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/java/" class="post-category">
-                                java
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
+                                数据库
                             </a>
                         
                     </div>
@@ -331,7 +327,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-01-13
+                    2019-03-07
                 </div>
                 
 
@@ -340,7 +336,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    710
+                    692
                 </div>
                 
 
@@ -358,50 +354,41 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="Java内存区域"><a href="#Java内存区域" class="headerlink" title="Java内存区域"></a>Java内存区域</h2><p>JDK7的内存区域如下</p>
-<ul>
-<li>线程私有：虚拟机栈，本地方法栈，程序计数器</li>
-<li>线程共享：堆内存，方法区</li>
+                <h2 id="Mysql体系结构和存储引擎"><a href="#Mysql体系结构和存储引擎" class="headerlink" title="Mysql体系结构和存储引擎"></a>Mysql体系结构和存储引擎</h2><h3 id="数据库与实例"><a href="#数据库与实例" class="headerlink" title="数据库与实例"></a>数据库与实例</h3><ul>
+<li>数据库：数据库是文件的集合，是依照某种数据模型组织起来并存放于存储器中的数据集合</li>
+<li>实例：数据库实例是程序，是位于用户和操作系统之间的一层数据管理软件，用户对数据库中的数据做任何的操作，包括数据定义、数据查询、数据维护、数据库运行控制等等都是在数据库实例下进行的，应用程序只有通过数据库实例才能和数据库打交道。</li>
 </ul>
-<p><img src="java7%E5%86%85%E5%AD%98.png" alt=""></p>
-<h4 id="程序计数器"><a href="#程序计数器" class="headerlink" title="程序计数器"></a>程序计数器</h4><p>虚拟机中的程序计数器和计算机的程序计数器(PC)作用类似，可以看成当前线程所执行的字节码的行号指示器，用来记录下一条要执行的指令。</p>
-<p>该区域没有规定任何OutMemeryError情况</p>
-<h4 id="虚拟机栈"><a href="#虚拟机栈" class="headerlink" title="虚拟机栈"></a>虚拟机栈</h4><p>虚拟机栈用来描述<strong>java方法</strong>执行的内存模型，每个方法在执行的同时会创建一个栈帧。</p>
-<p>栈帧中存放局部变量表，操作数栈，动态链接，方法出口</p>
-<p>其中局部变量表存放编译器可知的各种数据类型，对象引用，returnAddress类型(执行下一条指令)，局部变量表所需要的内存空间在编译期间完成分配</p>
-<p><img src="%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%A0%88.png" alt=""></p>
-<h4 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h4><p>堆中存放所有的对象实例以及数组</p>
-<p>堆内部也进行了分块划分，如下，这个划分会在垃圾回收时使用。</p>
-<p><img src="%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A0%86.png" alt=""></p>
-<h4 id="方法区"><a href="#方法区" class="headerlink" title="方法区"></a>方法区</h4><p>方法区存储已被虚拟机加载的<strong>类信息</strong>，<strong>常量</strong>，<strong>静态常量</strong>，<strong>即时编译器编译的代码</strong>，该区域通常被称为“永久代”</p>
-<h4 id="运行时常量池"><a href="#运行时常量池" class="headerlink" title="运行时常量池"></a>运行时常量池</h4><p>运行时常量池时方法区的一部分，用于存放编译期生成的各种字面量和符号的引用</p>
-<h3 id="jdk1-8的变化"><a href="#jdk1-8的变化" class="headerlink" title="jdk1.8的变化"></a>jdk1.8的变化</h3><ol>
-<li>将方法区除运行时常量池部分移动到了直接内存</li>
-<li>将运行时常量池部分移动到了堆中</li>
-</ol>
-<p><img src="%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%86%85%E5%AD%98%E7%A9%BA%E9%97%B4.png" alt=""></p>
-<h2 id="java的对象"><a href="#java的对象" class="headerlink" title="java的对象"></a>java的对象</h2><h3 id="对象的创建"><a href="#对象的创建" class="headerlink" title="对象的创建"></a>对象的创建</h3><p>当虚拟机遇到一个new指令时</p>
-<p><img src="java%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1.png" alt=""></p>
+<p>Mysql是一个单进程多线程的应用，Mysql实例在系统上表现就是一个进程。</p>
+<p>数据库是一个个文件组成的，要对这些文件执行诸如select，insert，updata，delete之类的数据库操作是不能简单通过操作文件来更改数据库的内容，需要通过数据库实例来完成对数据库的操作。</p>
+<h3 id="Mysql体系结构"><a href="#Mysql体系结构" class="headerlink" title="Mysql体系结构"></a>Mysql体系结构</h3><p><img src="Mysql%E6%9E%B6%E6%9E%84.png" alt=""></p>
+<p>Mysql由以下几个部分组成</p>
 <ul>
-<li><p>检查类是否已经加载</p>
-<p>判断该类是否已被加载，解析，初始化，若没有的话，必须先执行类加载过程</p>
-</li>
-<li><p>为对象分配内存</p>
-<p>对象所需要的内存大小在类加载完成之后便可完全确定。在类加载检查通过后，虚拟机将为对象分配内存。</p>
-</li>
-<li><p>初始化零值</p>
-<p>内存分配完之后，虚拟机将分配到的内存空间都初始化为零值。这一步保证对象的实例字段在java代码中可以不赋初始值就可以直接使用，程序能访问这些字段的数据类型所对应的零值</p>
-</li>
-<li><p>对象头信息设置</p>
-<p>虚拟机堆对对象进行必要的设置，例如对象是哪个类的实例，如何找到类的元数据信息，对象的哈希码等等，这些信息都在对象头之中</p>
-</li>
-<li><p>执行init方法</p>
-<p>最后一步即把对象按照程序员的意愿进行初始化</p>
-</li>
+<li>连接池组件</li>
+<li>管理服务和工具组件</li>
+<li>SQL接口组件</li>
+<li>查询分析器组件</li>
+<li>优化器组件</li>
+<li>缓冲组件</li>
+<li>插件式储存引擎</li>
+<li>物理文件</li>
 </ul>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>《深入理解Java虚拟机第二版》</p>
-<p><a href="https://blog.csdn.net/bruce128/article/details/79357870" target="_blank" rel="noopener">https://blog.csdn.net/bruce128/article/details/79357870</a></p>
-<p><a href="https://juejin.im/post/5a14de6751882555cc417df7" target="_blank" rel="noopener">https://juejin.im/post/5a14de6751882555cc417df7</a></p>
+<h3 id="Mysql存储引擎"><a href="#Mysql存储引擎" class="headerlink" title="Mysql存储引擎"></a>Mysql存储引擎</h3><p>存储引擎是基于表的，而不是数据库</p>
+<p>存储引擎的好处就是，每个存储引擎都有各自的特点，能够根据具体的应用建立不同存储引擎表，下面简介两个存储引擎</p>
+<h4 id="InnoDB存储引擎"><a href="#InnoDB存储引擎" class="headerlink" title="InnoDB存储引擎"></a>InnoDB存储引擎</h4><p>InnoDB存储引擎支持事务，其设计目标主要是面向在线事务处理（OLTP）的应用，是Mysql默认的存储引擎</p>
+<ul>
+<li>行锁设计</li>
+<li>支持外键</li>
+<li>非锁定读，即默认读取操作不会产生锁</li>
+</ul>
+<p>InnoDB通过使用多版本并发控制(MVCC)来获得高并发性，其实现了SQL标准的四种隔离级别，默认为REPEATABLE级别，它使用一种被称为next-keylocking的策略来避免幻读现象的产生。InnoDB还提供插入缓冲、二次写、自适应哈希索引、预读等高性能和高可用功能。</p>
+<p>表中数据采用聚集的方式存放，因此每场表的储存都是按主键的顺序进行存放，如果没有显式指定主键，则会为每一行生成一个6字节的ROWID，并作为主键。</p>
+<h4 id="MyISAM存储引擎"><a href="#MyISAM存储引擎" class="headerlink" title="MyISAM存储引擎"></a>MyISAM存储引擎</h4><p>MyISAM主要面向一些OLAP数据库应用。</p>
+<ul>
+<li>不支持事务</li>
+<li>表锁设计</li>
+<li>支持全文索引</li>
+</ul>
+<p>MyISAM引擎的缓冲池只缓存索引文件，而不缓冲数据文件，MyISAM存储引擎表由MYD和MYI组成，MYD用来存放数据文件，MYI用来存放索引文件。</p>
 
             </div>
             <hr/>
@@ -415,12 +402,12 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/java/">
-                                    <span class="chip bg-color">java</span>
+                                <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
+                                    <span class="chip bg-color">数据库</span>
                                 </a>
                             
-                                <a href="/tags/jvm/">
-                                    <span class="chip bg-color">jvm</span>
+                                <a href="/tags/mysql/">
+                                    <span class="chip bg-color">mysql</span>
                                 </a>
                             
                         </div>
@@ -462,32 +449,39 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2019/01/15/%E8%AF%BB%E6%89%A9%E6%95%A3%E5%86%99%E6%89%A9%E6%95%A3/">
+                <a href="/2019/12/30/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="读扩散写扩散">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="计算机组成原理">
                         
-                        <span class="card-title">读扩散写扩散</span>
+                        <span class="card-title">计算机组成原理</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            在阅读HBase入门与实践这本书时，模式设计模块有一部分内容写到，微信朋友圈运用写扩散模型提高读的效率，即将一个用户发的朋友圈同步到该用户好友的时间线中。这次找到资料，稍微了解了解读扩散与写扩散。
-读扩散 VS 写扩散消息同步模型中，有写扩
+                            一. 计算机系统概述计算机性能指标硬件性能参数
+
+计算机字长：CPU字长，指CPU一次能处理数据的二进制位数
+机器主频：时钟脉冲的频率
+主存容量：计算机能够存放的最大的二进制位数bit，B，KB，MB
+
+计算机性能指标
+
+响应时间：计算机完
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2019-01-15
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-12-30
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E6%9E%B6%E6%9E%84/" class="post-category">
-                                    架构
+                            <a href="/categories/%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/" class="post-category">
+                                    期末复习
                                 </a>
                             
                             
@@ -497,12 +491,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%9E%B6%E6%9E%84/">
-                        <span class="chip bg-color">架构</span>
-                    </a>
-                    
-                    <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/">
-                        <span class="chip bg-color">分布式</span>
+                    <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">
+                        <span class="chip bg-color">计算机组成原理</span>
                     </a>
                     
                 </div>
@@ -516,32 +506,34 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/01/12/MapReduce%E5%8E%9F%E7%90%86/">
+                <a href="/2019/02/23/Hbase%E5%AE%A2%E6%88%B7%E7%AB%AFAPI/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="MapReduce原理">
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="Hbase客户端API">
                         
-                        <span class="card-title">MapReduce原理</span>
+                        <span class="card-title">Hbase客户端API</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            MapReduce介绍Hadoop Map/Reduce是一个使用简易的软件框架，基于它写出来的应用程序能够运行在由上千个商用机器组成的大型集群上，并以一种可靠容错的方式并行处理上T级别的数据集。
-一个Map/Reduce 作业（job） 
+                            客户端APIjava客户端向Hbase服务端发起请求的使用流程
+
+构建一个 Configuration实例，该实例包含了一些客户端配置项，最重要的必需的两个配置项是 HBase 集群的 ZooKeeper 地址与端口。 
+Connectio
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-01-12
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-02-23
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Hadoop/" class="post-category">
-                                    Hadoop
+                            <a href="/categories/HBase/" class="post-category">
+                                    HBase
                                 </a>
                             
                             
@@ -551,12 +543,12 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Hadoop/">
-                        <span class="chip bg-color">Hadoop</span>
-                    </a>
-                    
                     <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/">
                         <span class="chip bg-color">大数据</span>
+                    </a>
+                    
+                    <a href="/tags/HBase/">
+                        <span class="chip bg-color">HBase</span>
                     </a>
                     
                 </div>
@@ -694,13 +686,6 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
 
 </main>
 
-
-<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<script>
-    MathJax.Hub.Config({
-        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
-    });
-</script>
 
 
     <footer class="page-footer bg-color">

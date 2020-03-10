@@ -547,22 +547,19 @@ public int[] selectionSort(int[] n">
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2019/01/19/HDFS%E7%AE%80%E4%BB%8B/">
+                <a href="/2019/01/19/Hadoop%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="HDFS简介">
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="Hadoop存储系统">
                         
-                        <span class="card-title">HDFS简介</span>
+                        <span class="card-title">Hadoop存储系统</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            HDFS简介数据块HDFS上的文件被划分为块大小的多个分块，作为独立的存储单元，默认大小128M，并且不到一个块大小的文件不会占用多余的空间，比如10M的文件，只会占用10M的大小，而且一个块的大小。
-分布式文件系统抽象为块有如下好处
-
-一
+                            Hadoop存储系统基本概念namenodeHDFS采用Master/Slave架构。NameNode是HDFS的Master架构，主要负责HDFS文件系统的管理工作，具体包括名称空间（namespace）管理，文件Block管理。Name
                         
                     </div>
                     <div class="publish-info">
@@ -603,22 +600,31 @@ public int[] selectionSort(int[] n">
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/01/15/Hbase%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B/">
+                <a href="/2019/01/15/Hbase%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%AE%9E%E4%BE%8B/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="Hbase数据模型">
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="Hbase模式设计实例">
                         
-                        <span class="card-title">Hbase数据模型</span>
+                        <span class="card-title">Hbase模式设计实例</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Hbase很适合存储不确定列，不确定大小的半结构化数据
-逻辑模型Hbase是一个键值（key-value）型数据库。Hbase数据行列值可以是空白的，且这些空白行列值不占用存储空间，所以Hbase存储的数据是稀疏的。
+                            用户行为日志系统前提数据类型
 
-表（table）：类
+用户商品浏览记录
+用户商品下单记录
+
+统计需求
+
+需要查询同一个用户一段时间内浏览过的商品，用来做用户商品推荐以提高转化率
+需要统计某个商品在某天的转化率，用来分析各渠道或者营销方式的优劣
+
+数据特征
+
+数据
                         
                     </div>
                     <div class="publish-info">

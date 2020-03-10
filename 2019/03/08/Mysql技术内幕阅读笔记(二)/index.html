@@ -4,9 +4,12 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="MapReduce原理, 成">
-    <meta name="description" content="MapReduce介绍Hadoop Map/Reduce是一个使用简易的软件框架，基于它写出来的应用程序能够运行在由上千个商用机器组成的大型集群上，并以一种可靠容错的方式并行处理上T级别的数据集。
-一个Map/Reduce 作业（job） ">
+    <meta name="keywords" content="Mysql技术内幕阅读笔记(二), 成">
+    <meta name="description" content="InnoDB存储引擎InnoDB体系架构InnoDB存储引擎有多个内存块，负责如下工作
+
+维护所有进程/线程需要访问的多个内部数据结构
+缓存磁盘上的数据，方便快速的读取，同时在对磁盘文件的数据修改之前在这里缓存。
+重做日志(redo log">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -14,7 +17,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>MapReduce原理 | 成</title>
+    <title>Mysql技术内幕阅读笔记(二) | 成</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -175,12 +178,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">MapReduce原理</h1>
+                    <h1 class="description center-align post-title">Mysql技术内幕阅读笔记(二)</h1>
                 </div>
             </div>
         </div>
@@ -297,12 +300,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Hadoop/">
-                                <span class="chip bg-color">Hadoop</span>
+                            <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
+                                <span class="chip bg-color">数据库</span>
                             </a>
                         
-                            <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/">
-                                <span class="chip bg-color">大数据</span>
+                            <a href="/tags/mysql/">
+                                <span class="chip bg-color">mysql</span>
                             </a>
                         
                     </div>
@@ -313,8 +316,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/Hadoop/" class="post-category">
-                                Hadoop
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
+                                数据库
                             </a>
                         
                     </div>
@@ -326,7 +329,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-01-12
+                    2019-03-08
                 </div>
                 
 
@@ -335,7 +338,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.1k
+                    2.3k
                 </div>
                 
 
@@ -353,99 +356,134 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="MapReduce介绍"><a href="#MapReduce介绍" class="headerlink" title="MapReduce介绍"></a>MapReduce介绍</h2><p>Hadoop Map/Reduce是一个使用简易的软件框架，基于它写出来的应用程序能够运行在由上千个商用机器组成的大型集群上，并以一种可靠容错的方式并行处理上T级别的数据集。</p>
-<p>一个Map/Reduce <em>作业（job）</em> 通常会把输入的数据集切分为若干独立的数据块，由 <em>map任务（task）</em>以完全并行的方式处理它们。框架会对map的输出先进行排序， 然后把结果输入给<em>reduce任务</em>。通常作业的输入和输出都会被存储在文件系统中。 整个框架负责任务的调度和监控，以及重新执行已经失败的任务。</p>
-<h2 id="MapReduce原理"><a href="#MapReduce原理" class="headerlink" title="MapReduce原理"></a>MapReduce原理</h2><p>MapReduce通常由三个操作组成</p>
+                <h2 id="InnoDB存储引擎"><a href="#InnoDB存储引擎" class="headerlink" title="InnoDB存储引擎"></a>InnoDB存储引擎</h2><h3 id="InnoDB体系架构"><a href="#InnoDB体系架构" class="headerlink" title="InnoDB体系架构"></a>InnoDB体系架构</h3><p>InnoDB存储引擎有多个内存块，负责如下工作</p>
 <ul>
-<li>map操作：map操作是一类将输入记录集转换为中间格式记录集的独立任务，其应用于本地数据。</li>
-<li>shuffle操作：工作节点根据输出键（由 map 函数生成）重新分配数据，对数据映射排序、分组、拷贝，目的是属于一个键的所有数据都位于同一个工作节点上。</li>
-<li>reduce操作：Reduce操作将与一个key关联的一组中间数值集归约（reduce）为一个更小的数值集。</li>
+<li>维护所有进程/线程需要访问的多个内部数据结构</li>
+<li>缓存磁盘上的数据，方便快速的读取，同时在对磁盘文件的数据修改之前在这里缓存。</li>
+<li>重做日志(redo log)缓冲</li>
 </ul>
-<p><img src="MapReduce%E6%B5%81%E7%A8%8B.png" alt=""></p>
-<p>其中map阶段与reduce阶段之间的关系如下，而shuffle阶段就是将map输出的键相同的值汇聚在一起以供reduce处理</p>
-<p><img src="Map%E4%B8%8EReduce%E7%9A%84%E5%85%B3%E7%B3%BB.png" alt=""></p>
-<h3 id="Map阶段"><a href="#Map阶段" class="headerlink" title="Map阶段"></a>Map阶段</h3><p> Map在输入的数据中获取一个键值对，然后返回一个键值对的列表：</p>
-<pre class=" language-java"><code class="language-java"><span class="token function">Map</span><span class="token punctuation">(</span>k1<span class="token punctuation">,</span>v1<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token function">list</span><span class="token punctuation">(</span>k2<span class="token punctuation">,</span>v2<span class="token punctuation">)</span></code></pre>
-<p>Map函数会被并行调用，应用于输入数据集中的每个键值对（keyed by K1），然后每个调用返回一个键值对（keyed by K2）列表。</p>
-<p>以计算词频为例，Map阶段如下</p>
-<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
- * 继承的Mapper类中
- *    第一个参数：LongWritable是输入的键，此处表示一行的起始偏移量
- *    第二个参数：Text是输入的值，此处表示一行的文本内容
- *    第三个参数：Text是输出的键，此处表示每一个单词
- *    第四个参数：IntWritable是输出的值，此处表示每个单词的数量都是1(不管重复不重复)
- */</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">WordCountMapper</span> <span class="token keyword">extends</span> <span class="token class-name">Mapper</span><span class="token operator">&lt;</span>LongWritable<span class="token punctuation">,</span> Text<span class="token punctuation">,</span> Text<span class="token punctuation">,</span> IntWritable<span class="token operator">></span><span class="token punctuation">{</span>
+<p><img src="InnoDB%E6%9E%B6%E6%9E%84.png" alt=""></p>
+<p>后台线程的主要作用是负责刷新内存池中的数据，保证缓冲池中的内存缓存的是最近的数据。并将已修改的数据文件刷新到磁盘文件，同时保证数据库发生异常的情况下InnoDB能恢复到正常运行状态。</p>
+<h4 id="后台线程"><a href="#后台线程" class="headerlink" title="后台线程"></a>后台线程</h4><ol>
+<li><p>Master Thread</p>
+<p>主要负责将缓存池中数据异步刷新到磁盘，保证数据的一致性，包括脏页的刷新，合并插入缓存，undo页的回收等。</p>
+</li>
+<li><p>IO Thread</p>
+<p>InnoDB存储引擎大量使用了AIO（Async IO）来处理IO请求，IO Thread的工作主要负责这些IO请求的回调处理。</p>
+<p>从InnoDB1.0版本开始，各IO Thread数量如下</p>
+<ul>
+<li>wrtie thread：4个</li>
+<li>read thread：4个</li>
+<li>insert buffer thread：1个</li>
+<li>log IO：1个</li>
+</ul>
+<pre class=" language-mysql"><code class="language-mysql"># INNODB版本查询
+SHOW VARIABLES LIKE 'INNODB_VERSION'\G;
 
-    <span class="token comment" spellcheck="true">/*
-     * map方法是提供给map task进程来调用的，map task进程是每读取一行文本来调用一次自定义的map方法
-     * map task在调用map方法时，传递的参数：
-     *         一行的起始偏移量LongWritable作为key
-     *         一行的文本内容Text作为value
-     */</span>
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">map</span><span class="token punctuation">(</span>LongWritable key<span class="token punctuation">,</span> Text value<span class="token punctuation">,</span>Context context<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException<span class="token punctuation">,</span> InterruptedException <span class="token punctuation">{</span>
-        <span class="token comment" spellcheck="true">//拿到一行文本内容，转换成String 类型</span>
-        String line <span class="token operator">=</span> value<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment" spellcheck="true">//将这行文本切分成单词</span>
-        String<span class="token punctuation">[</span><span class="token punctuation">]</span> words<span class="token operator">=</span>line<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+# INNODB THREAD 数量查询
+SHOW VARIABLES LIKE 'innodb_%io_threads'\G;
 
-        <span class="token comment" spellcheck="true">//输出&lt;单词，1></span>
-        <span class="token keyword">for</span><span class="token punctuation">(</span>String word<span class="token operator">:</span>words<span class="token punctuation">)</span><span class="token punctuation">{</span>
-            context<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Text</span><span class="token punctuation">(</span>word<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">IntWritable</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
-<h3 id="Shuffle阶段"><a href="#Shuffle阶段" class="headerlink" title="Shuffle阶段"></a>Shuffle阶段</h3><p>shuffle阶段是承接map和reduce，其也可以分为map shuffle和reduce shuffle</p>
-<h4 id="map-shuffle"><a href="#map-shuffle" class="headerlink" title="map shuffle"></a>map shuffle</h4><p>在Map端的shuffle过程是对Map的结果进行分区、排序、分割，然后将属于同一划分（分区）的输出合并在一起并写在磁盘上，最终得到一个分区有序的文件，分区有序的含义是map输出的键值对按分区进行排列，具有相同partition值的键值对存储在一起，每个分区里面的键值对又按key值进行升序排列（默认），其流程大致如下：<br><img src="MapShuffle.png" alt=""></p>
-<h5 id="partition"><a href="#partition" class="headerlink" title="partition"></a>partition</h5><p>对于map输出的每一键值对，系统会定一个partition，partition值默认是通过计算key的hash值后对Reduce task的数量取模获得。</p>
-<p>默认情况下只能每一个partition是有序的，但是将所有Reduce的输出合并在一起并非是全局有序的。如果想要做到全局有序，可以只定义一个reduce task，或者自定义Partitioner将数据按序分到每一个分区上。而自定义需要注意数据的倾斜(不能将大量数据放在一个分区)，还要保证同一个键的数据分到一个分区上。</p>
-<h5 id="collector"><a href="#collector" class="headerlink" title="collector"></a>collector</h5><p>Map的输出结果是由collector处理，每Map任务不断得将键值对输出到内存中构造的一个环形数据结构中。这个数据结构其实就是字节数组，叫kvbuffer，同时存放数据和数据的索引。</p>
-<p>当kvbuffer使用到一定程度时，则触发spill。默认的spill门限为0.8，即空间使用了80%的时候，这样可以使Map的输出进程和spill进程并发进行</p>
-<h5 id="sort"><a href="#sort" class="headerlink" title="sort"></a>sort</h5><p>当spill触发后，会先将kvbuffer中的数据按照partition值和key两个关键字升序排序，只移动数据的索引，排序结果是将索引数据按照partition为单位聚集在一起，同一个partition中按照key有序</p>
-<h5 id="spill"><a href="#spill" class="headerlink" title="spill"></a>spill</h5><p>spill的过程就是将数据写入到本地的过程，Spill线程根据排过序的Kvmeta挨个partition的把数据吐到这个文件中。</p>
-<p>在这个过程中如果用户配置了combiner类，那么在写之前会先调用combineAndSpill()，对结果进行进一步合并后再写出。Combiner会优化MapReduce的中间结果，Combiner的输出是Reducer的输入，Combiner绝不能改变最终的计算结果。一般combiner类指定为Reduce，因此combiner适合用于Reduce的输入key/value与输出key/value类型完全一致，且不影响最终结果的场景。</p>
-<h5 id="merge"><a href="#merge" class="headerlink" title="merge"></a>merge</h5><p>Map任务如果输出数据量很大，可能会进行好几次Spill，输出的文件会产生很多，分布在不同的磁盘上。merge过程就是将这些文件合并成一个大文件。</p>
-<h4 id="reduce-shuffle"><a href="#reduce-shuffle" class="headerlink" title="reduce shuffle"></a>reduce shuffle</h4><p>在Reduce端，shuffle主要分为复制Map输出、排序合并两个阶段。</p>
-<h5 id="copy"><a href="#copy" class="headerlink" title="copy"></a>copy</h5><p>Reduce任务通过HTTP向各个Map任务拖取它所需要的数据。Map任务成功完成后，会通知父TaskTracker状态已经更新，TaskTracker进而通知JobTracker（这些通知在心跳机制中进行）。所以，对于指定作业来说，JobTracker能记录Map输出和TaskTracker的映射关系。Reduce会定期向JobTracker获取Map的输出位置，一旦拿到输出位置，Reduce任务就会从此输出对应的TaskTracker上复制输出到本地，而不会等到所有的Map任务结束。</p>
-<h5 id="merge-sort"><a href="#merge-sort" class="headerlink" title="merge sort"></a>merge sort</h5><p>Copy过来的数据会先放入内存缓冲区中，如果内存缓冲区中能放得下这次数据的话就直接把数据写到内存中，即<strong>内存到内存merge</strong>。Reduce要向每个Map去拖取数据，在内存中每个Map对应一块数据，当内存缓存区中存储的Map数据占用空间达到一定程度的时候，开始启动内存中merge，把内存中的数据merge输出到磁盘上一个文件中，即<strong>内存到磁盘merge</strong>。</p>
-<h3 id="Reduce阶段"><a href="#Reduce阶段" class="headerlink" title="Reduce阶段"></a>Reduce阶段</h3><p>Reduce 是对一个列表的元素进行适当的合并，将map阶段的键值对处理成我们想要的结果</p>
-<pre class=" language-java"><code class="language-java"><span class="token function">Reduce</span><span class="token punctuation">(</span>k2<span class="token punctuation">,</span> <span class="token function">list</span> <span class="token punctuation">(</span>v2<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token function">list</span><span class="token punctuation">(</span>v3<span class="token punctuation">)</span></code></pre>
-<p>以计算词频为例，Reduce阶段如下</p>
-<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
- * 继承的Reducer类中
- *    第一个参数：Text是输入的键,和Map阶段的输出键一样，此处表示每个单词
- *    第二个参数：IntWritable是输入的值，和Map阶段的输出值一样，此处表示每个单词的数量是1
- *    第三个参数：Text是输出的键，此处表示不重复的单词
- *    第四个参数：IntWritable是输出的值，此处表示每个单词的数量（不重复）
- */</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">WordCountReducer</span> <span class="token keyword">extends</span> <span class="token class-name">Reducer</span><span class="token operator">&lt;</span>Text<span class="token punctuation">,</span> IntWritable<span class="token punctuation">,</span> Text<span class="token punctuation">,</span> IntWritable<span class="token operator">></span><span class="token punctuation">{</span>
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token comment" spellcheck="true">/*
-     * reduce方法提供给reduce task进程来调用
-     * 
-     * reduce task会将shuffle阶段分发过来的大量kv数据对进行聚合，聚合的机制是相同key的kv对聚合为一组
-     * 然后reduce task对每一组聚合kv调用一次我们自定义的reduce方法
-     * 比如：&lt;hello,1>&lt;hello,1>&lt;hello,1>&lt;tom,1>&lt;tom,1>&lt;tom,1>
-     *  hello组会调用一次reduce方法进行处理，tom组也会调用一次reduce方法进行处理
-     *  调用时传递的参数：
-     *          key：一组kv中的key
-     *          values：一组kv中所有value的迭代器
-     */</span>
-    <span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">reduce</span><span class="token punctuation">(</span>Text key<span class="token punctuation">,</span> Iterable<span class="token operator">&lt;</span>IntWritable<span class="token operator">></span> values<span class="token punctuation">,</span>Context context<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException<span class="token punctuation">,</span> InterruptedException <span class="token punctuation">{</span>
-        <span class="token comment" spellcheck="true">//定义一个计数器</span>
-        <span class="token keyword">int</span> count <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-        <span class="token comment" spellcheck="true">//通过value这个迭代器，遍历这一组kv中所有的value，进行累加</span>
-        <span class="token keyword">for</span><span class="token punctuation">(</span>IntWritable value<span class="token operator">:</span>values<span class="token punctuation">)</span><span class="token punctuation">{</span>
-            count<span class="token operator">+=</span>value<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-
-        <span class="token comment" spellcheck="true">//输出这个单词的统计结果</span>
-        context<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">IntWritable</span><span class="token punctuation">(</span>count<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://juejin.im/post/5bb59f87f265da0aeb7118f2" target="_blank" rel="noopener">https://juejin.im/post/5bb59f87f265da0aeb7118f2</a></p>
-<p><a href="https://hadoop.apache.org/docs/r1.0.4/cn/mapred_tutorial.html" target="_blank" rel="noopener">https://hadoop.apache.org/docs/r1.0.4/cn/mapred_tutorial.html</a></p>
+# 查询IO THREAD
+SHOW ENGINE INNODB STATUS\G；</code></pre>
+<p>读线程ID总是小于写线程ID</p>
+</li>
+<li><p>purge Thread</p>
+<p>事务被提交之后，其所使用的undolog可能不再需要，因此需要使用purgeThread回收已经使用并分配的undo页，老版本中purge操作仅在Master Thread完成，InnoDB1.1之后，purge操作可以独立到单独线程中进行，一以此来减轻Mater Thread的工作，从而提高CPU的使用率以及提升存储引擎的性能。</p>
+<pre><code>在配置文件中开启独立的purge Thread
+[mysqld]
+innodb_purge_threads=1 #InnoBD1.2版本之后可以设置大于1</code></pre></li>
+<li><p>Page Cleaner Thread</p>
+<p>完成脏页的刷新操作（之前是在Master Thread完成），减轻Master Thread的工作及对于用户查询线程的阻塞</p>
+</li>
+</ol>
+<h4 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h4><ol>
+<li><p>缓冲池</p>
+<p>InnoDB存储引擎是基于磁盘存储的，并将其中的记录按照页的方式进行管理。为了解决磁盘与内存速度不匹配问题，使用缓冲池提高数据库的整体性能。</p>
+<ul>
+<li>读取操作：在数据库中进行读取页操作时，首先将磁盘读到的页存放在缓冲池中，这个过程称为将页“FIX”在缓冲池中，下一次读取相同的页时，首先判断页是否在缓冲池中，如果在，则该页在缓冲池被命中，可以直接读取，如果不再缓冲池中，需要从磁盘上读取。</li>
+<li>修改操作：首先修改在缓冲池中的页，然后再以一定的频率刷新到磁盘上。页从缓冲池刷新到磁盘的操作并不是在每次页发生更新时触发，而是通过checkPoint机制刷新回磁盘</li>
+</ul>
+<p>缓冲池中缓存的数据页类型有：<strong>索引页，数据页，undo页，插入缓冲（insert buffer），自适应哈希索引，InnoDB存储的锁信息，数据字典信息</strong></p>
+<p><img src="IoonDB%E5%86%85%E5%AD%98%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B.png" alt=""></p>
+<p>InnoDB1.0版本开始，允许多个缓冲池实例。每个页根据哈希值平均分配到不同缓冲池实例中。好处是减少数据库内部的资源竞争，增加数据库的并发处理能力。</p>
+</li>
+<li><p>LRU List ，Free List，Flush List</p>
+<p>LRU List</p>
+<p>数据库的缓冲池是通过LRU（Latest Recent Used，最近最少使用）算法进行管理。即最频繁使用的页放在LRU列表的前端，而最少使用的页在LRU列表的尾端。当缓冲池不能存放新读到的页时，将首先释放LRU列表中尾端的页。</p>
+<p>InnoDB存储引擎中，将LRU算法进行了改进，会将新读到的页放在midpoint位置，而不是直接放在LRU列表的首部，midpoint之后的列表称为old表，之前的列表称为new表。这是为了防止在进行索引和数据的扫描操作时，需要访问很多的页，而且这些页仅在该次操作中使用，并不是活跃的热点数据，如果将新读的页放在首部，在扫描操作中很可能会将热点数据刷新出去，因此放在midpoint处，等过了设置的放置时间（innodb_old_blocks_time）后，再将表加到LRU列表的热端。</p>
+<p><img src="LRU%E5%88%97%E8%A1%A8.png" alt=""></p>
+<ul>
+<li>页从LRU列表的old部分加入到new部分时，称此时发生的操作为page made young</li>
+<li>因为<code>innodb_old_blocks_time</code>的设置而导致页没有从old部分移动到new部分的操作称为page not made young。</li>
+</ul>
+<p>Free List</p>
+<p>当数据库刚启动时，LRU列表是空的，这是所有的页都存放在Free列表中。当需要从缓冲池分页时，首先从Free列表中查找是否有可用的空闲页，若有则将该页从Free列表中删除，放入到LRU列表中。</p>
+<p>INNODB存储引擎从1.0.X版本开始支持压缩页的功能，即将原来16KB的页压缩为1KB、2KB、4KB和8KB。由于页的大小发生了变化，所以LRU列表也有了些许的变化，对于非16KB的页，是通过unzip_LRU列表进行管理的。</p>
+<ul>
+<li>首先，在unzip_LRU列表中对不同压缩页大小的页进行分别管理</li>
+<li>其次通过伙伴算法进行内存的分配。如对需要从缓冲池中申请页为4KB的大小的过程如下<ul>
+<li>检查4KB的unzip_LRU的列表，检查是否有可用的空闲页；</li>
+<li>若有，则直接使用</li>
+<li>否则，检查8KB的unzip_LRU列表</li>
+<li>若能够得到空闲页，将页分成2个4KB的页，存放到4KB的unzip_LRU列表汇总；</li>
+<li>若不能得到空闲页，从LRU列表中申请一个16KB的页，分为1个8K的页还有2个4KB的页，分别存放到对应的unzip_LRU列表中。</li>
+</ul>
+</li>
+</ul>
+<p>Flush List</p>
+<p>在LRU列表中的页被修改后，该页成为脏页，即缓冲池中的页和磁盘上的页的数据产生了不一致。这时数据库会通过CHECKPOINT机制将脏页刷新会磁盘。</p>
+<p> Flush列表中的页即为脏页列表。</p>
+<p> 脏页既存在于LRU列表中，也存在与Flush列表中。LRU列表用来管理缓冲池中的页的可用性，Flush列表用来管理将页刷新回磁盘，二者互不影响。</p>
+</li>
+<li><p>重做日志缓存</p>
+<p>InnoDB存储引擎首先将重做日志信息放在这个缓冲区中，然后按照一定的频率刷新到重做日志文件。</p>
+<p>刷新到磁盘的策略</p>
+<ul>
+<li>MASTER THREAD每一秒将重做日志缓冲刷新到重做日志文件中</li>
+<li>每个事务提交时会将重做日志缓冲刷新到重做日志文件中</li>
+<li>当重做日志缓冲池剩余空间小于一半时，重做日志缓冲刷新到重做日志文件中。</li>
+</ul>
+</li>
+</ol>
+<h3 id="Checkpoint技术"><a href="#Checkpoint技术" class="headerlink" title="Checkpoint技术"></a>Checkpoint技术</h3><p>一条DML语句会使得产生脏页（内存的数据比磁盘新），那就需要刷新到磁盘中。基本上是采用<code>Write Ahead Log</code>策略。即当事务提交时，先写重做日志，再修改页。当由于发生宕机而导致数据丢失时，通过重做日志来完成数据的恢复。</p>
+<p> 而Checkpoint技术是为了解决这个过程的痛点：</p>
+<ul>
+<li><p>缩短数据库恢复的时间</p>
+<p> 由于checkpoint之前的数据都刷回去磁盘了，所以只需要对checkpoint后的重做日志进行恢复。大大缩短了恢复时间。</p>
+</li>
+<li><p>缓冲池不够用时，将脏页刷新到磁盘</p>
+<p> LRU算法会溢出最近最少使用的页，如果是脏页，强制Checkpoint。</p>
+</li>
+<li><p>重做日志不可用时，刷新脏页。</p>
+<p> 重做日志的空间是循环使用的，当要被重用的时候，被重用的部分必须进行checkpoint。</p>
+</li>
+</ul>
+<p>在InnoDB存储引擎内部，有两种Checkpoint，分别为：</p>
+<ul>
+<li><p>Sharp Checkpoint</p>
+<p> 是在数据库关闭时刷新全部脏页到磁盘。这是默认的工作方式，参数是<code>innodb_fast_shutdown=1</code></p>
+</li>
+<li><p>Fuzzy Checkpoint</p>
+<p> 运行时使用，指刷新一部分脏页。</p>
+<ul>
+<li><p><code>Master Thread Checkpoint</code></p>
+<p> 每秒或者每十秒刷新从缓冲池的脏页列表中刷新一定比例的页回磁盘。</p>
+</li>
+<li><p><code>FLUSH_LRU_LIST Checkpoint</code></p>
+<p> 因为InnoDB存储引擎需要保障LRU列表中需要有足够多的空闲页可使用。</p>
+<p> 在InnoDB 1.1.x版本之前，检查LRU列表中是否有足够空间操作发生在用户查询线程中，而且如果查询空间不足，会将尾端的页移除，如果有脏页就进行Checkpoint。</p>
+<p> 在InnoDB1.2.x版本开始，这个操作会放在Page Cleaner 线程中进行。</p>
+<p> 可以通过参数进行设置预留的空间大小，设置LRU列表需要保留多少个空闲页的空间</p>
+<pre><code>SHOW VARIABLES LIKE &#39;innodb_lru_sacn_depth&#39;\G;</code></pre></li>
+<li><p><code>Async/Sync Flush Checkpoint</code></p>
+<p> 是指重做日志文件不可用（空间快用完了）的情况，这时需要强制将一些页刷新会磁盘，而此时脏页是从脏页列表中选取的。</p>
+</li>
+<li><p>Dirty Page too much Checkpoint</p>
+<p> 脏页的数量太多，导致InnoDB强制进行CheckPoint。可以由参数来配置，表示缓冲中脏页的数量占据百分比为多少后，进行脏页的刷新。</p>
+</li>
+</ul>
+</li>
+</ul>
 
             </div>
             <hr/>
@@ -459,12 +497,12 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Hadoop/">
-                                    <span class="chip bg-color">Hadoop</span>
+                                <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
+                                    <span class="chip bg-color">数据库</span>
                                 </a>
                             
-                                <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/">
-                                    <span class="chip bg-color">大数据</span>
+                                <a href="/tags/mysql/">
+                                    <span class="chip bg-color">mysql</span>
                                 </a>
                             
                         </div>
@@ -506,31 +544,39 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2019/01/12/HashMap%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/">
+                <a href="/2019/12/30/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="HashMap源码阅读">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="计算机组成原理">
                         
-                        <span class="card-title">HashMap源码阅读</span>
+                        <span class="card-title">计算机组成原理</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            HashMap简介Hashmap存储键值对，其根据键的hashCode值存储数据，大多数情况下可以直接定位到它的值，因而具有很快的访问速度，遍历顺序与插入顺序不一致。 HashMap最多只允许一条记录的键为null，允许多条记录的值为nul
+                            一. 计算机系统概述计算机性能指标硬件性能参数
+
+计算机字长：CPU字长，指CPU一次能处理数据的二进制位数
+机器主频：时钟脉冲的频率
+主存容量：计算机能够存放的最大的二进制位数bit，B，KB，MB
+
+计算机性能指标
+
+响应时间：计算机完
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2019-01-12
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-12-30
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/java/" class="post-category">
-                                    java
+                            <a href="/categories/%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/" class="post-category">
+                                    期末复习
                                 </a>
                             
                             
@@ -540,12 +586,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/java/">
-                        <span class="chip bg-color">java</span>
-                    </a>
-                    
-                    <a href="/tags/%E9%9B%86%E5%90%88/">
-                        <span class="chip bg-color">集合</span>
+                    <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">
+                        <span class="chip bg-color">计算机组成原理</span>
                     </a>
                     
                 </div>
@@ -559,25 +601,26 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/01/11/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%88%86%E5%BA%93%E5%88%86%E8%A1%A8/">
+                <a href="/2019/03/07/Mysql%E6%8A%80%E6%9C%AF%E5%86%85%E5%B9%95%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0(%E4%B8%80)/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="数据库分库分表">
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="Mysql技术内幕阅读笔记(一)">
                         
-                        <span class="card-title">数据库分库分表</span>
+                        <span class="card-title">Mysql技术内幕阅读笔记(一)</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            垂直拆分垂直拆分是将一个包含了很多表的数据库,根据表的功能的不同,拆分为多个小的数据库,每个库中包含部分表。
-比如大型的电商项目平台是由不同的子项目模块构成的如订单系统，账户系统，商品管理系统等等，这些个独立的模块都可以拆分成独立的服务与独
+                            Mysql体系结构和存储引擎数据库与实例
+数据库：数据库是文件的集合，是依照某种数据模型组织起来并存放于存储器中的数据集合
+实例：数据库实例是程序，是位于用户和操作系统之间的一层数据管理软件，用户对数据库中的数据做任何的操作，包括数据定义、
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-01-11
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-03-07
                             </span>
                         <span class="publish-author">
                             
@@ -737,13 +780,6 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
 
 </main>
 
-
-<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<script>
-    MathJax.Hub.Config({
-        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
-    });
-</script>
 
 
     <footer class="page-footer bg-color">

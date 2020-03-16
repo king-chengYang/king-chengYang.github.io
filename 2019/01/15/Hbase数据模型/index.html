@@ -299,12 +299,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/">
-                                <span class="chip bg-color">大数据</span>
-                            </a>
-                        
                             <a href="/tags/HBase/">
                                 <span class="chip bg-color">HBase</span>
+                            </a>
+                        
+                            <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/">
+                                <span class="chip bg-color">大数据</span>
                             </a>
                         
                     </div>
@@ -411,12 +411,12 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/">
-                                    <span class="chip bg-color">大数据</span>
-                                </a>
-                            
                                 <a href="/tags/HBase/">
                                     <span class="chip bg-color">HBase</span>
+                                </a>
+                            
+                                <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/">
+                                    <span class="chip bg-color">大数据</span>
                                 </a>
                             
                         </div>
@@ -458,32 +458,34 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2019/01/15/%E8%AF%BB%E6%89%A9%E6%95%A3%E5%86%99%E6%89%A9%E6%95%A3/">
+                <a href="/2019/01/16/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="读扩散写扩散">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="排序算法">
                         
-                        <span class="card-title">读扩散写扩散</span>
+                        <span class="card-title">排序算法</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            在阅读HBase入门与实践这本书时，模式设计模块有一部分内容写到，微信朋友圈运用写扩散模型提高读的效率，即将一个用户发的朋友圈同步到该用户好友的时间线中。这次找到资料，稍微了解了解读扩散与写扩散。
-读扩散 VS 写扩散消息同步模型中，有写扩
+                            选择排序时间复杂度：$O(n^2)$
+方法：依次找到数组中第一小，第二小，第三小…的数，并放置在对应的位置上
+每次排序后的结果：每次将未排序的数中的最小值排到正确的位置上
+public int[] selectionSort(int[] n
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2019-01-15
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-01-16
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E6%9E%B6%E6%9E%84/" class="post-category">
-                                    架构
+                            <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
+                                    算法
                                 </a>
                             
                             
@@ -493,12 +495,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%9E%B6%E6%9E%84/">
-                        <span class="chip bg-color">架构</span>
-                    </a>
-                    
-                    <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/">
-                        <span class="chip bg-color">分布式</span>
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
                     </a>
                     
                 </div>
@@ -512,37 +510,43 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/01/13/java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F/">
+                <a href="/2019/01/15/Hbase%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%AE%9E%E4%BE%8B/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="Java内存区域">
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="Hbase模式设计实例">
                         
-                        <span class="card-title">Java内存区域</span>
+                        <span class="card-title">Hbase模式设计实例</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Java内存区域JDK7的内存区域如下
+                            用户行为日志系统前提数据类型
 
-线程私有：虚拟机栈，本地方法栈，程序计数器
-线程共享：堆内存，方法区
+用户商品浏览记录
+用户商品下单记录
 
+统计需求
 
-程序计数器虚拟机中的程序计数器和计算机的程序计数器(PC)作用类似，可以看成当前线程所执行的字节码的行号指示器，用来记录下一
+需要查询同一个用户一段时间内浏览过的商品，用来做用户商品推荐以提高转化率
+需要统计某个商品在某天的转化率，用来分析各渠道或者营销方式的优劣
+
+数据特征
+
+数据
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-01-13
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-01-15
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/java/" class="post-category">
-                                    java
+                            <a href="/categories/HBase/" class="post-category">
+                                    HBase
                                 </a>
                             
                             
@@ -552,12 +556,12 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/java/">
-                        <span class="chip bg-color">java</span>
+                    <a href="/tags/HBase/">
+                        <span class="chip bg-color">HBase</span>
                     </a>
                     
-                    <a href="/tags/jvm/">
-                        <span class="chip bg-color">jvm</span>
+                    <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/">
+                        <span class="chip bg-color">大数据</span>
                     </a>
                     
                 </div>

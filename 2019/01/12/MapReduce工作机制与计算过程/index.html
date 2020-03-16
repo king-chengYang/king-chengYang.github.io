@@ -1,0 +1,1010 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta name="keywords" content="MapReduce工作机制与计算过程, 成">
+    <meta name="description" content="MapReduce介绍Hadoop Map/Reduce是一个使用简易的软件框架，基于它写出来的应用程序能够运行在由上千个商用机器组成的大型集群上，并以一种可靠容错的方式并行处理上T级别的数据集。
+一个Map/Reduce 作业（job） ">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>MapReduce工作机制与计算过程 | 成</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <script src="/libs/jquery/jquery.min.js"></script>
+    
+<meta name="generator" content="Hexo 4.2.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+
+
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper head-container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">成</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">成</div>
+        <div class="logo-desc">
+            
+            你好哇！李三日！遇到你真高兴！
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">MapReduce工作机制与计算过程</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Hadoop/">
+                                <span class="chip bg-color">Hadoop</span>
+                            </a>
+                        
+                            <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/">
+                                <span class="chip bg-color">大数据</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Hadoop/" class="post-category">
+                                Hadoop
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2019-01-12
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    4.8k
+                </div>
+                
+
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="MapReduce介绍"><a href="#MapReduce介绍" class="headerlink" title="MapReduce介绍"></a>MapReduce介绍</h2><p>Hadoop Map/Reduce是一个使用简易的软件框架，基于它写出来的应用程序能够运行在由上千个商用机器组成的大型集群上，并以一种可靠容错的方式并行处理上T级别的数据集。</p>
+<p>一个Map/Reduce <em>作业（job）</em> 通常会把输入的数据集切分为若干独立的数据块，由 <em>map任务（task）</em>以完全并行的方式处理它们。框架会对map的输出先进行排序， 然后把结果输入给<em>reduce任务</em>。通常作业的输入和输出都会被存储在文件系统中。 整个框架负责任务的调度和监控，以及重新执行已经失败的任务。</p>
+<h2 id="MapReduce工作机制"><a href="#MapReduce工作机制" class="headerlink" title="MapReduce工作机制"></a>MapReduce工作机制</h2><p>可以在 Job 对象上面调用 submit() 方法或者 waitForCompletion() 方法来运行一个 MapReduce 作业。</p>
+<p>一个MapReduce运行过程如下：</p>
+<p><img src="MapReduce%E8%BF%90%E8%A1%8C%E8%BF%87%E7%A8%8B.png" alt=""></p>
+<p>作业运行中涉及到5个实体：</p>
+<ul>
+<li>客户端，提交MapReduce作业</li>
+<li>YARN资源管理器（resource manager），负责协调集群上计算i机资源的分配</li>
+<li>YARN节点管理器（node manager），负责启动和监视集群中机器上的计算容器（container）</li>
+<li>MapReduce的application master，负责协调运行MapReduce作业的任务。它和MapReduce任务在容器中运行</li>
+<li>分布式文件系统</li>
+</ul>
+<h3 id="作业提交"><a href="#作业提交" class="headerlink" title="作业提交"></a>作业提交</h3><p>在 Job 对象上面调用 submit() 方法，在内部创建一个 JobSubmitter 实例，然后调用该实例的 submitJobInternal() 方法（上图步骤1）。如果使用waitForCompletion() 方法来进行提交作业，该方法每隔 1 秒轮询作业的进度，如果进度有所变化，将该进度报告给控制台（console）。<br>JobSubmitter 所实现作业提交过程如下：</p>
+<ol>
+<li>向资源管理器申请一个新应用ID （上图步骤二）</li>
+<li>检查作业的输出说明。例如，如果没有指定输出目录或输出目录已经存在，作业不提交</li>
+<li>计算作业的输入分片。如果分片无法计算，比如输入路径不存在作业不提交</li>
+<li>将运行作业所需要的资源（包括作业JAR文件，配置文件等）复制到共享文件系统中一个以作业ID命名的目录下（上图步骤三）</li>
+<li>调用资源管理器的submitApplication()提交作业（上图步骤四）</li>
+</ol>
+<h3 id="作业初始化"><a href="#作业初始化" class="headerlink" title="作业初始化"></a>作业初始化</h3><p>当资源管理器接受到 submitApplication() 方法的调用，它把请求递交给 YARN 调度器（scheduler）。调度器分配了一个容器（container），资源管理器在该容器中启动 application master 进程，该进程被节点管理器管理（上图步骤5a 和 5b）。</p>
+<ol>
+<li>application master通过创建多个薄记对象完成对作业的初始化，用以保持对作业进度的跟踪。（上图步骤6）</li>
+<li>然后，application master将从共享文件系统的中获取客户端计算的输入分片。（上图步骤7）</li>
+<li><strong>再对每一个分片创建一个map任务对象。</strong>任务ID也在此时分配。</li>
+<li>最后，application master在任务运行之前，设置输出目录以及任务输出的临时工作空间</li>
+</ol>
+<h3 id="任务分配"><a href="#任务分配" class="headerlink" title="任务分配"></a>任务分配</h3><p>application master需要判断如何运行构成MapReduce作业的各个任务。如果作业很小，就选择和自己在同一个JVM上运行任务。否则应该为该作业的所有map任务和reduce任务向资源管理器请求容器（上图步骤8），首先Map任务发出请求，直到有5%的map任务已经完成时，reduce任务的请求才会发出。</p>
+<p>reduce任务能够在集群任意位置运行，但是map任务有着数据本地化局限：</p>
+<ul>
+<li>理想情况下，任务的数据本地化，意味着任务在分片驻留的同一节点运行</li>
+<li>任务可能是机架本地化，分片在同一机架而非同一节点上运行</li>
+<li>还有可能是别的机架h获取所需数据</li>
+</ul>
+<h3 id="任务执行"><a href="#任务执行" class="headerlink" title="任务执行"></a>任务执行</h3><p>  一旦资源调度器在一个特定的节点上为一个任务分配一个容器所需的资源，application master 通过连接节点管理器来启动这个容器(上图步骤9a 和9b)。任务通过一个主类为 YarnChild 的 Java 应用程序来执行。在它运行任务之前，它会将任务所需的资源本地化，包括作业配置，JAR 文件以及一些在分布式缓存中的文件(上图步骤10)。最后，它运行 map 或者 reduce 任务(上图步骤11)。</p>
+<p>YarnChild 在一个指定的 JVM 中运行，所以任何用户自定义的 map 和 reduce 函数的 bugs（或者甚至在 YarnChild）都不会影响到节点管理器。</p>
+<h3 id="进度和状态更新"><a href="#进度和状态更新" class="headerlink" title="进度和状态更新"></a>进度和状态更新</h3><p>MapReduce 作业是长时间运行的批处理作业（long-running batch jobs），运行时间从几十秒到几小时。由于可能运行时间很长，所以用户得到该作业的处理进度反馈是很重要的。</p>
+<p>作业和任务都含有一个状态，包括运行状态、maps 和 reduces 的处理进度，作业计数器的值，以及一个状态消息或描述（可能在用户代码中设置）。这些状态会在作业的过程中改变。</p>
+<p>当一个任务运行，它会保持进度的跟踪（就是任务完成的比例）。<strong>对于 map 任务，就是被处理的输入的比例</strong>。对于 reduce 任务，稍微复杂一点，但是系统任然能够估算已处理的 reduce 输入的比例。通过把整个过程分为三个部分，对应于 shuffle 的三个阶段。例如，如果一个任务运行 reducer 完成了一半的输入，该任务的进度就是 5/6，因为它已经完成了 copy 和 sort 阶段（1/3 each）以及 reduce 阶段完成了一半（1/6）。</p>
+<blockquote>
+<p><strong>MapReduce 的进度组成</strong><br> 进度不总是可测的，但是它告诉 Hadoop 一个任务在做的一些事情。例如，任务的写输出记录是有进度的，即使不能用总进度的百分比来表示进度报告非常重要（因为它自己也可能不知道到底有多少输出要写，也可能不知道需要写的总量）。</p>
+<p>如下的操作构成了进度：</p>
+<ul>
+<li>读取输入记录（在 mapper 或者 reducer 中）。</li>
+<li>写输出记录（在 mapper 或者 reducer 中）。</li>
+<li>设置状态描述（由 Reporter 的或 TaskAttempContext 的 setStatus() 方法设置）。</li>
+<li>计数器的增长（使用 Reporter 的 incrCounter() 方法 或者 Counter 的 increment() 方法）。</li>
+<li>调用 Reporter 的或者 TaskAttemptContext 的 progress() 方法。</li>
+</ul>
+</blockquote>
+<p>任务有一些计数器，它们在任务运行时记录各种事件，这些计数器要么是框架内置的，例如：已写入的map输出记录数，要么是用户自定义的。</p>
+<p>当 map 或 reduce 任务运行时，子进程使用 umbilical 接口和父 application master 进行通信。任务每隔三秒钟通过 umbilical 接口报告其进度和状态（包括计数器）给 application master，application master会形成一个作业的聚合视图。</p>
+<p>在作业执行的过程中，客户端每秒通过轮询 application master 获取最新的状态（间隔通过 mapreduce.client.progressmonitor.polinterval 设置）。客户端也可使用 Job 的 getStatus() 方法获取一个包含作业所有状态信息的 JobStatus 实例，过程如下：</p>
+<p><img src="MapReduce%E7%8A%B6%E6%80%81.png" alt=""></p>
+<h3 id="作业完成"><a href="#作业完成" class="headerlink" title="作业完成"></a>作业完成</h3><p>当 application master 接受到最后一个任务完成的通知，它改变该作业的状态为 “successful”。当 Job 对象轮询状态，它知道作业已经成功完成，所以它打印一条消息告诉用户以及从 waitForCompletion() 方法返回。此时，作业的统计信息和计数器被打印到控制台。</p>
+<p>Application master 也可以发送一条 HTTP 作业通知，如果配置了的话。当客户端想要接受回调时，可以通过 mapreduce.job.end-notification.url 属性进行配置。</p>
+<p>最后，当作业完成，application master 和作业容器清理他们的工作状态（所以中间输入会被删除），然后 OutputCommiter 的 commitJob() 方法被调用。作业的信息被作业历史服务器存档，以便日后用户查询。</p>
+<h2 id="MapReduce计算过程"><a href="#MapReduce计算过程" class="headerlink" title="MapReduce计算过程"></a>MapReduce计算过程</h2><p>MapReduce通常由三个操作组成</p>
+<ul>
+<li>map操作：map操作是一类将输入记录集转换为中间格式记录集的独立任务，其应用于本地数据。</li>
+<li>shuffle操作：工作节点根据输出键（由 map 函数生成）重新分配数据，对数据映射排序、分组、拷贝，目的是属于一个键的所有数据都位于同一个工作节点上。</li>
+<li>reduce操作：Reduce操作将与一个key关联的一组中间数值集归约（reduce）为一个更小的数值集。</li>
+</ul>
+<p><img src="MapReduce%E6%B5%81%E7%A8%8B.png" alt=""></p>
+<p>其中map阶段与reduce阶段之间的关系如下，而shuffle阶段就是将map输出的键相同的值汇聚在一起以供reduce处理</p>
+<p><img src="Map%E4%B8%8EReduce%E7%9A%84%E5%85%B3%E7%B3%BB.png" alt=""></p>
+<p>整个计算过程：<strong>输入分片 —&gt; map阶段  —&gt; shuffle阶段 —&gt; reduce阶段</strong></p>
+<h3 id="输入分片"><a href="#输入分片" class="headerlink" title="输入分片"></a>输入分片</h3><p>在进行map计算之前，mapreduce会根据输入文件计算输入分片（input split），<strong>每个输入分片（input split）针对一个map任务</strong>，输入分片（input split）存储的并非数据本身，而是一个分片长度和一个记录数据的位置的数组。</p>
+<p>对于不可分的文件，一个文件一个分片。</p>
+<p>对于可分的文件会被分成不大于块大小的分片，例如文件大小为140M，会被分为128M+12M两个分片；文件大小为100M，则为100M大小的分片。因此，如果可以在运行MapReduce程序之前合并一些小文件对优化作业有很大帮助。</p>
+<p>为什么默认分片大小和块大小相同？</p>
+<pre><code>If the split spanned two blocks, it would be unlikely that any HDFS node stored both blocks</code></pre><p>即</p>
+<pre><code>如果分片跨越了两个数据块，那么不太可能所有的 HDFS 节点都存储了分片中的两个数据块，（也就是意味着总会存在网络传输的情况）</code></pre><h3 id="Map阶段"><a href="#Map阶段" class="headerlink" title="Map阶段"></a>Map阶段</h3><p> Map在输入的数据中获取一个键值对，然后返回一个键值对的列表：</p>
+<pre class=" language-java"><code class="language-java"><span class="token function">Map</span><span class="token punctuation">(</span>k1<span class="token punctuation">,</span>v1<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token function">list</span><span class="token punctuation">(</span>k2<span class="token punctuation">,</span>v2<span class="token punctuation">)</span></code></pre>
+<p>Map函数会被并行调用，应用于输入数据集中的每个键值对（keyed by K1），然后每个调用返回一个键值对（keyed by K2）列表。</p>
+<p>以计算词频为例，Map阶段如下</p>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
+ * 继承的Mapper类中
+ *    第一个参数：LongWritable是输入的键，此处表示一行的起始偏移量
+ *    第二个参数：Text是输入的值，此处表示一行的文本内容
+ *    第三个参数：Text是输出的键，此处表示每一个单词
+ *    第四个参数：IntWritable是输出的值，此处表示每个单词的数量都是1(不管重复不重复)
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">WordCountMapper</span> <span class="token keyword">extends</span> <span class="token class-name">Mapper</span><span class="token operator">&lt;</span>LongWritable<span class="token punctuation">,</span> Text<span class="token punctuation">,</span> Text<span class="token punctuation">,</span> IntWritable<span class="token operator">></span><span class="token punctuation">{</span>
+
+    <span class="token comment" spellcheck="true">/*
+     * map方法是提供给map task进程来调用的，map task进程是每读取一行文本来调用一次自定义的map方法
+     * map task在调用map方法时，传递的参数：
+     *         一行的起始偏移量LongWritable作为key
+     *         一行的文本内容Text作为value
+     */</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">map</span><span class="token punctuation">(</span>LongWritable key<span class="token punctuation">,</span> Text value<span class="token punctuation">,</span>Context context<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException<span class="token punctuation">,</span> InterruptedException <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">//拿到一行文本内容，转换成String 类型</span>
+        String line <span class="token operator">=</span> value<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//将这行文本切分成单词</span>
+        String<span class="token punctuation">[</span><span class="token punctuation">]</span> words<span class="token operator">=</span>line<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment" spellcheck="true">//输出&lt;单词，1></span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span>String word<span class="token operator">:</span>words<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            context<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Text</span><span class="token punctuation">(</span>word<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">IntWritable</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<h3 id="Shuffle阶段"><a href="#Shuffle阶段" class="headerlink" title="Shuffle阶段"></a>Shuffle阶段</h3><p>shuffle阶段是承接map和reduce，其也可以分为map shuffle和reduce shuffle</p>
+<h4 id="map-shuffle"><a href="#map-shuffle" class="headerlink" title="map shuffle"></a>map shuffle</h4><p>在Map端的shuffle过程是对Map的结果进行分区、排序、分割，然后将属于同一分区的输出合并在一起并写在磁盘上，最终得到一个分区有序的文件，分区有序的含义是map输出的键值对按分区进行排列，具有相同partition值的键值对存储在一起，每个分区里面的键值对又按key值进行升序排列（默认），其流程大致如下：</p>
+<p><img src="MapShuffle.png" alt=""></p>
+<h5 id="写缓存区"><a href="#写缓存区" class="headerlink" title="写缓存区"></a>写缓存区</h5><p>每个map任务都是有一个<strong>环形缓冲区</strong>的用于存储任务的输出。在默认情况下，缓冲区的大小为100MB，其值可以通过改变io.sort.mb来调整。一旦缓冲内容达到阈值(io.sort,spill,percent，默认是0.8)，一个后台线程会将内容spill到磁盘。在spill到磁盘的过程中，map输出并不会停止往缓冲区写入数据，但如果在此期间缓冲区被写满，map会被阻塞知道写磁盘过程完成。溢出写过程安装轮询方式将缓冲区的内容写到mapred.local.dir指定的作业特定子目录中的目录中。</p>
+<h5 id="分区，排序，合并"><a href="#分区，排序，合并" class="headerlink" title="分区，排序，合并"></a>分区，排序，合并</h5><p>写磁盘之前，线程首先根据数据最终要传的reducer把数据划分成相应的分区。在每个分区中，后台线程按键在内存中排序，如果有一个combiner，它就在排序后的输出上运行。运行combinner使得map输出结果更紧凑，因此可以减少写到磁盘的数据和传递给reducer的数据。</p>
+<h5 id="写文件"><a href="#写文件" class="headerlink" title="写文件"></a>写文件</h5><p>每次内存缓冲区达到溢出阈值，就会新建一个溢出文件(spill file)，因此在map任务写完其最后一个输出记录之后，会有几个溢写文件。在任务完成之前，溢出文件被合并成一个已分区且已排序的输出文件。配置属性io.sort.factor控制着一次最多能合并多少流，默认是10。</p>
+<p>如果至少存在3个溢出文件(通过min.num.spills.for.combine属性设置)时，<strong>则combiner就会在输出文件写到磁盘之前再次运行</strong>。combiner可以在输入上反复运行，单不影响最终的结果。如果只有一两个溢出文件，那么对map输出的减少不值得调用combiner，就不会为map输出再次运行combiner。</p>
+<h5 id="压缩"><a href="#压缩" class="headerlink" title="压缩"></a>压缩</h5><p>在将压缩map输出写到磁盘的过程中对它进行压缩往往是个好主意，因为这样就会写磁盘的速度更快，更加节约时间，并且减少传给reducer的数据量。在默认情况下，输出是不压缩的，但是只要将mapred.compress.map.output设置为true，就可以启用这个功能。使用的压缩库由mapred.map.output.compression.codec指定。</p>
+<p>Reducer是通过HTTP的方式得到输出文件的分区。</p>
+<h4 id="reduce-shuffle"><a href="#reduce-shuffle" class="headerlink" title="reduce shuffle"></a>reduce shuffle</h4><p>集群中往往一个mr任务会有若干map任务和reduce任务，map任务运行有快有慢，reduce不可能等到所有的map任务都运行结束再启动，因此只要有一个任务完成，reduce任务就开始复制其输出。复制线程的数量由mapred.reduce.parallel.copies属性来改变，默认是 5。</p>
+<blockquote>
+<p>Reducer如何知道map输出的呢？</p>
+<p>map任务完成之后，它们会使用心跳机制通知它们的application master。因此，对于指定作业，application master知道map输出和主机位置的映射关系。reducer中一个线程定期询问master以便获得map输出主机的位置，知道获得所有的输出。</p>
+</blockquote>
+<h5 id="复制"><a href="#复制" class="headerlink" title="复制"></a>复制</h5><p>Reduce对map输出的不同大小也有相应的调优处理。如果map输出相当小，会被复制到reduce任务JVM的内存(缓冲区大小由mapred.job.shuffle.input.buffer.percent属性控制，指定用于此用途的堆空间的百分比)，否则，map输出会被复制到磁盘。一旦内存缓冲区达到阈值(由mapred.job.shuffle.merge.percent决定)或达到map的输出阈值(mapred.inmem.merge,threshold控制)，则合并后溢出写到磁盘中。如果指定combiner，则在合并期间运行它已降低写入磁盘的数据量。</p>
+<p>随着磁盘上副本的增多，后台线程会将它们合并为更大的，排序好的文件。这会为后面的合并节省一些时间。注意，为了合并，压缩的map输出(通过map任务)都必须在内存中解压缩。</p>
+<h5 id="合并排序"><a href="#合并排序" class="headerlink" title="合并排序"></a>合并排序</h5><p>复制完所有的map输出后，reduce任务进入排序阶段(更加恰当的说法是合并阶段，因为排序是在map端进行的)，这个阶段将合并map的输出，维持其顺序排序。这是循环进行的。比如，有50个map输出，而合并因子是10(默认值是10，由io.sort.factor属性设置，与map的合并类似)，合并将进行5趟。每趟将10个文件合并成一个文件，因此最后有5个中间文件。</p>
+<p>在最后阶段，即reduce阶段，直接把数据输入reduce函数，从而省略了一次磁盘往返行程，并没有将这5个文件合并成一个已排序的文件最为最后一趟。最后的合并可以来自内存和磁盘片段。</p>
+<p>每趟合并的文件数实际上比上面例子中展示的有所不同的。目标是合并最小数据量的文件以便满足最后一趟的合并系数。因此，如果有40个文件，我们不会再四趟中每趟合并10个文件而得到4个文件。相反，第一趟只合并4个文件，随后的三塘合并10个文件。最后一趟中，4个已经合并的文件和剩余的6个文件合计是个文件进行合并。如下图所述：</p>
+<p>注意这并没有改变合并的次数，它只是一个优化措施，目的是尽量减少写到磁盘的数据量，因为最后一趟总是直接合并到reduce。</p>
+<p>![](reduce shuffle.png)</p>
+<h3 id="Reduce阶段"><a href="#Reduce阶段" class="headerlink" title="Reduce阶段"></a>Reduce阶段</h3><p>Reduce 是对一个列表的元素进行适当的合并，将map阶段的键值对处理成我们想要的结果</p>
+<pre class=" language-java"><code class="language-java"><span class="token function">Reduce</span><span class="token punctuation">(</span>k2<span class="token punctuation">,</span> <span class="token function">list</span> <span class="token punctuation">(</span>v2<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token function">list</span><span class="token punctuation">(</span>v3<span class="token punctuation">)</span></code></pre>
+<p>以计算词频为例，Reduce阶段如下</p>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
+ * 继承的Reducer类中
+ *    第一个参数：Text是输入的键,和Map阶段的输出键一样，此处表示每个单词
+ *    第二个参数：IntWritable是输入的值，和Map阶段的输出值一样，此处表示每个单词的数量是1
+ *    第三个参数：Text是输出的键，此处表示不重复的单词
+ *    第四个参数：IntWritable是输出的值，此处表示每个单词的数量（不重复）
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">WordCountReducer</span> <span class="token keyword">extends</span> <span class="token class-name">Reducer</span><span class="token operator">&lt;</span>Text<span class="token punctuation">,</span> IntWritable<span class="token punctuation">,</span> Text<span class="token punctuation">,</span> IntWritable<span class="token operator">></span><span class="token punctuation">{</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token comment" spellcheck="true">/*
+     * reduce方法提供给reduce task进程来调用
+     * 
+     * reduce task会将shuffle阶段分发过来的大量kv数据对进行聚合，聚合的机制是相同key的kv对聚合为一组
+     * 然后reduce task对每一组聚合kv调用一次我们自定义的reduce方法
+     * 比如：&lt;hello,1>&lt;hello,1>&lt;hello,1>&lt;tom,1>&lt;tom,1>&lt;tom,1>
+     *  hello组会调用一次reduce方法进行处理，tom组也会调用一次reduce方法进行处理
+     *  调用时传递的参数：
+     *          key：一组kv中的key
+     *          values：一组kv中所有value的迭代器
+     */</span>
+    <span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">reduce</span><span class="token punctuation">(</span>Text key<span class="token punctuation">,</span> Iterable<span class="token operator">&lt;</span>IntWritable<span class="token operator">></span> values<span class="token punctuation">,</span>Context context<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException<span class="token punctuation">,</span> InterruptedException <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">//定义一个计数器</span>
+        <span class="token keyword">int</span> count <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//通过value这个迭代器，遍历这一组kv中所有的value，进行累加</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span>IntWritable value<span class="token operator">:</span>values<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            count<span class="token operator">+=</span>value<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token comment" spellcheck="true">//输出这个单词的统计结果</span>
+        context<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">IntWritable</span><span class="token punctuation">(</span>count<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://juejin.im/post/5bb59f87f265da0aeb7118f2" target="_blank" rel="noopener">https://juejin.im/post/5bb59f87f265da0aeb7118f2</a></p>
+<p><a href="https://hadoop.apache.org/docs/r1.0.4/cn/mapred_tutorial.html" target="_blank" rel="noopener">https://hadoop.apache.org/docs/r1.0.4/cn/mapred_tutorial.html</a></p>
+
+            </div>
+            <hr/>
+
+            
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/Hadoop/">
+                                    <span class="chip bg-color">Hadoop</span>
+                                </a>
+                            
+                                <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/">
+                                    <span class="chip bg-color">大数据</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2019/01/12/HashMap%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="HashMap源码阅读">
+                        
+                        <span class="card-title">HashMap源码阅读</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            HashMap简介Hashmap存储键值对，其根据键的hashCode值存储数据，大多数情况下可以直接定位到它的值，因而具有很快的访问速度，遍历顺序与插入顺序不一致。 HashMap最多只允许一条记录的键为null，允许多条记录的值为nul
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-01-12
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/java/" class="post-category">
+                                    java
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/java/">
+                        <span class="chip bg-color">java</span>
+                    </a>
+                    
+                    <a href="/tags/%E9%9B%86%E5%90%88/">
+                        <span class="chip bg-color">集合</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2019/01/11/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%88%86%E5%BA%93%E5%88%86%E8%A1%A8/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="数据库分库分表">
+                        
+                        <span class="card-title">数据库分库分表</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            垂直拆分垂直拆分是将一个包含了很多表的数据库,根据表的功能的不同,拆分为多个小的数据库,每个库中包含部分表。
+比如大型的电商项目平台是由不同的子项目模块构成的如订单系统，账户系统，商品管理系统等等，这些个独立的模块都可以拆分成独立的服务与独
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-01-11
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
+                                    数据库
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
+                        <span class="chip bg-color">数据库</span>
+                    </a>
+                    
+                    <a href="/tags/mysql/">
+                        <span class="chip bg-color">mysql</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2019</span>
+            <a href="http://yzcheng.com" target="_blank">yzc</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2019";
+                    var startMonth = "12";
+                    var startDate = "26";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+    
+
+</body>
+
+</html>

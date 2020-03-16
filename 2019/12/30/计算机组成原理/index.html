@@ -1082,28 +1082,28 @@ Bl
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/03/08/Mysql%E6%8A%80%E6%9C%AF%E5%86%85%E5%B9%95%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0(%E4%BA%8C)/">
+                <a href="/2019/03/15/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95%E5%8E%9F%E7%90%86/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="Mysql技术内幕阅读笔记(二)">
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="数据库索引原理">
                         
-                        <span class="card-title">Mysql技术内幕阅读笔记(二)</span>
+                        <span class="card-title">数据库索引原理</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            InnoDB存储引擎InnoDB体系架构InnoDB存储引擎有多个内存块，负责如下工作
-
-维护所有进程/线程需要访问的多个内部数据结构
-缓存磁盘上的数据，方便快速的读取，同时在对磁盘文件的数据修改之前在这里缓存。
-重做日志(redo log
+                            Mysql中B+树特点
+内部节点只用作索引，不存放数据
+所有的叶子节点都在同一层
+叶子节点存放指针（非聚簇索引，存放的是指向数据的指针）或者存放数据（聚簇索引，叶子节点存放数据）
+相邻的叶子节点之间相互连接，遍历查询时，只需要定位到第一个数
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-03-08
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-03-15
                             </span>
                         <span class="publish-author">
                             

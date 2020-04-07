@@ -4,9 +4,9 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="数据库分库分表, 成">
-    <meta name="description" content="垂直拆分垂直拆分是将一个包含了很多表的数据库,根据表的功能的不同,拆分为多个小的数据库,每个库中包含部分表。
-比如大型的电商项目平台是由不同的子项目模块构成的如订单系统，账户系统，商品管理系统等等，这些个独立的模块都可以拆分成独立的服务与独">
+    <meta name="keywords" content="Java内存区域, 成">
+    <meta name="description" content="线程的实现线程是比进程更轻量级的调度执行单位，线程的引入，可以把一个进程的资源分配和执行调度分开，各个线程既可以共享进程资源（内存地址，文件I/O等），又可以独立调度（线程是CPU调度的基本单位）。
+Java语言提供了在不同硬件和操作系统平">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -14,7 +14,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>数据库分库分表 | 成</title>
+    <title>Java内存区域 | 成</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -175,12 +175,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">数据库分库分表</h1>
+                    <h1 class="description center-align post-title">Java内存区域</h1>
                 </div>
             </div>
         </div>
@@ -297,12 +297,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
-                                <span class="chip bg-color">数据库</span>
+                            <a href="/tags/java/">
+                                <span class="chip bg-color">java</span>
                             </a>
                         
-                            <a href="/tags/mysql/">
-                                <span class="chip bg-color">mysql</span>
+                            <a href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/">
+                                <span class="chip bg-color">虚拟机</span>
                             </a>
                         
                     </div>
@@ -313,8 +313,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
-                                数据库
+                            <a href="/categories/java/" class="post-category">
+                                java
                             </a>
                         
                     </div>
@@ -326,7 +326,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-01-11
+                    2019-03-30
                 </div>
                 
 
@@ -335,7 +335,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.1k
+                    1.7k
                 </div>
                 
 
@@ -353,77 +353,73 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="垂直拆分"><a href="#垂直拆分" class="headerlink" title="垂直拆分"></a>垂直拆分</h2><p><strong>垂直拆分是将一个包含了很多表的数据库,根据表的功能的不同,拆分为多个小的数据库,每个库中包含部分表。</strong></p>
-<p>比如大型的电商项目平台是由不同的子项目模块构成的如订单系统，账户系统，商品管理系统等等，这些个独立的模块都可以拆分成独立的服务与独立的数据库。</p>
-<p>优点</p>
+                <h3 id="线程的实现"><a href="#线程的实现" class="headerlink" title="线程的实现"></a>线程的实现</h3><p>线程是比进程更轻量级的调度执行单位，线程的引入，可以把一个进程的资源分配和执行调度分开，各个线程既可以共享进程资源（内存地址，文件I/O等），又可以独立调度（线程是CPU调度的基本单位）。</p>
+<p>Java语言提供了在不同硬件和操作系统平台下对线程操作的统一处理，每个已经执行start()且还没有结束的<code>java.lang.Thread</code>类的实例就代表了一个线程。</p>
+<p>实现线程的主要有三种方式：使用内核线程实现，使用用户线程实现和使用用户线程加轻量级进程混合实现</p>
+<h4 id="使用内核线程实现"><a href="#使用内核线程实现" class="headerlink" title="使用内核线程实现"></a>使用内核线程实现</h4><p>内核线程（Kernel-Level Thread，KLT）就是直接由操作系统内核（Kernel）支持的线程，这种线程由内核来完成线程切换，内核通过操作调度器（Scheduler）对线程进行调度，并负责将线程的任务映射到各个处理器上。</p>
+<p>程序一般不会直接使用内核线程，而是使用内核线程的一种高级接口——轻量级进程（Light Weight Process，LWP），轻量级进程就是通常意义上所讲的线程，由于每个轻量级进程都由一个内核线程支持，因此只有先支持内核线程，才能由轻量级进程。轻量级进程与内核线程之间1：1的关系称为1对1的线程模型。</p>
+<p><img src="%E5%86%85%E6%A0%B8%E7%BA%BF%E7%A8%8B.png" alt=""></p>
+<p>由于内核线程的支持，每个轻量级进程都成为一个独立的调度单元，即使一个轻量级线程在系统调用中阻塞了，也不会影响整个进程继续工作。但轻量级进程具有以下局限性：</p>
 <ul>
-<li>拆分后业务清晰，拆分规则明确。</li>
+<li>由于是基于内核线程实现的，所以各个线程操作，如创建，析构以及同步，都需要进行系统调用，而系统调用的代价比较高，需要从用户态和内核态中来回切换。</li>
+<li>每个轻量级进程都需要一个内核线程的支持，因此轻量级进程要消耗一定的内核资源，因此一个系统支持轻量级进程的数量是有限的。</li>
 </ul>
-<ol start="2">
-<li>系统之间整合或扩展容易。</li>
-<li>数据维护简单。</li>
-</ol>
-<p>缺点</p>
+<p>对于Sun JDK来说，它的windows版与Linux版都是使用一对一的线程模型实现的，一条java线程就映射到一条轻量级进程之中。</p>
+<h4 id="使用用户线程实现"><a href="#使用用户线程实现" class="headerlink" title="使用用户线程实现"></a>使用用户线程实现</h4><p>用户线程指的是完全建立在用户空间的线程库上，系统内核不能感知线程存在的实现。用户线程的建立，同步，销毁和调度完全在用户态完成，不需要内核帮助。如果程序实现得当，这种线程不需要切换到内核态，因此操作可以是非常快速且低消耗的，也可以支持规模更大的线程数量，部分高性能数据库中的多线程就是由用户线程实现。进程与用户线程之间是1：N的关系。</p>
+<h4 id="使用用户线程加轻量级进程混合使用"><a href="#使用用户线程加轻量级进程混合使用" class="headerlink" title="使用用户线程加轻量级进程混合使用"></a>使用用户线程加轻量级进程混合使用</h4><p>在该模式下，既存在用户线程，也存在轻量级进程。用户线程还是完全建立在用户空间上，因此用户线程的创建，切换，析构等操作依然廉价，并且可以支持大规模的用户线程并发。</p>
+<p>操作系统提供支持的轻量级进程则作为用户线程和内核之间的桥梁，这样可以使用内核提供的线程调度功能及处理器映射，并且用户线程的系统调用要通过轻量级进程完成，大大降低了整个进程被完全阻塞的风险。轻量级进程和用户线程是N：M的关系。</p>
+<h3 id="Java线程调度"><a href="#Java线程调度" class="headerlink" title="Java线程调度"></a>Java线程调度</h3><p><strong>线程调度是指系统为线程分配处理器使用权的过程</strong>。主要的调度方式有两种：协同式线程调度和抢占式线程调度。</p>
 <ul>
-<li>存在单表数据量过大的问题（需要水平切分）</li>
-<li>部分业务表无法join，只能通过接口方式解决，提高了系统复杂度</li>
+<li>使用协同式调度的多线程系统，线程的执行时间由线程本身来控制，线程把自己的工作执行完了之后，要通知系统切换到另一个线程上。<ul>
+<li>优点即实现简单，而且没有什么线程同步问题</li>
+<li>缺点是线程执行时间不可控制，如果一个线程编写出现问题，一直不通知系统进行线程切换，则该线程会一直阻塞在那里。</li>
 </ul>
-<h2 id="水平拆分"><a href="#水平拆分" class="headerlink" title="水平拆分"></a>水平拆分</h2><p>当一个应用难以再细粒度的垂直切分，或切分后数据量行数巨大，存在单库读写、存储性能瓶颈，这时候就需要进行水平切分了。<strong>水平切分分为库内分表和分库分表，是根据表内数据内在的逻辑关系，将同一个表按不同的条件分散到多个数据库或多个表中，每个表中只包含一部分数据，从而使得单个表的数据量变小，达到分布式的效果。</strong></p>
-<p>比如存放大量用户购物信息的购物表，可以按照下单时间拆分成多个表，每一个表就可以只存放少量的数据，再将这些表存在不同的数据库中，即可解决单库读写，存储性能瓶颈问题。</p>
-<p>优点</p>
-<ul>
-<li>单表大小可控</li>
-<li>便于扩展，如果要对集群扩容，只需要添加节点，无需对其他节点进行数据迁移</li>
-</ul>
-<p>缺点</p>
-<ul>
-<li>热点数据成为性能瓶颈。例如订单系统，近一段的订单可能会被频繁读写，而很早的历史订单则会很少读取。</li>
-</ul>
-<p>水平拆分的三种情况，以students表，db数据库为例</p>
-<ul>
-<li><p>只分表，将一个表水平拆分存储在一个数据库中</p>
-<p>例如，db中存放students1和students2两个表</p>
 </li>
-<li><p>只分库，在多个数据库中分别存放一个表</p>
-<p>例如，db1存放了一个students表，db2也存放了一个students表</p>
-</li>
-<li><p>分库分表，在多个数据库中存放多个相同的表（<strong>可以解决数据库IO瓶颈，数据库连接压力，CPU，网络，内存等等的瓶颈问题。</strong>）</p>
-<p>例如，db1存放了students1和students2两个表；db2也存放了students1和students2两个表</p>
-</li>
+<li>使用抢占式调度的多线程系统，每个线程将由系统来分配执行时间，线程的切换不由线程本身决定（在java中可以使用Thread.yield()方法让出执行时间，但获取执行时间是不可控的）。在这种实现线程调度的方式下，线程的执行时间是系统可控的，也不会出现一个线程导致整个进程阻塞的问题。</li>
 </ul>
-<h2 id="主从复制读写分离"><a href="#主从复制读写分离" class="headerlink" title="主从复制读写分离"></a>主从复制读写分离</h2><p><strong>在实际的生产环境中，对数据库的读和写都在同一个数据库服务器中，很多情况下是不能满足实际需求的，通过主从复制的方式来同步数据保证数据不丢失，再通过读写分离来提升数据库的并发负载能力减轻服务器的压力</strong></p>
-<h3 id="主从复制"><a href="#主从复制" class="headerlink" title="主从复制"></a>主从复制</h3><p><img src="%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6.png" alt=""></p>
-<p>过程</p>
+<p>java是使用抢占式调度方式，虽然java线程调度是系统自动完成的，但我们可以设置线程优先级，建议系统给高优先级的线程多分配一些时间。</p>
+<h3 id="Java线程状态转换"><a href="#Java线程状态转换" class="headerlink" title="Java线程状态转换"></a>Java线程状态转换</h3><p>java语言有5种线程状态，在任意时间点，一个线程只能有且只有其中的一种状态。</p>
+<p><img src="%E7%BA%BF%E7%A8%8B%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A2.png" alt=""></p>
 <ol>
-<li>在每个事务更新数据完成之前，master在二进制日志进行记录，记录之后，master通知存储引擎提交事务。</li>
-<li>Slave将master的binary log复制到其中继日志</li>
-<li>Slave的线程从中继日志读取事件日志，然后更新slave数据，使其与master中的数据一致</li>
-</ol>
-<h3 id="读写分离"><a href="#读写分离" class="headerlink" title="读写分离"></a>读写分离</h3><p><img src="%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB.png" alt=""></p>
-<p>读写分离就是在主服务器上修改，数据会同步到从服务器，从服务器只能提供读取数据，不能写入，实现备份的同时也减轻了主服务器的压力。</p>
+<li><p>新建（New）</p>
+<p>创建后尚未启动的线程处于这种状态</p>
+</li>
+<li><p>运行（Runable）</p>
+<p>Runable包括了操作系统线程状态种的Running和Ready，也就是处于该状态的线程可能正在执行，也有可能正在等待着CPU为它分配执行时间。</p>
+</li>
+<li><p>等待</p>
 <ul>
-<li>主库，提供数据库写服务</li>
-<li>从库，提供数据库读服务</li>
+<li><p>无限期等待</p>
+<p>处于这种状态的线程不会被分配CPU执行时间，它们要等待被其他线程显式地唤醒。以下是让线程进入无限期等待的几种方式</p>
+<ul>
+<li>没有设置Timtout参数的Object.wait()方法</li>
+<li>没有设置Timeout参数的Thread.join()方法</li>
+<li>LockSupport.park()方法</li>
 </ul>
-<h2 id="分库分表比较"><a href="#分库分表比较" class="headerlink" title="分库分表比较"></a>分库分表比较</h2><p>读写分离主要解决数据库读性能瓶颈，水平拆分主要解决数据库数据量大的问题，垂直拆分是实现业务解耦</p>
-<p>数据库拆分原则</p>
-<ol>
-<li><p>优先考虑缓存降低对数据库的读操作。</p>
 </li>
-<li><p>再考虑读写分离，降低数据库写操作。</p>
+<li><p>限期等待</p>
+<p>处于这种状态的线程不会被分配CPU执行时间，不过无需等待被其他线程显式地唤醒，在一定时间之后它们会由系统自动唤醒。以下是让线程进入限期等待的几种方式</p>
+<ul>
+<li>Thread.sleep()方法</li>
+<li>设置了Timtout参数的Object.wait()方法</li>
+<li>设置了Timeout参数的Thread.join()方法</li>
+<li>LockSupport.parkNanos()方法</li>
+<li>LockSupport.parkUntil()方法</li>
+</ul>
 </li>
-<li><p>最后开始数据拆分,切分模式： <strong>首先垂直（纵向）拆分、再次水平拆分</strong>。</p>
+</ul>
 </li>
-<li><p>首先考虑按照业务垂直拆分。</p>
+<li><p>阻塞</p>
+<p>线程被阻塞了，<code>阻塞状态</code>与<code>等待状态</code>的区别是：</p>
+<ul>
+<li>阻塞状态在等待获取到一个排它锁，这个事件将在另一个线程放弃这个锁的时候发生</li>
+<li>等到状态是在等待一段时间，或者唤醒动作的发生，在程序等待进入同步区域时，线程会进入这种状态</li>
+</ul>
 </li>
-<li><p>再考虑水平拆分：先分库(设置数据路由规则，把数据分配到不同的库中)</p>
-</li>
-<li><p>最后再考虑分表，单表拆分到数据1000万以内。</p>
+<li><p>结束</p>
+<p>已终止线程的线程状态，线程已经结束执行</p>
 </li>
 </ol>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://www.qingtingip.com/h_186509.html" target="_blank" rel="noopener">https://www.qingtingip.com/h_186509.html</a></p>
-<p><a href="https://blog.csdn.net/shiyong1949/article/details/59586773" target="_blank" rel="noopener">https://blog.csdn.net/shiyong1949/article/details/59586773</a></p>
-<p><a href="https://blog.csdn.net/worn_xiao/article/details/83963932" target="_blank" rel="noopener">https://blog.csdn.net/worn_xiao/article/details/83963932</a></p>
 
             </div>
             <hr/>
@@ -437,12 +433,12 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
-                                    <span class="chip bg-color">数据库</span>
+                                <a href="/tags/java/">
+                                    <span class="chip bg-color">java</span>
                                 </a>
                             
-                                <a href="/tags/mysql/">
-                                    <span class="chip bg-color">mysql</span>
+                                <a href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/">
+                                    <span class="chip bg-color">虚拟机</span>
                                 </a>
                             
                         </div>
@@ -484,28 +480,86 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2019/01/12/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/">
+                <a href="/2019/12/30/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="垃圾回收">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="计算机组成原理">
                         
-                        <span class="card-title">垃圾回收</span>
+                        <span class="card-title">计算机组成原理</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            是否垃圾回收对象是否存活：
-引用计数法：给对象添加一个引用计数器，当被引用时加1，当引用失效时减1，当引用计数器为0时，表示该对象没有被引用。
+                            一. 计算机系统概述计算机性能指标硬件性能参数
 
-可达性分析：以“GC Roots“为起点，并开始向下搜索，搜索所走的路径称为引用链，一个对线到
+计算机字长：CPU字长，指CPU一次能处理数据的二进制位数
+机器主频：时钟脉冲的频率
+主存容量：计算机能够存放的最大的二进制位数bit，B，KB，MB
+
+计算机性能指标
+
+响应时间：计算机完
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2019-01-12
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-12-30
                         </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/" class="post-category">
+                                    期末复习
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">
+                        <span class="chip bg-color">计算机组成原理</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2019/03/22/Executors%E6%A1%86%E6%9E%B6/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="Executors框架">
+                        
+                        <span class="card-title">Executors框架</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            Executors框架概述Executors框架整体架构如下：
+
+
+Executor执行器接口，也是最顶层的抽象核心接口， 分离了任务和任务的执行。
+ExecutorService在Executor的基础上提供了执行器生命周期管理，任务异步
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-03-22
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -525,62 +579,12 @@
                         <span class="chip bg-color">java</span>
                     </a>
                     
-                    <a href="/tags/jvm/">
-                        <span class="chip bg-color">jvm</span>
+                    <a href="/tags/JUC/">
+                        <span class="chip bg-color">JUC</span>
                     </a>
                     
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2019/01/05/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="数据库索引">
-                        
-                        <span class="card-title">数据库索引</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            索引索引的目的在于提高查询效率，可以类比字典，如果要查“mysql”这个单词，我们肯定需要定位到m字母，然后从下往下找到y字母，再找到剩下的sql。而如果没有索引，那么可能需要把所有单词看一遍才能找到，这个过程是非常耗费时间的。
-聚集索引与
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-01-05
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
-                                    数据库
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
-                        <span class="chip bg-color">数据库</span>
-                    </a>
-                    
-                    <a href="/tags/mysql/">
-                        <span class="chip bg-color">mysql</span>
+                    <a href="/tags/%E5%B9%B6%E5%8F%91/">
+                        <span class="chip bg-color">并发</span>
                     </a>
                     
                 </div>
@@ -718,6 +722,13 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
 
 </main>
 
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
 
 
     <footer class="page-footer bg-color">

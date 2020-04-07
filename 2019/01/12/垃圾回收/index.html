@@ -1,0 +1,1082 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta name="keywords" content="垃圾回收, 成">
+    <meta name="description" content="是否垃圾回收对象是否存活：
+引用计数法：给对象添加一个引用计数器，当被引用时加1，当引用失效时减1，当引用计数器为0时，表示该对象没有被引用。
+
+可达性分析：以“GC Roots“为起点，并开始向下搜索，搜索所走的路径称为引用链，一个对线到">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>垃圾回收 | 成</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <script src="/libs/jquery/jquery.min.js"></script>
+    
+<meta name="generator" content="Hexo 4.2.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+
+
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper head-container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">成</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">成</div>
+        <div class="logo-desc">
+            
+            你好哇！李三日！遇到你真高兴！
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/11.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">垃圾回收</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/java/">
+                                <span class="chip bg-color">java</span>
+                            </a>
+                        
+                            <a href="/tags/jvm/">
+                                <span class="chip bg-color">jvm</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/java/" class="post-category">
+                                java
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2019-01-12
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    4.4k
+                </div>
+                
+
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="是否垃圾回收"><a href="#是否垃圾回收" class="headerlink" title="是否垃圾回收"></a>是否垃圾回收</h2><h3 id="对象是否存活："><a href="#对象是否存活：" class="headerlink" title="对象是否存活："></a>对象是否存活：</h3><ul>
+<li><p>引用计数法：给对象添加一个引用计数器，当被引用时加1，当引用失效时减1，当引用计数器为0时，表示该对象没有被引用。</p>
+</li>
+<li><p>可达性分析：以“GC Roots“为起点，并开始向下搜索，搜索所走的路径称为<strong>引用链</strong>，一个对线到GC Roots没有引用链时，则表示该对象不可用。</p>
+<p>GC Roots:</p>
+<ul>
+<li>虚拟机栈（栈帧中本地变量表）中引用的对象</li>
+<li>方法区中类静态属性引用的对象</li>
+<li>方法区中常量引用的对象</li>
+</ul>
+</li>
+</ul>
+<h3 id="引用类型"><a href="#引用类型" class="headerlink" title="引用类型"></a>引用类型</h3><p>java将引用分为强引用（Strong Reference），软引用（Soft Reference），弱引用（Weak Reference），虚引用（Phantom Reference）</p>
+<ul>
+<li>强引用：类似<code>Object obj = new Object();</code>只要强引用存在，则该被引用对象永远不会被回收。</li>
+<li>软引用：用来描述一些有用但并非必需的对象。在内存空间充足时，垃圾回收器就不会回收它；如果内存空间不足了，就会回收这些对象的内存，如果在回收还没有足够的内存，才会抛出内存溢出异常。</li>
+<li>弱引用：也用来描述非必需对象的，它的强度比软引用更弱一些。被弱引用关联的对象只能生存到下一次垃圾回收发生之前。</li>
+<li>虚引用：是最弱的一种引用关系，一个对象是否有虚引用的存在，完全不会对其生存时间构成影响，也无法通过虚引用来取得一个对象实例。为一个对象设置虚引用关联的唯一目的是在这个对象被回收时收到一个系统通知。</li>
+</ul>
+<h3 id="被标记不可用即可删除？"><a href="#被标记不可用即可删除？" class="headerlink" title="被标记不可用即可删除？"></a>被标记不可用即可删除？</h3><p>一个对象死亡，至少要经历两次标记过程。</p>
+<p>如果对象在进行可达性分析后发现没有与GC Roots相连的引用链，则它将被第一次标记并且进行一次筛选。筛选的条件是<strong>此对象是否有必要执行<code>finalize()</code>方法</strong></p>
+<ul>
+<li>如果对象没有覆盖<code>finalize()</code>方法，或者<code>finalize()</code>方法已经被虚拟机调用过，则认为没有必要执行<code>finalize()</code>方法，则直接回收该对象</li>
+<li>如果覆盖了<code>finalize()</code>方法，那么对象会被放置在一个叫做<code>F-Queue</code>的队列之中。然后由一个虚拟机自动创建的，低优先级的Finalizer线程去执行它，该执行是指会触发该方法，当并不承诺等待它运行结束。<code>finalize()</code>方法是对象逃脱死亡命运的最后一次机会，稍后GC将对<code>F-Queue</code>中的对象进行第二次标记。<ul>
+<li>如果在<code>finalize()</code>方法中将该对象重新与引用链上任何一个对象建立关联，例如将自己（this）赋值给类变量或者对象的成员变量，则该对象即可不被清除</li>
+<li>否则，如果该对象被标记为清除，则回收该对象</li>
+</ul>
+</li>
+</ul>
+<p><code>finalize()</code>方法特点：</p>
+<ul>
+<li>一个对象的<code>finalize()</code>方法最多会被系统自动调用一次</li>
+<li>何时执行<ol>
+<li>所有对象被Garbage Collection时自动调用,比如运行System.gc()的时候.</li>
+<li>程序退出时为每个对象调用一次finalize方法。</li>
+<li>显式的调用finalize方法</li>
+</ol>
+</li>
+</ul>
+<h2 id="垃圾回收算法"><a href="#垃圾回收算法" class="headerlink" title="垃圾回收算法"></a>垃圾回收算法</h2><h3 id="标记-清除算法："><a href="#标记-清除算法：" class="headerlink" title="标记-清除算法："></a>标记-清除算法：</h3><ul>
+<li>思想：首先标记所有需要回收的对象，在标记完成之后统一回收所有标记对象。</li>
+<li>特点：<ol>
+<li>标记和清除两个过程效率都不高</li>
+<li>标记清除之后会产生大量不连续的内存碎片</li>
+</ol>
+</li>
+</ul>
+<p><img src="%E6%A0%87%E8%AE%B0%E6%B8%85%E9%99%A4.png" alt=""></p>
+<h3 id="复制算法："><a href="#复制算法：" class="headerlink" title="复制算法："></a>复制算法：</h3><ul>
+<li>思想：将可用内存按容量划分为大小相等的两块，每次只使用其中的一块。当这一块的内存用完了，就将还存活着的对象复制到另外一块上面，然后再把已使用过的内存空间一次清理掉。</li>
+<li>特点：<ol>
+<li>每次都对整个半区进行内存回收，内存分配时也就不用考虑内存碎片等复杂情况，只要移动堆顶指针，按顺序分配内存即可，实现简单，运行高效。</li>
+<li>将内存缩小为原来的一半，浪费空间。</li>
+<li>复制收集算法在对象存活率较高时就要执行较多的复制操作，效率将会变低</li>
+<li>该回收方法用来收集新生代</li>
+</ol>
+</li>
+</ul>
+<p><img src="%E5%A4%8D%E5%88%B6%E7%AE%97%E6%B3%95.png" alt=""></p>
+<h3 id="标记-整理算法："><a href="#标记-整理算法：" class="headerlink" title="标记-整理算法："></a>标记-整理算法：</h3><ul>
+<li>思想：首先标记所有需要回收的对象，然后让所有存活的对象都向一端移动，再直接清理掉端边界以外的内存</li>
+<li>特点：<ol>
+<li>适用于老年代回收</li>
+</ol>
+</li>
+</ul>
+<p><img src="%E6%A0%87%E8%AE%B0%E5%8E%8B%E7%BC%A9.png" alt=""></p>
+<h3 id="分代回收："><a href="#分代回收：" class="headerlink" title="分代回收："></a>分代回收：</h3><ul>
+<li>思想：把Java堆分为新生代和老年代，根据各个年代的特点采用最适当的收集算法。在新生代中，每次垃圾收集时都发现有大批对象死去，只有少量存活，那就选用复制算法，只需要付出少量存活对象的复制成本就可以完成收集。而老年代中因为对象存活率高，使用“标记-清理”或“标记-整理”算法来进行回收。</li>
+</ul>
+<h2 id="垃圾收集器"><a href="#垃圾收集器" class="headerlink" title="垃圾收集器"></a>垃圾收集器</h2><h3 id="Serial收集器"><a href="#Serial收集器" class="headerlink" title="Serial收集器"></a>Serial收集器</h3><p>Serial收集器是一个单线程收集器，它具有如下特点</p>
+<ol>
+<li>虚拟机运行在Client模式下默认的新生代收集器</li>
+<li>它只会使用一个CPU或者一个线程完成垃圾收集工作，因此在单CPU环境下有最高的效率</li>
+<li>它进行垃圾收集之前，必须暂停其他所有的工作线程（Stop the world），直到它收集结束</li>
+<li>新生代使用复制算法，老年代采用标记-整理算法</li>
+<li>参数控制：<ul>
+<li><strong>-XX:+UseSerialGC</strong>  串行收集器</li>
+</ul>
+</li>
+</ol>
+<p><img src="Serial%E6%94%B6%E9%9B%86%E5%99%A8.png" alt=""></p>
+<h3 id="ParNew收集器"><a href="#ParNew收集器" class="headerlink" title="ParNew收集器"></a>ParNew收集器</h3><p>ParNew收集器是Serial收集器的多线程版本，具有以下特点：</p>
+<ol>
+<li>用作运行在Server模式下的虚拟机的新生代收集器</li>
+<li>使用多条线程进行垃圾收集</li>
+<li>它进行垃圾收集之前，必须暂停其他所有的工作线程（Stop the world），直到它收集结束</li>
+<li>新生代使用复制算法，老年代采用标记-整理算法</li>
+<li>参数控制：<ul>
+<li><strong>-XX:+UseParNewGC</strong>  ParNew收集器    </li>
+<li><strong>-XX:ParallelGCThreads</strong> 限制线程数量</li>
+</ul>
+</li>
+</ol>
+<p><img src="ParNew%E6%94%B6%E9%9B%86%E5%99%A8.png" alt=""></p>
+<h3 id="Parallel-Scavenge收集器"><a href="#Parallel-Scavenge收集器" class="headerlink" title="Parallel Scavenge收集器"></a>Parallel Scavenge收集器</h3><p>Parallel Scavenge收集器是一个关注吞吐量（运行用户代码时间/（运行用户代码时间+垃圾收集时间））的垃圾收集器，具有以下特点：</p>
+<ol>
+<li>新生代收集器</li>
+<li>并行的多线程收集器</li>
+<li>新生代使用复制算法，老年代使用标记-压缩算法</li>
+<li>具有“GC自适应的调节策略”：使用<code>-XX:+UseAdaptiveSizePolicy</code>参数，就不需要手动指定新生代大小，Eden与Survivor区的比例，今生老年代对象大小等细节参数。虚拟机会根据当前系统的运行情况收集性能监控信息，动态调整这些参数以提供最合适的停顿时间或最大的吞吐量</li>
+<li>参数控制：<ul>
+<li><strong>-XX:+UseParallelGC</strong>  使用Parallel收集器+ 老年代串行。</li>
+<li><strong>-XX:+MaxGCPauseMillis</strong>  控制最大垃圾收集停顿时间</li>
+<li><strong>-XX:+GCTimeRatio</strong>  设置吞吐量大小</li>
+</ul>
+</li>
+</ol>
+<h3 id="Serial-Old收集器："><a href="#Serial-Old收集器：" class="headerlink" title="Serial Old收集器："></a>Serial Old收集器：</h3><p>Serial Old收集器是Serial收集器的老年代版本，具有如下特点：</p>
+<ol>
+<li><p>用作运行在Client模式下的虚拟机的老年代收集器</p>
+</li>
+<li><p>是一个单线程收集器</p>
+</li>
+<li><p>新生代使用复制算法，老年代使用标价-整理算法</p>
+</li>
+</ol>
+<h3 id="Parallel-Old收集器："><a href="#Parallel-Old收集器：" class="headerlink" title="Parallel Old收集器："></a>Parallel Old收集器：</h3><p>Parallel Old是Parallel Scavenge收集器的老年代版本，具有如下特点：</p>
+<ol>
+<li>适合用于注重吞吐量，以及CPU资源敏感的场合（使用Paraller Scanvenge+Parallel Old组合）</li>
+<li>是一个多线程收集器</li>
+<li>老年代使用标记-整理算法</li>
+<li>参数控制<ul>
+<li><strong>-XX:+UseParallelOldGC</strong> 使用Parallel收集器+ 老年代并行</li>
+</ul>
+</li>
+</ol>
+<h3 id="CMS收集器："><a href="#CMS收集器：" class="headerlink" title="CMS收集器："></a>CMS收集器：</h3><p>CMS是一种以<strong>获取最短回收停顿时间</strong>为目标的收集器，具有以下特点</p>
+<ol>
+<li><p>CMS适合应用在互联网网站或者B/S系统的服务端</p>
+</li>
+<li><p>CMS收集器是基于<strong>标记-清除</strong>算法实现的</p>
+</li>
+<li><p>收集过程有四个步骤</p>
+<ul>
+<li><strong>初始标记</strong><ul>
+<li>需要Stop the World</li>
+<li>只标记GC Roots直接关联到的对象，速度很快</li>
+</ul>
+</li>
+<li><strong>并发标记</strong><ul>
+<li>进行GC Roots Tracing</li>
+<li>和用户程序一起运行</li>
+</ul>
+</li>
+<li><strong>重新标记</strong><ul>
+<li>需要Stop the World</li>
+<li>修正并发标记期间因用户程序继续运行而导致标记产生变动的那一部分对象的标记记录</li>
+</ul>
+</li>
+<li><strong>并发清除</strong><ul>
+<li>和用户程序一起运行</li>
+</ul>
+</li>
+</ul>
+<p><img src="CMS%E6%94%B6%E9%9B%86%E5%99%A8.png" alt=""></p>
+</li>
+</ol>
+<p>CMS收集器有以下缺点</p>
+<ul>
+<li><p>CMS收集器对CPU资源非常敏感。因为回收线程和用户程序一起运行，会导致应用程序变慢，总吞吐量变低，应尽量减少回收线程独占CPU的时间</p>
+</li>
+<li><p>CMS收集器无法处理浮动垃圾（Floating Garbage），可能出现“Concurrent Mode Failure”失败而导致赢一次Full GC的产生。</p>
+<ul>
+<li>浮动垃圾是并发清除阶段产生的新垃圾</li>
+<li>因为并发清除时，用户程序改在运行，因此需要给用户程序预留一定的内存空间，而不是像其他收集器一样等到老年代几乎用完再进行垃圾收集。如果预留的空间无法满足程序需要，就会出现一次”Concurrent Mode Failure”失败，这时虚拟器启动Serial Old收集器重新进行老年代的垃圾收集，这样停顿的时间就很长了。</li>
+</ul>
+</li>
+<li><p>因为使用标记-清除算法，因此会出现碎片</p>
+</li>
+</ul>
+<h3 id="G1收集器："><a href="#G1收集器：" class="headerlink" title="G1收集器："></a>G1收集器：</h3><p>G1收集器是目前技术发展的最前沿成果之一，具有以下特点</p>
+<ol>
+<li>G1是一款面向服务端应用的垃圾收集器</li>
+<li>并行与并发：充分利用CPU缩短Stop The World的停顿时间，执行GC时可以让用户程序并发运行</li>
+<li>分代收集</li>
+<li>空间整合：使用标记-整理算法，因此不会产生碎片</li>
+<li>可预测停顿：这是G1的另一大优势，降低停顿时间是G1和CMS的共同关注点，但G1除了追求低停顿外，还能建立可预测的停顿时间模型，能让使用者明确指定在一个长度为N毫秒的时间片段内，消耗在垃圾收集上的时间不得超过N毫秒，这几乎已经是实时Java（RTSJ）的垃圾收集器的特征了。</li>
+</ol>
+<p>上面提到的垃圾收集器，收集的范围都是整个新生代或者老年代，而G1不再是这样。使用G1收集器时，Java堆的内存布局与其他收集器有很大差别，<strong>它将整个Java堆划分为多个大小相等的独立区域（Region）</strong>，虽然还保留有新生代和老年代的概念，但新生代和老年代不再是物理隔阂了，它们都是一部分（可以不连续）Region的集合。</p>
+<p>G1收集器的可预测的停顿时间模型：G1有计划的避免整个Java堆中进行全区域的垃圾收集。G1跟踪各个Region里面的垃圾堆积的价值大小（回收空间+所需时间），在后台维护一个优先列表，每次根据允许的收集时间，优先回收价值最大的Region。</p>
+<p>G1收集器对全堆扫描的解决：Region之间的对象引用是使用Remembered Set来避免全堆扫描的，G1中每个Region都有一个与之对应的Remembered Set。</p>
+<ol>
+<li>虚拟机发现程序在对Reference类型的数据进行写操作时，会产生一个Write Barrier暂时中断写操作</li>
+<li>检查Reference引用的对象是否处于不同的Region之中</li>
+<li>如果存在不同的Region，便通过CardTable将相关引用信息记录到被引用对象所属的Remembered Set之中</li>
+<li>当进行内存回收时，在GC根节点的枚举范围中加入Remembered Set即可保证不对全堆扫描</li>
+</ol>
+<p>G1的流程如下：</p>
+<ol>
+<li>初始标记<ul>
+<li>标记GC Roots直接关联到的对象</li>
+<li>修改<strong>TAMS(Next Top at Mark Start)</strong>的值，让下一阶段用户程序并发时，能在正确的可用的Region中创建新对象，该阶段需要停顿线程，但耗时很短。</li>
+</ul>
+</li>
+<li>并发标记<ul>
+<li>从GC Roots开始对堆中对象进行可达性分析，可与用户程序并发执行</li>
+</ul>
+</li>
+<li>最终标记<ul>
+<li>修正在并发标记期间因用户程序继续运作而导致标记产生变动的那一部分标记记录，虚拟机将这段时间对象变换记录在线程Remembered Set Logs里，最终标记阶段需要把Remembered Set Logs的数据合并到Remembered Set中，该阶段需要停顿线程，但可并行执行</li>
+</ul>
+</li>
+<li>筛选回收<ul>
+<li>首先对各个Region的回收价值和成本进行排序</li>
+<li>根据用户期望的GC挺短时间指定回收计划</li>
+</ul>
+</li>
+</ol>
+<h2 id="内存分配与回收策略"><a href="#内存分配与回收策略" class="headerlink" title="内存分配与回收策略"></a>内存分配与回收策略</h2><p>java的自动内存管理解决了两个问题：给对象分配内存以及回收分配给对象的内存。</p>
+<p>而对于对象分配，有如下一些规则，</p>
+<p><img src="%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F.png" alt=""></p>
+<h3 id="对象优先在Eden分配"><a href="#对象优先在Eden分配" class="headerlink" title="对象优先在Eden分配"></a>对象优先在Eden分配</h3><p>大多数情况下，对象在新生代Eden区中分配，当Eden区没有足够空间进行分配时，虚拟机将发起一次Minor GC。</p>
+<blockquote>
+<p>新生代的Minor GC复制算法</p>
+<p>新生代采取复制算法，在Minor GC之前，to survivor区域保持清空，对象保存在Eden和from survivor区，minor GC运行时，Eden中的幸存对象会被复制到to Survivor（同时对象年龄会增加1）。而from survivor区中的幸存对象会考虑对象年龄，如果年龄没达到阈值，对象依然复制到to survivor中。如果对象达到阈值那么将被移到老年代。复制阶段完成后，Eden和From幸存区中只保存死对象，可以视为清空。如果在复制过程中to幸存区被填满了，剩余的对象将被放到老年代。最后，From survivor和to survivor会调换一下名字，下次Minor GC时，To survivor变为From Survivor。</p>
+</blockquote>
+<h3 id="大对象直接进入老年代"><a href="#大对象直接进入老年代" class="headerlink" title="大对象直接进入老年代"></a>大对象直接进入老年代</h3><p>大对象是指，需要大量连续内存空间的Java对象，最典序的大对象就是很长的字符串以及数组。</p>
+<p>使用<code>-XX:PretenureSizeThreshold</code>参数，使大于这个值的对象直接在老年代分配，这样子可以避免在Eden和两个Survicor区之间发生大量的内存复制</p>
+<h3 id="长期存活的对象进入老年代"><a href="#长期存活的对象进入老年代" class="headerlink" title="长期存活的对象进入老年代"></a>长期存活的对象进入老年代</h3><p>虚拟机给每个对象定义一个对象年龄计数器。<strong>如果对象在Eden出生并经过第一次Minor GC后仍然存活，并且能被survivor容纳的话，将被移动到survivor空间中，并且对象年龄设为1。对于在survivor区中每经过一个Minor GC，年龄就增加1岁，它的年龄增加到一定程度（默认15岁），就可以进入到老年代</strong>。</p>
+<p>晋升到老年代的年龄阈值，可以通过参数<code>-XX:MaxTenuringThreshold</code>设置</p>
+<h3 id="动态对象年龄判定"><a href="#动态对象年龄判定" class="headerlink" title="动态对象年龄判定"></a>动态对象年龄判定</h3><p>如果在survivor空间中<strong>相同年龄</strong>所有对象大小的总和大于survivor空间的一半，年龄<strong>大于或等于该年龄的对象</strong>可以直接进入老年代。</p>
+<h3 id="空间分配担保"><a href="#空间分配担保" class="headerlink" title="空间分配担保"></a>空间分配担保</h3><p>在发生Minor GC之前，虚拟机会先检查<strong>老年代最大可用的连续空间是否大于新生代所有对象总空间</strong></p>
+<ul>
+<li>如果条件成立，那么Minor GC可以确保是安全的。</li>
+<li>如果不成立，则虚拟机会查看HandlerPromotionFailure设置是否允许担保失败。<ul>
+<li>如果允许，那么会继续检查<strong>老年代最大可用的连续空间</strong>是否大于<strong>历次晋升到老年代对象的平均大小</strong>。如果大于，将尝试着进行一次Monitor GC，尽管这次GC是有风险的。如果小于，或者HandlerPromotionFailure设置不允许冒险，那这时也要改为进行一次Full GC了。</li>
+</ul>
+</li>
+</ul>
+<p>新生代复制算法只使用其中一个Survivor空间来作为轮换备份，因此当出现大量对象在Minor GC后仍然存活的情况（最极端的情况是内存回收之后，新生代中所有的对象都存活），就需要老年代进行分配担保，把Survivor无法容纳的对象直接进入老年代。老年代要进行这样的担保，前提是老年代本身还有容纳这些对象的剩余空间，一共有多少对象存活下来在实际完成内存回收之前是无法明确知道的，所以只好取之前每一次回收晋升到老年代对象容量的平均大小值作为经验值，与老年代的剩余空间进行比较，决定是否进行Full GC来让老年代腾出更多空间。</p>
+<p>取平均值进行比较其实是一种动态概率的手段，也就是说，如果某次Minor GC存活后的对象突增，远远高于平均值的话，依然会导致担保失败。如果出现HandlerPromotionFailure失败，那就只好在失败后重新发起一次FULL GC。虽然担保失败时绕的圈子是最大的，但大部分情况下都还是将HandlerPromotionFailure开关打开，避免Full GC过于频繁。</p>
+
+            </div>
+            <hr/>
+
+            
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/java/">
+                                    <span class="chip bg-color">java</span>
+                                </a>
+                            
+                                <a href="/tags/jvm/">
+                                    <span class="chip bg-color">jvm</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2019/01/12/MapReduce%E5%B7%A5%E4%BD%9C%E6%9C%BA%E5%88%B6%E4%B8%8E%E8%AE%A1%E7%AE%97%E8%BF%87%E7%A8%8B/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="MapReduce工作机制与计算过程">
+                        
+                        <span class="card-title">MapReduce工作机制与计算过程</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            MapReduce介绍Hadoop Map/Reduce是一个使用简易的软件框架，基于它写出来的应用程序能够运行在由上千个商用机器组成的大型集群上，并以一种可靠容错的方式并行处理上T级别的数据集。
+一个Map/Reduce 作业（job） 
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-01-12
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Hadoop/" class="post-category">
+                                    Hadoop
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Hadoop/">
+                        <span class="chip bg-color">Hadoop</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/">
+                        <span class="chip bg-color">大数据</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2019/01/11/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%88%86%E5%BA%93%E5%88%86%E8%A1%A8/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="数据库分库分表">
+                        
+                        <span class="card-title">数据库分库分表</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            垂直拆分垂直拆分是将一个包含了很多表的数据库,根据表的功能的不同,拆分为多个小的数据库,每个库中包含部分表。
+比如大型的电商项目平台是由不同的子项目模块构成的如订单系统，账户系统，商品管理系统等等，这些个独立的模块都可以拆分成独立的服务与独
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-01-11
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
+                                    数据库
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
+                        <span class="chip bg-color">数据库</span>
+                    </a>
+                    
+                    <a href="/tags/mysql/">
+                        <span class="chip bg-color">mysql</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2019</span>
+            <a href="http://yzcheng.com" target="_blank">yzc</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2019";
+                    var startMonth = "12";
+                    var startDate = "26";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+    
+
+</body>
+
+</html>

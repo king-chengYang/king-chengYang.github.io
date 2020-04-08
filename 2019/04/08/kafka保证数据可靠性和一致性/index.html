@@ -4,8 +4,8 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="流计算, 成">
-    <meta name="description" content="原文出处：https://mp.weixin.qq.com/s?__biz=MzA5MTc0NTMwNQ==&amp;amp;mid=2650719541&amp;amp;idx=1&amp;amp;sn=39fba251816ee625854c31ddc91f7">
+    <meta name="keywords" content="Kafka保证数据可靠性和一致性, 成">
+    <meta name="description" content="原文：https://mp.weixin.qq.com/s?__biz=MzA5MTc0NTMwNQ==&amp;amp;mid=2650719661&amp;amp;idx=1&amp;amp;sn=c0e9c11a9b254252592e6197487ffc7">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -13,7 +13,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>流计算 | 成</title>
+    <title>Kafka保证数据可靠性和一致性 | 成</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -174,12 +174,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">流计算</h1>
+                    <h1 class="description center-align post-title">Kafka保证数据可靠性和一致性</h1>
                 </div>
             </div>
         </div>
@@ -300,8 +300,8 @@
                                 <span class="chip bg-color">大数据</span>
                             </a>
                         
-                            <a href="/tags/%E6%B5%81%E5%BC%8F%E5%A4%84%E7%90%86/">
-                                <span class="chip bg-color">流式处理</span>
+                            <a href="/tags/Kafka/">
+                                <span class="chip bg-color">Kafka</span>
                             </a>
                         
                     </div>
@@ -312,8 +312,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/" class="post-category">
-                                大数据
+                            <a href="/categories/Kafka/" class="post-category">
+                                Kafka
                             </a>
                         
                     </div>
@@ -334,7 +334,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.8k
+                    2k
                 </div>
                 
 
@@ -352,67 +352,33 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>原文出处：<a href="https://mp.weixin.qq.com/s?__biz=MzA5MTc0NTMwNQ==&amp;mid=2650719541&amp;idx=1&amp;sn=39fba251816ee625854c31ddc91f73af&amp;chksm=887dd843bf0a515544bed451d6f1b26af560f9c8991bb72d302c74c852fa848c95601d375482&amp;mpshare=1&amp;scene=24&amp;srcid=&amp;sharer_sharetime=1586262346462&amp;sharer_shareid=9f8f1bd360ef58661a2034df035a1bb1#rd" target="_blank" rel="noopener">https://mp.weixin.qq.com/s?__biz=MzA5MTc0NTMwNQ==&amp;mid=2650719541&amp;idx=1&amp;sn=39fba251816ee625854c31ddc91f73af&amp;chksm=887dd843bf0a515544bed451d6f1b26af560f9c8991bb72d302c74c852fa848c95601d375482&amp;mpshare=1&amp;scene=24&amp;srcid=&amp;sharer_sharetime=1586262346462&amp;sharer_shareid=9f8f1bd360ef58661a2034df035a1bb1#rd</a></p>
-<h3 id="01-“流”好在哪里？"><a href="#01-“流”好在哪里？" class="headerlink" title="01 “流”好在哪里？"></a>01 “流”好在哪里？</h3><p>“流”是一种非常好的编程模式。</p>
-<p><img src="%E6%B5%81%E8%AE%A1%E7%AE%97%E6%A8%A1%E5%BC%8F.png" alt=""></p>
-<p>▲图一：代表流计算模式的有向无环图DAG</p>
-<p><strong>首先，“流”与“异步”不谋而合。</strong></p>
-<p>“流”的各个节点通过队列传递消息，不同节点的执行正好就是完全异步的。并且由于有队列隔离，不同节点的执行完全不用考虑并发安全的问题。“流”在内部执行时是异步和并行的，能最大限度提高资源使用效率，提高程序执行性能。</p>
-<p>可以说，“流”是“异步”的一种重要表现方式，“异步”则是“流”在执行时的内禀性质。</p>
-<p><img src="%E6%B5%81%E4%B8%8E%E5%BC%82%E6%AD%A5.png" alt=""></p>
-<p>▲图2：“流”和“异步”，傻傻分不清楚！</p>
-<p><strong>其次，如果“流”的执行节点间使用的是阻塞队列</strong>，那么整个流的各个执行环节就天然地带有了反向压力能力，让我们不必担心很多异步系统在高负载而又临时处理能力不足时造成的OOM问题。</p>
-<p><strong>再次，“流”能够非常自然地描述业务执行的流程。</strong>不管是大到整个产品线的各个服务模块，还是小到每个服务模块中的具体实现步骤。就像“分形”一样，“流”能够做任意细力度的划分。这是一种非常普遍的描述事情发生过程的模式。</p>
-<p><strong>最后，通过类似于Kafka这样消息中间件的隔离，可以非常清晰地定义模块和模块之间的边界</strong>，从设计模式中高内聚、低耦合的角度来看，是一种非常不错的实践！</p>
-<h3 id="02-流计算解决了什么问题？"><a href="#02-流计算解决了什么问题？" class="headerlink" title="02 流计算解决了什么问题？"></a>02 流计算解决了什么问题？</h3><p>总的来说，我们使用流计算主要是为了计算以下几类问题。</p>
-<h4 id="1-流数据操作"><a href="#1-流数据操作" class="headerlink" title="1. 流数据操作"></a><strong>1. 流数据操作</strong></h4><p>流数据操作可以说是流计算系统与生俱来的能力，它本身是针对数据流的转化或转移处理，所以实现和使用起来都相对更加直观。</p>
-<p>流数据操作的内容主要包括了三类：<strong>对数据进行清洗、规整和结构化</strong>，对不同来源的数据进行关联及合并，以及在不同系统之间搬运数据。这三类操作通过一些常用的流式API就可以实现。</p>
-<h4 id="2-单点特征计算"><a href="#2-单点特征计算" class="headerlink" title="2. 单点特征计算"></a><strong>2. 单点特征计算</strong></h4><p>一个事件中包含的用户是否在黑名单中？发生事件的设备是否是模拟器？温度传感器传来的温度事件是否已经超出正常温度范围？发送消息设备的IP是否是代理？一次交易的金额是否属于大额交易？手机是否有SIM卡？</p>
-<p>诸如此类的问题，要么可以通过黑白名单，要么能够通过特定的规则计算而得到答案，实现起来相对简单，所以<strong>我们将这类特征计算称之为单点特征。</strong></p>
-<h4 id="3-时间维度聚合特征计算"><a href="#3-时间维度聚合特征计算" class="headerlink" title="3. 时间维度聚合特征计算"></a><strong>3. 时间维度聚合特征计算</strong></h4><p>相同设备的1小时内注册事件次数、相同银行卡号的7天交易事件次数、过去30天内同一IP段上交易金额、过去1分钟高温事件的次数、过去5分钟日志告警事件的次数……</p>
-<p>诸如此类特征在诸如风控、预警、监控等各种场景都非常广泛的应用。分析不难发现，这类特征都有个共同特点，它们均需要在时间维度对数据进行聚合运算。因此，<strong>我们称这类特征为时间维度聚合特征。</strong></p>
-<h4 id="4-关联图谱特征计算"><a href="#4-关联图谱特征计算" class="headerlink" title="4. 关联图谱特征计算"></a><strong>4. 关联图谱特征计算</strong></h4><p>除了时间维度的聚合分析外，我们还经常进行“空间”维度的聚合分析。不过<strong>这种分析有个更专业的名字，即“关联图谱”分析。</strong></p>
-<p>比如在一些风控场景中，我们需要计算用户账户使用IP的个数、同一手机号码发生在不同城市的个数、同一设备上关联用户的数目、同一用户关联设备的数目、同一推荐人推荐的用户数等特征。</p>
-<p>以设备关联用户数为例，如果某个设备上注册的用户很多，那么它的风险就比较高，毕竟正常情况下我们都只会用自己的手机注册自己的账号，而不会是帮其他几十、上百人注册账号的。</p>
-<h4 id="5-事件序列分析"><a href="#5-事件序列分析" class="headerlink" title="5. 事件序列分析"></a><strong>5. 事件序列分析</strong></h4><p>数据流中的数据不是单纯在时间上有着先来后到的关系，而是在数据和数据之间也有着联系。</p>
-<p>考虑用户在手机上安装新APP的过程，它可能是先点击了某个广告链接，然后下载并安装了APP，最后成功注册了账号。从“点击”到“下载”，再到“安装”和“注册”，这就完成了一次将广告转化为用户的过程。</p>
-<p>再比如在网络欺诈识别场景中，如果用户在新建账号后，立马发生大量交易行为。那么这种“新建账号”到“10分钟内5次交易”的行为就是种非常可疑的行为了。</p>
-<p>诸如此类从数据流表示的事件流中，检测并筛选出符合特定模式或行为的事件序列的过程，我们称之为<strong>复杂事件处理</strong>（Complex Event Processing，简称为CEP）。<strong>CEP也是流计算经常被用来解决的问题。</strong></p>
-<h4 id="6-模型学习和预测"><a href="#6-模型学习和预测" class="headerlink" title="6. 模型学习和预测"></a><strong>6. 模型学习和预测</strong></h4><p>随着流计算越来越流行和普及，越来越多的原本主要针对离线批式数据的统计和机器学习模型也被用于流数据。</p>
-<p>比如在风控系统中，当我们计算好特征后，还需要把这些特征输入评分模型进行风险评分。根据不同的使用场景，使用的评分模型可能是基于规则的模型，也可能是基于机器学习的模型。传统的机器学习模型主要通过离线训练而来，但现在越来越多的模型会直接基于流数据在线训练和更新。</p>
-<p>再比如在异常检测应用中，我们会在线统计并估计变量的分布参数，然后根据训练出的分布模型判断变量之后的取值是否属于异常。<strong>这种同时在线更新和预测的做法，在流计算应用中也越来越常见。</strong></p>
-<h3 id="03-流数据状态和流信息状态"><a href="#03-流数据状态和流信息状态" class="headerlink" title="03 流数据状态和流信息状态"></a><strong>03 流数据状态和流信息状态</strong></h3><p>在流计算系统中，“<strong>状态</strong>”是非常重要的方面。甚至从各种开源流计算框架的发展历史来看，我们会发现大家对实时流计算中的“状态”问题也是一点点逐步才弄清楚的。</p>
-<p>关联操作中临时保存的窗口数据、实现时间维度聚合特征、关联图谱特征、CEP中有限状态机、统计或机器学习模型的参数估计，实时流计算系统需要的最主要的几个计算目标，无不与“状态”有关。但，<strong>这些状态是有区别的！</strong></p>
-<p>我们将流在执行过程中涉及到的状态，分为两类：<strong>流数据状态</strong>和<strong>流信息状态</strong>。</p>
+                <p>原文：<a href="https://mp.weixin.qq.com/s?__biz=MzA5MTc0NTMwNQ==&amp;mid=2650719661&amp;idx=1&amp;sn=c0e9c11a9b254252592e6197487ffc77&amp;chksm=887dd8dbbf0a51cd98a77ff477e79ea968aab8e66d0094bfb603bccf018eaaa083b047d216cb&amp;scene=0&amp;xtrack=1#rd" target="_blank" rel="noopener">https://mp.weixin.qq.com/s?__biz=MzA5MTc0NTMwNQ==&amp;mid=2650719661&amp;idx=1&amp;sn=c0e9c11a9b254252592e6197487ffc77&amp;chksm=887dd8dbbf0a51cd98a77ff477e79ea968aab8e66d0094bfb603bccf018eaaa083b047d216cb&amp;scene=0&amp;xtrack=1#rd</a></p>
+<p>学过大数据的同学应该都知道 Kafka，它是分布式消息订阅系统，有非常好的横向扩展性，可实时存储海量数据，是流数据处理中间件的事实标准。本文将介绍 Kafka 是如何保证数据可靠性和一致性的。</p>
+<h2 id="数据可靠性"><a href="#数据可靠性" class="headerlink" title="数据可靠性"></a><strong>数据可靠性</strong></h2><p>Kafka 作为一个商业级消息中间件，消息可靠性的重要性可想而知。本文从 Producter 往 Broker 发送消息、Topic 分区副本以及 Leader 选举几个角度介绍数据的可靠性。</p>
+<h3 id="Topic-分区副本"><a href="#Topic-分区副本" class="headerlink" title="Topic 分区副本"></a><strong>Topic 分区副本</strong></h3><p>在 Kafka 0.8.0 之前，Kafka 是没有副本的概念的，那时候人们只会用 Kafka 存储一些不重要的数据，因为没有副本，数据很可能会丢失。但是随着业务的发展，支持副本的功能越来越强烈，所以为了保证数据的可靠性，Kafka 从 0.8.0 版本开始引入了分区副本（详情请参见 KAFKA-50）。也就是说每个分区可以人为的配置几个副本（比如创建主题的时候指定 replication-factor，也可以在 Broker 级别进行配置 default.replication.factor），一般会设置为3。</p>
+<p>Kafka 可以保证单个分区里的事件是有序的，分区可以在线（可用），也可以离线（不可用）。在众多的分区副本里面有一个副本是 Leader，其余的副本是 follower，所有的读写操作都是经过 Leader 进行的，同时 follower 会定期地去 leader 上的复制数据。当 Leader 挂了的时候，其中一个 follower 会重新成为新的 Leader。通过分区副本，引入了数据冗余，同时也提供了 Kafka 的数据可靠性。</p>
+<p>Kafka 的分区多副本架构是 Kafka 可靠性保证的核心，把消息写入多个副本可以使 Kafka 在发生崩溃时仍能保证消息的持久性。</p>
+<h3 id="Producer-往-Broker-发送消息"><a href="#Producer-往-Broker-发送消息" class="headerlink" title="Producer 往 Broker 发送消息"></a><strong>Producer 往 Broker 发送消息</strong></h3><p>如果我们要往 Kafka 对应的主题发送消息，我们需要通过 Producer 完成。前面我们讲过 Kafka 主题对应了多个分区，每个分区下面又对应了多个副本；为了让用户设置数据可靠性， Kafka 在 Producer 里面提供了消息确认机制。也就是说我们可以通过配置来决定消息发送到对应分区的几个副本才算消息发送成功。可以在定义 Producer 时通过 acks 参数指定（在 0.8.2.X 版本之前是通过 request.required.acks 参数设置的，详见 KAFKA-3043）。这个参数支持以下三种值：</p>
 <ul>
-<li><strong>流数据状态。</strong>在流数据处理的过程中，可能需要处理事件窗口、时间乱序、多流关联等问题，在解决这些问题的过程中，通常会涉及到对部分流数据的临时缓存，并在处理完后将其清理。我们将临时保存的部分流数据称为“流数据状态”。</li>
-<li><strong>流信息状态。</strong>在对流数据的分析过程中，会得到一些我们感兴趣的信息，比如时间维度的聚合数据、关联图谱中的一度关联节点数、CEP中的有限状态机等，这些信息可能会在后续的流数据分析过程中被继续使用，从而需要将这些信息保存下来。同时在后续的流数据处理过程中，这些信息还会被不断地访问和更新。我们将这些分析所得并保存下来的数据称为“流信息状态”。</li>
+<li>acks = 0：意味着如果生产者能够通过网络把消息发送出去，那么就认为消息已成功写入 Kafka 。在这种情况下还是有可能发生错误，比如发送的对象无能被序列化或者网卡发生故障，但如果是分区离线或整个集群长时间不可用，那就不会收到任何错误。在 acks=0 模式下的运行速度是非常快的（这就是为什么很多基准测试都是基于这个模式），你可以得到惊人的吞吐量和带宽利用率，不过如果选择了这种模式， 一定会丢失一些消息。</li>
+<li>acks = 1：意味若 Leader 在收到消息并把它写入到分区数据文件（不一定同步到磁盘上）时会返回确认或错误响应。在这个模式下，如果发生正常的 Leader 选举，生产者会在选举时收到一个 LeaderNotAvailableException 异常，如果生产者能恰当地处理这个错误，它会重试发送悄息，最终消息会安全到达新的 Leader 那里。不过在这个模式下仍然有可能丢失数据，比如消息已经成功写入 Leader，但在消息被复制到 follower 副本之前 Leader发生崩溃。</li>
+<li>acks = all（这个和 request.required.acks = -1 含义一样）：意味着 Leader 在返回确认或错误响应之前，会等待所有同步副本都收到悄息。如果和 min.insync.replicas 参数结合起来，就可以决定在返回确认前至少有多少个副本能够收到悄息，生产者会一直重试直到消息被成功提交。不过这也是最慢的做法，因为生产者在继续发送其他消息之前需要等待所有副本都收到当前的消息。</li>
 </ul>
-<p>将实时流计算应用中的状态分为了“流数据状态”和“流信息状态”。可以说是从两个不同的维度对“流”进行的管理。前者“流数据状态”是从“时间”角度对流进行管理，而后者“流信息状态”则是从“空间”角度对流的管理。</p>
-<p>“流信息状态”弥补了“流数据状态”只是对事件在时间序列上做管理的不足，将流的状态扩展到了任意的空间。</p>
-<p><strong>目前，针对“流信息状态”的存储，主要有三种方式：</strong></p>
+<p>根据实际的应用场景，我们设置不同的 acks，以此保证数据的可靠性。</p>
+<p>另外，Producer 发送消息还可以选择同步（默认，通过 producer.type=sync 配置） 或者异步（producer.type=async）模式。如果设置成异步，虽然会极大的提高消息发送的性能，但是这样会增加丢失数据的风险。如果需要确保消息的可靠性，必须将 producer.type 设置为 sync。</p>
+<h3 id="Leader-选举"><a href="#Leader-选举" class="headerlink" title="Leader 选举"></a><strong>Leader 选举</strong></h3><p>在介绍 Leader 选举之前，让我们先来了解一下 ISR（in-sync replicas）列表。每个分区的 leader 会维护一个 ISR 列表，ISR 列表里面就是 follower 副本的 Borker 编号，只有跟得上 Leader 的 follower 副本才能加入到 ISR 里面，这个是通过 replica.lag.time.max.ms 参数配置的。只有 ISR 里的成员才有被选为 leader 的可能。</p>
+<p>所以当 Leader 挂掉了，而且 unclean.leader.election.enable=false 的情况下，Kafka 会从 ISR 列表中选择第一个 follower 作为新的 Leader，因为这个分区拥有最新的已经 committed 的消息。通过这个可以保证已经 committed 的消息的数据可靠性。</p>
+<p>综上所述，为了保证数据的可靠性，我们最少需要配置一下几个参数：</p>
 <ul>
-<li>计算节点和状态数据节点分离的分布式内存数据库方案</li>
+<li>producer 级别：acks=all（或者 request.required.acks=-1），同时发生模式为同步 producer.type=sync</li>
+<li>topic 级别：设置 replication.factor&gt;=3，并且 min.insync.replicas&gt;=2；</li>
+<li>broker 级别：关闭不完全的 Leader 选举，即 unclean.leader.election.enable=false；</li>
 </ul>
-<p><img src="redis%E9%9B%86%E7%BE%A4.png" alt=""></p>
-<p>▲图3：使用Redis集群进行状态存储和管理</p>
-<ul>
-<li>计算节点和状态数据节点共存的分布式内存格点方案</li>
-</ul>
-<p><img src="Ignite%E9%9B%86%E7%BE%A4.png" alt="img"></p>
-<p>▲图4：使用Ignite集群进行状态存储和管理</p>
-<ul>
-<li>基于分布式文件系统同步状态数据的方案</li>
-</ul>
-<p><img src="%E5%88%86%E5%B8%83%E5%BC%8F%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F.png" alt=""></p>
-<p>▲图5：基于分布式文件系统的状态存储和管理集群</p>
-<p>将“流计算应用本身的执行过程”和“流数据的信息管理机制”解耦，这使得实时流计算系统的整体结构更加清晰。如果我们将前者理解为CPU的执行流水线，那么后者就相当于是内存。实时流计算系统的这种架构就非常像是一个分布式的JVM了！</p>
-<h3 id="04-流计算框架"><a href="#04-流计算框架" class="headerlink" title="04 流计算框架"></a><strong>04 流计算框架</strong></h3><p>目前的开源流计算框架有许多，比如Apache Storm、Spark Streaming、Apache Samza、Apache Flink、Akka Streaming、Apache Beam等。这些流计算框架各有特色，那我们该如何面对琳琅满目的流计算框架呢？可以从两个角度来看待这个问题。</p>
-<p><strong>从横向功能特征的角度来看</strong>，其实所有流计算框架的核心概念都是相同的。只要我们掌握了流计算中的核心概念，把握流计算框架中各种问题的关键所在，那么面对这些流计算框架，也不会感到眼花缭乱，乱了阵脚。</p>
-<p><strong>从纵向发展历史的角度来看</strong>，以Flink为代表的新一代流计算框架，在理论和实践上都已日趋完善和成熟。当掌握了流计算中的核心概念后，不妨一开始就站在Flink这个巨人的肩膀上，开始在流计算领域的探索和实践。</p>
-<p>而作为有希望统一流计算领域的Apache Beam，实际上是构建在各种具体流计算框架上的更高一层统一编程模式，它对流计算中的各种概念和问题做出了总结，是我们追踪流计算领域最新进展的一个好切入点。</p>
-<p>最后附上实时流计算系统思维导图（点击图片可放大）：</p>
-<p><img src="%E6%80%9D%E7%BB%B4%E5%AF%BC%E5%9B%BE.png" alt=""></p>
+<h2 id="数据一致性"><a href="#数据一致性" class="headerlink" title="数据一致性"></a><strong>数据一致性</strong></h2><p>这里介绍的数据一致性主要是说不论是老的 Leader 还是新选举的 Leader，Consumer 都能读到一样的数据。那么 Kafka 是如何实现的呢？</p>
+<p><img src="%E4%B8%80%E8%87%B4%E6%80%A7.png" alt=""></p>
+<p>假设分区的副本为3，其中副本0是 Leader，副本1和副本2是 follower，并且在 ISR 列表里面。虽然副本0已经写入了 Message4，但是 Consumer 只能读取到 Message2。因为所有的 ISR 都同步了 Message2，只有 High Water Mark 以上的消息才支持 Consumer 读取，而 High Water Mark 取决于 ISR 列表里面偏移量最小的分区，对应于上图的副本2，这个很类似于木桶原理。</p>
+<p>这样做的原因是还没有被足够多副本复制的消息被认为是“不安全”的，如果 Leader 发生崩溃，另一个副本成为新 Leader，那么这些消息很可能丢失了。如果我们允许消费者读取这些消息，可能就会破坏一致性。试想，一个消费者从当前 Leader（副本0） 读取并处理了 Message4，这个时候 Leader 挂掉了，选举了副本1为新的 Leader，这时候另一个消费者再去从新的 Leader 读取消息，发现这个消息其实并不存在，这就导致了数据不一致性问题。</p>
+<p>当然，引入了 High Water Mark 机制，会导致 Broker 间的消息复制因为某些原因变慢，那么消息到达消费者的时间也会随之变长（因为我们会先等待消息复制完毕）。延迟时间可以通过参数 replica.lag.time.max.ms 参数配置，它指定了副本在复制消息时可被允许的最大延迟时间。</p>
 
             </div>
             <hr/>
@@ -430,8 +396,8 @@
                                     <span class="chip bg-color">大数据</span>
                                 </a>
                             
-                                <a href="/tags/%E6%B5%81%E5%BC%8F%E5%A4%84%E7%90%86/">
-                                    <span class="chip bg-color">流式处理</span>
+                                <a href="/tags/Kafka/">
+                                    <span class="chip bg-color">Kafka</span>
                                 </a>
                             
                         </div>
@@ -473,88 +439,31 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2019/12/30/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">
+                <a href="/2019/04/08/%E6%B5%81%E8%AE%A1%E7%AE%97/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="计算机组成原理">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="流计算">
                         
-                        <span class="card-title">计算机组成原理</span>
+                        <span class="card-title">流计算</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            一. 计算机系统概述计算机性能指标硬件性能参数
-
-计算机字长：CPU字长，指CPU一次能处理数据的二进制位数
-机器主频：时钟脉冲的频率
-主存容量：计算机能够存放的最大的二进制位数bit，B，KB，MB
-
-计算机性能指标
-
-响应时间：计算机完
+                            原文出处：https://mp.weixin.qq.com/s?__biz=MzA5MTc0NTMwNQ==&amp;mid=2650719541&amp;idx=1&amp;sn=39fba251816ee625854c31ddc91f7
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2019-12-30
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-04-08
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/" class="post-category">
-                                    期末复习
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">
-                        <span class="chip bg-color">计算机组成原理</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2019/04/08/kafka%E4%BF%9D%E8%AF%81%E6%95%B0%E6%8D%AE%E5%8F%AF%E9%9D%A0%E6%80%A7%E5%92%8C%E4%B8%80%E8%87%B4%E6%80%A7/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="Kafka保证数据可靠性和一致性">
-                        
-                        <span class="card-title">Kafka保证数据可靠性和一致性</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            原文：https://mp.weixin.qq.com/s?__biz=MzA5MTc0NTMwNQ==&amp;mid=2650719661&amp;idx=1&amp;sn=c0e9c11a9b254252592e6197487ffc7
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-04-08
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/Kafka/" class="post-category">
-                                    Kafka
+                            <a href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/" class="post-category">
+                                    大数据
                                 </a>
                             
                             
@@ -568,8 +477,61 @@
                         <span class="chip bg-color">大数据</span>
                     </a>
                     
-                    <a href="/tags/Kafka/">
-                        <span class="chip bg-color">Kafka</span>
+                    <a href="/tags/%E6%B5%81%E5%BC%8F%E5%A4%84%E7%90%86/">
+                        <span class="chip bg-color">流式处理</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2019/04/08/Hadoop%20YARN%20%E5%9C%A8%E5%BF%AB%E6%89%8B%E7%9A%84%E5%BA%94%E7%94%A8%E5%AE%9E%E8%B7%B5%E4%B8%8E%E6%8A%80%E6%9C%AF%E6%BC%94%E8%BF%9B%E4%B9%8B%E8%B7%AF/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="Hadoop YARN 在快手的应用实践与技术演进之路">
+                        
+                        <span class="card-title">Hadoop YARN 在快手的应用实践与技术演进之路</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            原文出处：https://mp.weixin.qq.com/s?__biz=MzA5MTc0NTMwNQ==&amp;mid=2650719076&amp;idx=1&amp;sn=3956a8f9d1dcfc63132984a1f71bf
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-04-08
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Hadoop/" class="post-category">
+                                    Hadoop
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Hadoop/">
+                        <span class="chip bg-color">Hadoop</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/">
+                        <span class="chip bg-color">大数据</span>
                     </a>
                     
                 </div>

@@ -4,8 +4,8 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="Hadoop YARN 在快手的应用实践与技术演进之路, 成">
-    <meta name="description" content="原文出处：https://mp.weixin.qq.com/s?__biz=MzA5MTc0NTMwNQ==&amp;amp;mid=2650719076&amp;amp;idx=1&amp;amp;sn=3956a8f9d1dcfc63132984a1f71bf">
+    <meta name="keywords" content="流计算, 成">
+    <meta name="description" content="原文出处：https://mp.weixin.qq.com/s?__biz=MzA5MTc0NTMwNQ==&amp;amp;mid=2650719541&amp;amp;idx=1&amp;amp;sn=39fba251816ee625854c31ddc91f7">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -13,7 +13,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Hadoop YARN 在快手的应用实践与技术演进之路 | 成</title>
+    <title>流计算 | 成</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -174,12 +174,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Hadoop YARN 在快手的应用实践与技术演进之路</h1>
+                    <h1 class="description center-align post-title">流计算</h1>
                 </div>
             </div>
         </div>
@@ -296,12 +296,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Hadoop/">
-                                <span class="chip bg-color">Hadoop</span>
-                            </a>
-                        
                             <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/">
                                 <span class="chip bg-color">大数据</span>
+                            </a>
+                        
+                            <a href="/tags/%E6%B5%81%E5%BC%8F%E5%A4%84%E7%90%86/">
+                                <span class="chip bg-color">流式处理</span>
                             </a>
                         
                     </div>
@@ -312,8 +312,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/Hadoop/" class="post-category">
-                                Hadoop
+                            <a href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/" class="post-category">
+                                大数据
                             </a>
                         
                     </div>
@@ -334,7 +334,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    4.8k
+                    2.8k
                 </div>
                 
 
@@ -352,47 +352,71 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>原文出处：<a href="https://mp.weixin.qq.com/s?__biz=MzA5MTc0NTMwNQ==&amp;mid=2650719076&amp;idx=1&amp;sn=3956a8f9d1dcfc63132984a1f71bf582&amp;chksm=887dde12bf0a5704aca4066aa590bd3fbedbaf9533b48734c145d1355eccdde9812da487da57&amp;mpshare=1&amp;scene=24&amp;srcid=&amp;sharer_sharetime=1586262523299&amp;sharer_shareid=9f8f1bd360ef58661a2034df035a1bb1#rd" target="_blank" rel="noopener">https://mp.weixin.qq.com/s?__biz=MzA5MTc0NTMwNQ==&amp;mid=2650719076&amp;idx=1&amp;sn=3956a8f9d1dcfc63132984a1f71bf582&amp;chksm=887dde12bf0a5704aca4066aa590bd3fbedbaf9533b48734c145d1355eccdde9812da487da57&amp;mpshare=1&amp;scene=24&amp;srcid=&amp;sharer_sharetime=1586262523299&amp;sharer_shareid=9f8f1bd360ef58661a2034df035a1bb1#rd</a></p>
-<p>本文主要分为三部分：<strong>yarn的背景、</strong> <strong>yarn技术改进、</strong> <strong>yarn未来规划。</strong></p>
-<h3 id="yarn背景"><a href="#yarn背景" class="headerlink" title="yarn背景"></a>yarn背景</h3><p>yarn大家都比较熟悉了，是从Hadoop1.0分离到2.0的比较重要的特性，把原来的jobtracker集中式调度变成yarn的二级调度，解决集群扩展性的问题。yarn主要是分成了三个模块，ResourceManager来管理整个集群的资源，NodeManager管理整个机器资源情况，ApplicationMaster管理整个APP的资源信息。MR/SPARK/Flink实现了自己的AM逻辑在yarn上运行。</p>
-<p><img src="yarn.png" alt=""></p>
-<p>接下来介绍一下yarn的RM模块。yarn的RM模块按照功能可以分成两部分：集群状态管理和资源分配。RM内部通过ResourceTrackerService和ApplicationMasterService 负责NM和APP的通信交互。服务内部会生成相应的事件交给内部的事件处理器处理。驱动NM和APP状态机的运行，确保APP和NM处于合适的状态。调度通俗的讲就是把节点的空闲资源分配给需要的APP。社区早期版本的yarn是在心跳逻辑里面触发整个调度逻辑的，这里面有一个问题，调度过程会跟整个事件处理的竞争资源，导致两方相互影响，性能不高，后来yarn社区做了优化，把整个调度逻辑拆离，放到单独线程来做。</p>
-<p><img src="RM.png" alt=""></p>
-<p><strong>yarn在快手的应用特点</strong></p>
-<p>yarn在快手是非常典型的大数据的应用栈，yarn上面服务了一些经典的离线计算，像HiveSQL，最终回变成一个MR／SPARK作业或者PESTO查询在yarn上运行。对于流式的实时数据处理需求，我们上层有一个青藤平台来托管FLINK在YARN上运行。对于模型训练的场景，我们是用XLearning作为调度器，调度TensorFlow，XGBoost，MPI等训练学习引擎。基于Spark和XLearning，我们打造了亚瑟机器学习平台，可以把数据处理流程和一些模型的训练、预测流程做一个打通，方便用户使用。</p>
-<p><img src="yarn%E5%9C%A8%E5%BF%AB%E6%89%8B.png" alt=""></p>
-<h3 id="yarn技术改进"><a href="#yarn技术改进" class="headerlink" title="yarn技术改进"></a><strong>yarn技术改进</strong></h3><h4 id="1-yarn技术实践和演进"><a href="#1-yarn技术实践和演进" class="headerlink" title="1. yarn技术实践和演进"></a>1. yarn技术实践和演进</h4><p>对yarn的一些改动，主要分成四个方面：（1）集群稳定性方面的优化。（2）对yarn的抢占机制做了优化。（3）yarn的调度性能提升。（4）计算集群小IO优化。</p>
-<p><img src="%E6%8A%80%E6%9C%AF%E5%AE%9E%E8%B7%B5%E4%B8%8E%E6%BC%94%E8%BF%9B.png" alt=""></p>
-<h4 id="2-整个集群变大以后，对yarn调度系统来说面临什么问题"><a href="#2-整个集群变大以后，对yarn调度系统来说面临什么问题" class="headerlink" title="2.整个集群变大以后，对yarn调度系统来说面临什么问题?"></a>2.整个集群变大以后，对yarn调度系统来说面临什么问题?</h4><p>直观的感觉来说，整个集群变大，节点就变多了，running的APP也会增多。节点和APP增多会导致RM对外服务压力变大，事件处理逻辑增多，事件处理压力会比较大，并且对增加整个调度的压力。因为你有很多的APP需要请求资源，你整个资源池又非常大，所以整个调度压力是非常大的，怎么解决这个压力的问题。还有整个状态变化会非常多，这时候会有一些事件处理，在yarn原生的框架里面，事件处理是单线程的，会有各种各样的问题，整个事件处理压力非常大。针对这些问题我们做了一些针对性的优化。在大集群里面，机器故障会变得越来越频繁，怎么应对机器故障对整个作业稳定性造成的影响，这也是比较重要的方面。</p>
-<p><img src="%E9%9B%86%E7%BE%A4%E8%A7%84%E6%A8%A1%E5%B8%A6%E6%9D%A5%E7%9A%84%E9%97%AE%E9%A2%98.png" alt=""></p>
-<h4 id="3-在RM方面做的一些优化"><a href="#3-在RM方面做的一些优化" class="headerlink" title="3.在RM方面做的一些优化"></a>3.在RM方面做的一些优化</h4><p>从几个比较经典的Case来说一下。有一次我们升级整个集群的时候，导致整个集群挂掉，一次升级几百个机器，直接导致RM事件雪崩，最终OOM掉。我们发现是RM和NM交互有一些冗余事件的，我们对冗余事件进行了一些优化。对于NM，我们设计了一个慢启动的策略，如果NM刚启动没有必要维持每秒汇报一次，开始可以20秒汇报一次，下次10秒，下次5秒，最终恢复到正常，这样会把整个RM的事件处理压力降下来，最终升级集群对RM基本没什么影响。最终升级瓶颈变成了我们的运维系统，不能并发升级太多机器。</p>
-<p>HDFS是yarn非常底层的基础设施，ResourceManager事件处理逻辑中有一些HDFS操作，HDFS卡一下，会造成整个事件处理逻辑卡住，最终整个集群卡住。分析发现RM对HDFS的操作主要集中在失败APP的处理，不是非常核心的逻辑，解决方案也比较简单粗暴，把HDFS的操作从同步改成异步。我们还对整个yarn事件处理逻辑进行排查，发现有一些像DNS的操作，在某些情况下也会比较卡，我们就把这种比较重IO的操作进行相应的优化，确保事件处理逻辑中都是快速的CPU操作，保证事件处理的高效和稳定。</p>
-<p>经过优化之后，我们发现在集群规模比较大的时候，事件处理过程还是要消耗非常多的CPU，我们profile发现，大部分的CPU的消耗是处理NM节点信息的汇报，RM事件处理主要分几个部分，有一些是节点级别的，有一些是APP级别的，有一些调度级别的。NM级别跟其他的是没有太必要放在同一个线程处理，我们把它抽离出来，放在一个额外的线程上，这样把大部分处理迁出去了，让整个事件处理逻辑变得比较轻量。</p>
-<p>2.6之后yarn支持状态恢复，RM重启理论上对APP是没有影响的，可以把APP恢复出来，但是还是有一些比较小的缺陷，会造成APP的失败，比如没有把一些异常cover住，抛到AM，导致AM挂掉，token恢复在一些场景下也有问题。我们的RM升级是非常频繁的，基本上2天左右就会升级新版本，集群上有一些非常重要的作业，所以失败，对他们造成的影响会比较大。</p>
-<p><img src="%E6%80%A7%E8%83%BD%E6%80%A7%E6%94%B9%E8%BF%9B.png" alt=""></p>
-<h4 id="4-在从节点上面怎么避免单点问题"><a href="#4-在从节点上面怎么避免单点问题" class="headerlink" title="4.在从节点上面怎么避免单点问题"></a>4.在从节点上面怎么避免单点问题</h4><p>yarn社区本身是有一个磁盘的故障监测机制的，基本的思路也会定期在磁盘上创建目录，如果能创建成功说明这个磁盘是OK的，如果失败就认为你这个磁盘有问题，这个比较简单有效。但是在某些特定场景下，会有一些奇怪的磁盘问题，比如整个磁盘是好的，但是某个目录是坏的，可能会导致某些特定的作业失败。我们扩展了NM磁盘的黑名单功能，通过container的失败信息做一些规则匹配，这样可以定向发现一些磁盘问题，把疑似有问题的磁盘放在黑名单里面，不再向这个磁盘调度作业。</p>
-<p>yarn有一个比较大的问题，如果你有一台机器有问题，造成一些container调度失败，并且系统没有捕获的话，会造成雪崩效应，比如一批container启动失败了，这台机器资源看起来非常空闲，然后RM发现机器空闲，就调动更多container上来，然后越来越多的container失败，最后导致很多APP运行失败。社区提出了AM的黑名单机制，主要来解决AM的失败问题，如果AM大量失败，不往这台机器上调度AM，APP内部依赖自己的黑名单机制，发现这些问题机器。我们觉得这样可能会造成很多无效的container失败，所以我们的解决思路是建立整个集群的黑名单，而不单独是AM的黑名单。当我们通过一些规则发现有大量的container在某一台机器失败，或者这台机器的container调度速度非常异常，我们会把这台机器放到我们集群的黑名单里面，不再向这台机器调度资源。</p>
-<p>资源隔离方面，现在社区主要是用cgroup做一些内存和CPU的隔离，其他方面的隔离非常弱的，我们当时碰到一些场景比如磁盘打满了，FD泄露、线程泄露的问题。曾经在上一家公司的时候写过一个程序，有线程泄露的问题，泄露之后把整个机器的线程全用光了，这样导致这个机器所有服务异常，计算框架计算不断把这个问题task调度到其他机器上，最终把整个集群都打挂了。解决方案就是对container的线程数目，磁盘大小定期检查，如果超过阙值，直接kill掉。</p>
-<p>单台机器的故障率比较低，但集群规模变大之后，整体故障率变得非常高。怎么发现这些机器是个问题。我们借助container失败率做一个基本的判断。如果是一台机器失败率高于正常值，可能是非常有问题的，需要人工检查一下。还可以借助一些物理指标的异常检测，因为在离线系统里面，CPU打得比较高的，load也比较高，所以当前这些指标可能不容易发现，用syscpu作为异常检测指标，集群中经常有些机器task跑的比较慢，重启机器就好了。一台机器有问题会导致Task失败，Task失败会导致作业的失败，我们做了一个失败APP的归因系统，可以从归因系统里面发现一些问题机器。单纯从作业失败还不够，我们正在做一个基于失败TASK的归因系统，因为TASK有容灾重试机制，可能会掩盖潜在问题。</p>
-<p><img src="%E7%A8%B3%E5%AE%9A%E6%80%A7%E6%94%B9%E8%BF%9B.png" alt=""></p>
-<h4 id="5-yarn调度方面做的优化"><a href="#5-yarn调度方面做的优化" class="headerlink" title="5.yarn调度方面做的优化"></a>5.yarn调度方面做的优化</h4><p>yarn一个主要的功能，就是要调度整个集群的资源，它的视角是整个集群的节点信息，还有APP的资源请求信息，还有一些队列信息。yarn的调度模型里面，逻辑是比较复杂的， 简单说，先来一个节点，如果这个节点有一定资源的话，会对集群中的一级队列做排序，然后选出最应该调度的队列。选择这个队列之后找这个队列下面的二级队列进行排序，逐渐递归找到APP，选一个合适的APP进行调度，如果资源调度不上，再找下一个APP。调度逻辑是要耗费很大资源的，主要是各种排序。但整个排序真的有这么大必要吗？</p>
-<p><img src="%E8%B0%83%E5%BA%A6%E4%BC%98%E5%8C%96.png" alt=""></p>
-<p><strong>我们早期思路就是怎么减少整个排序的时间，减少排序时间从三方面着手，减少排序规模，减少单次排序时间，优化排序算法</strong>。如何减少排序规模？集群里有几千个队列，几千个队列是不是都需要资源？APP是不是都需要资源，是否都需要排序？实际场景中大部分是不需要资源和参与排序的，这样把整个排序规模减小了。在调度单词排序时，使用了java.collection.sort()函数排序的，每次排序涉及到两个元素的compare，怎么来减少compare的开销？在yarn里面每一次compare的时候有很多可以可以优化的地方，比如计算一个队列使用的资源量，有一些临时对象可以cache住，最终缩小整个单次排序的时间。Collection.sort底层使用归并排序，我们改成堆排序，经过这些优化后，差不多能够支撑5000台机器的规模。</p>
-<p><img src="%E8%B0%83%E5%BA%A6%E4%BC%98%E5%8C%96-%E7%BC%A9%E7%9F%AD%E6%8E%92%E5%BA%8F%E6%97%B6%E9%97%B4.png" alt=""></p>
-<p>优化之后还是存在一个很明显的问题，调度的扩展性是不足的，因为整个排序过程都是在一个CPU里面，如果想利用更多CPU，会涉及到整个排序怎么切分，节点怎么切分、作业怎么切分，怎么让资源分配达到均衡，怎么保证公平性，涉及到非常复杂的策略，非常难拆分。yarn调度是先选一个节点，然后再选APP，调度过程只看到一个节点的信息，而看不到整体的集群信息，整个调度策略是非常受限，很难加一些策略在里面。比如yarn本地化一个非常简单的功能实现上比较复杂，在整个调度框架层面。如何来解决这个问题？</p>
-<p><img src="%E4%BC%98%E5%8C%96%E5%90%8E%E5%AD%98%E5%9C%A8%E7%9A%84%E9%97%AE%E9%A2%98.png" alt=""></p>
-<p>最终决定我们重写调度逻辑，开发了Kwaischeduler。我们觉得在整个集群里面有一个上帝视角的，你可以拿到整个集群的资源使用情况和资源配置情况和每一个队列、每个APP的资源需求量和资源的配置。基于这些信息，我们能够计算出来，应该给每一个APP来分配多少资源。然后App资源的分配过程我们完全可以并发起来，借助多线程的能力，去整个资源池里面抢这些资源。因为我们是先调度APP的，所以抢这些资源的时候，借鉴K8S的调度思路，先对节点进行过滤，然后按照不同的调度策略，给每个节点打分，每个策略可以有一个权重，从理论上来说每个APP都可以有自己的策略。Kwai scheduler上线后调度性能和调度策略扩展性不是问题，现在单集群的调度性能可以达到每秒钟4万多container，对比国内其他厂商和社区，我们的调度性能和扩展性上表现还不错。</p>
-<p><img src="Kwaischeduler.png" alt=""></p>
-<p><strong>简单介绍一下底层实现。首先主要分成两部分，一部分是集群资源的预分配过程，把一些资源分配到每个APP，第二部分是APP怎么去每台机器上竞争资源</strong>。有一个单独线程定期会对集群情况做snapshot，基于snapshot来做一个上帝视角的资源分配。我们为每个APP分配出资源之后，就可以把APP丢到线程池里面并发抢资源，对相应的节点排序，选出分数最高的节点，最终你会有一个commit的过程，真正拿到资源。整个调度分配结束后，会把整个分配结果写回到整个原生的yarn框架。</p>
-<p><img src="Kwaischeduler%E5%8E%9F%E7%90%86.png" alt=""></p>
-<p><strong>在计算集群里面有一个大的问题，就很多的小IO</strong>。在我们业务场景里面，快手的数据规模比较大比较大，经常是几十万个map，几千reduce。一个map也没有多少数据，可能就是250M，reduce单次shuffle取的数据非常小的，可能只有几K几十K，所以有很多的小IO，导致整个集群磁盘util非常高，但是磁盘读写速度非常慢。针对这个问题，我们对MR的shuffle过程做一个Cache。在shuffle过程中，当一个请求来的时候，我们分析一下这次shuffle过程有没有可能产生比较多小IO，可以按需把shuffle数据放到cache里，只需要一次大的IO把数据搬到Cache里面，后面的shuffle请求可以直接从cache里面读，消灭了后面多次小IO，通过这个我们优化，提升了整个的集群IO性能。</p>
-<p><img src="%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96.png" alt=""></p>
-<p><strong>yarn为什么有抢占的问题，为什么K8S这些在线系统不会有抢占问题</strong>。yarn主要是离线调度系统，资源使用不像在线系统比较恒定，有一些突增，这意味着如果完全资源配额限制资源，会导致整个集群的资源利用率降低或者job的运行时间拉长。所以yarn允许你的资源使用超过配额。这带来另一个问题，使用超过配额后，当另一个队列需要资源的时候，能不能及时把这些资源释放出来。在大部分情况下是可以的，因为离线系统的作业一般会比较快的结束。但是在特殊场景下，有可能是一个spark作业一直占着资源不释放，可能会导致一些比较核心的作业拿不到资源。抢占主要是解决这个问题。但是在大部分的公司，抢占是没有打开的，原因主要因为社区版本的抢占不太可控。会基于队列的资源使用量来决定是否抢占，如果核心队列资源使用超过配额太多， 可能会被非核心队列抢占，存在比较大的风险。我们解读这个问题的思路是基于一些核心队列来触发的抢占，抢占只能从核心的队列触发，被抢占的只是非核心队列，这样就解决低优先级作业抢占核心的作业问题。但是这个方案还是有些问题，如果使用资源超过配额的都是一些核心的作业，这时候怎么处理？我们主要思路是，希望构建整个集群的作业优先级体系，把作业重要性系统做一个全局拉起，这样我们可以做一些队列内部的抢占和跨核心队列之间的抢占。</p>
-<p><img src="%E8%B5%84%E6%BA%90%E6%8A%A2%E5%8D%A0%E6%94%B9%E8%BF%9B.png" alt=""></p>
-<h3 id="yarn的未来规划"><a href="#yarn的未来规划" class="headerlink" title="yarn的未来规划"></a>yarn的未来规划</h3><p>构建作业分级保障，现在我们yarn的集群规模比较大，大家使用的资源都非常多，但是这些资源有没有用到真正比较重要的业务上，其实我们是有些疑问的，有多少无效的计算在里面，当然这个涉及到业务层的优化。为作业打一些作业的标签，基于这些任务的标签，以及优先级的特性，刻划整个集群资源的使用情况，为预算或者其他的技术方案提供一些技术的底层支持。</p>
-<p>我们现在单个yarn集群规模在国内是top级的，但是单集群毕竟是容量有限，我们后面会考虑多集群建设的方案，社区的federation方案在跨IDC方面有些问题，如何在业务透明的前提下，建设跨IDC集群有非常多问题需要解决。</p>
-<p><img src="%E6%9C%AA%E6%9D%A5%E8%A7%84%E5%88%92.png" alt=""></p>
-<p><strong>yarn现在主要托管的是一些离线计算的资源</strong>，公司还有很多空闲资源没有使用，怎么来使用这些空闲资源，怎么做到把一些合适的任务调入到一些比较空闲的机器上，当这个机器需要的时候，及时把任务迁移走，怎么减少业务相互的影响，底层这方面需要做什么支撑，这都需要探索。</p>
+                <p>原文出处：<a href="https://mp.weixin.qq.com/s?__biz=MzA5MTc0NTMwNQ==&amp;mid=2650719541&amp;idx=1&amp;sn=39fba251816ee625854c31ddc91f73af&amp;chksm=887dd843bf0a515544bed451d6f1b26af560f9c8991bb72d302c74c852fa848c95601d375482&amp;mpshare=1&amp;scene=24&amp;srcid=&amp;sharer_sharetime=1586262346462&amp;sharer_shareid=9f8f1bd360ef58661a2034df035a1bb1#rd" target="_blank" rel="noopener">https://mp.weixin.qq.com/s?__biz=MzA5MTc0NTMwNQ==&amp;mid=2650719541&amp;idx=1&amp;sn=39fba251816ee625854c31ddc91f73af&amp;chksm=887dd843bf0a515544bed451d6f1b26af560f9c8991bb72d302c74c852fa848c95601d375482&amp;mpshare=1&amp;scene=24&amp;srcid=&amp;sharer_sharetime=1586262346462&amp;sharer_shareid=9f8f1bd360ef58661a2034df035a1bb1#rd</a></p>
+<h3 id="01-“流”好在哪里？"><a href="#01-“流”好在哪里？" class="headerlink" title="01 “流”好在哪里？"></a>01 “流”好在哪里？</h3><p>“流”是一种非常好的编程模式。</p>
+<p><img src="%E6%B5%81%E8%AE%A1%E7%AE%97%E6%A8%A1%E5%BC%8F.png" alt=""></p>
+<p>▲图一：代表流计算模式的有向无环图DAG</p>
+<p><strong>首先，“流”与“异步”不谋而合。</strong></p>
+<p>“流”的各个节点通过队列传递消息，不同节点的执行正好就是完全异步的。并且由于有队列隔离，不同节点的执行完全不用考虑并发安全的问题。“流”在内部执行时是异步和并行的，能最大限度提高资源使用效率，提高程序执行性能。</p>
+<p>可以说，“流”是“异步”的一种重要表现方式，“异步”则是“流”在执行时的内禀性质。</p>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/LSOjyib5giaVdSYgYBau7umBdNvKibwLS3GqTMKyXIfjszxqed0LKTSnh7XviafBdnHmKUjduAXwice8LZrl0CLtibIQ/640?wx_fmt=gif&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" alt="img"></p>
+<p><img src="%E6%B5%81%E4%B8%8E%E5%BC%82%E6%AD%A5.png" alt=""></p>
+<p>▲图2：“流”和“异步”，傻傻分不清楚！</p>
+<p><strong>其次，如果“流”的执行节点间使用的是阻塞队列</strong>，那么整个流的各个执行环节就天然地带有了反向压力能力，让我们不必担心很多异步系统在高负载而又临时处理能力不足时造成的OOM问题。</p>
+<p><strong>再次，“流”能够非常自然地描述业务执行的流程。</strong>不管是大到整个产品线的各个服务模块，还是小到每个服务模块中的具体实现步骤。就像“分形”一样，“流”能够做任意细力度的划分。这是一种非常普遍的描述事情发生过程的模式。</p>
+<p><strong>最后，通过类似于Kafka这样消息中间件的隔离，可以非常清晰地定义模块和模块之间的边界</strong>，从设计模式中高内聚、低耦合的角度来看，是一种非常不错的实践！</p>
+<h3 id="02-流计算解决了什么问题？"><a href="#02-流计算解决了什么问题？" class="headerlink" title="02 流计算解决了什么问题？"></a>02 流计算解决了什么问题？</h3><p>总的来说，我们使用流计算主要是为了计算以下几类问题。</p>
+<h4 id="1-流数据操作"><a href="#1-流数据操作" class="headerlink" title="1. 流数据操作"></a><strong>1. 流数据操作</strong></h4><p>流数据操作可以说是流计算系统与生俱来的能力，它本身是针对数据流的转化或转移处理，所以实现和使用起来都相对更加直观。</p>
+<p>流数据操作的内容主要包括了三类：<strong>对数据进行清洗、规整和结构化</strong>，对不同来源的数据进行关联及合并，以及在不同系统之间搬运数据。这三类操作通过一些常用的流式API就可以实现。</p>
+<h4 id="2-单点特征计算"><a href="#2-单点特征计算" class="headerlink" title="2. 单点特征计算"></a><strong>2. 单点特征计算</strong></h4><p>一个事件中包含的用户是否在黑名单中？发生事件的设备是否是模拟器？温度传感器传来的温度事件是否已经超出正常温度范围？发送消息设备的IP是否是代理？一次交易的金额是否属于大额交易？手机是否有SIM卡？</p>
+<p>诸如此类的问题，要么可以通过黑白名单，要么能够通过特定的规则计算而得到答案，实现起来相对简单，所以<strong>我们将这类特征计算称之为单点特征。</strong></p>
+<h4 id="3-时间维度聚合特征计算"><a href="#3-时间维度聚合特征计算" class="headerlink" title="3. 时间维度聚合特征计算"></a><strong>3. 时间维度聚合特征计算</strong></h4><p>相同设备的1小时内注册事件次数、相同银行卡号的7天交易事件次数、过去30天内同一IP段上交易金额、过去1分钟高温事件的次数、过去5分钟日志告警事件的次数……</p>
+<p>诸如此类特征在诸如风控、预警、监控等各种场景都非常广泛的应用。分析不难发现，这类特征都有个共同特点，它们均需要在时间维度对数据进行聚合运算。因此，<strong>我们称这类特征为时间维度聚合特征。</strong></p>
+<h4 id="4-关联图谱特征计算"><a href="#4-关联图谱特征计算" class="headerlink" title="4. 关联图谱特征计算"></a><strong>4. 关联图谱特征计算</strong></h4><p>除了时间维度的聚合分析外，我们还经常进行“空间”维度的聚合分析。不过<strong>这种分析有个更专业的名字，即“关联图谱”分析。</strong></p>
+<p>比如在一些风控场景中，我们需要计算用户账户使用IP的个数、同一手机号码发生在不同城市的个数、同一设备上关联用户的数目、同一用户关联设备的数目、同一推荐人推荐的用户数等特征。</p>
+<p>以设备关联用户数为例，如果某个设备上注册的用户很多，那么它的风险就比较高，毕竟正常情况下我们都只会用自己的手机注册自己的账号，而不会是帮其他几十、上百人注册账号的。</p>
+<h4 id="5-事件序列分析"><a href="#5-事件序列分析" class="headerlink" title="5. 事件序列分析"></a><strong>5. 事件序列分析</strong></h4><p>数据流中的数据不是单纯在时间上有着先来后到的关系，而是在数据和数据之间也有着联系。</p>
+<p>考虑用户在手机上安装新APP的过程，它可能是先点击了某个广告链接，然后下载并安装了APP，最后成功注册了账号。从“点击”到“下载”，再到“安装”和“注册”，这就完成了一次将广告转化为用户的过程。</p>
+<p>再比如在网络欺诈识别场景中，如果用户在新建账号后，立马发生大量交易行为。那么这种“新建账号”到“10分钟内5次交易”的行为就是种非常可疑的行为了。</p>
+<p>诸如此类从数据流表示的事件流中，检测并筛选出符合特定模式或行为的事件序列的过程，我们称之为<strong>复杂事件处理</strong>（Complex Event Processing，简称为CEP）。<strong>CEP也是流计算经常被用来解决的问题。</strong></p>
+<h4 id="6-模型学习和预测"><a href="#6-模型学习和预测" class="headerlink" title="6. 模型学习和预测"></a><strong>6. 模型学习和预测</strong></h4><p>随着流计算越来越流行和普及，越来越多的原本主要针对离线批式数据的统计和机器学习模型也被用于流数据。</p>
+<p>比如在风控系统中，当我们计算好特征后，还需要把这些特征输入评分模型进行风险评分。根据不同的使用场景，使用的评分模型可能是基于规则的模型，也可能是基于机器学习的模型。传统的机器学习模型主要通过离线训练而来，但现在越来越多的模型会直接基于流数据在线训练和更新。</p>
+<p>再比如在异常检测应用中，我们会在线统计并估计变量的分布参数，然后根据训练出的分布模型判断变量之后的取值是否属于异常。<strong>这种同时在线更新和预测的做法，在流计算应用中也越来越常见。</strong></p>
+<h3 id="03-流数据状态和流信息状态"><a href="#03-流数据状态和流信息状态" class="headerlink" title="03 流数据状态和流信息状态"></a><strong>03 流数据状态和流信息状态</strong></h3><p>在流计算系统中，“<strong>状态</strong>”是非常重要的方面。甚至从各种开源流计算框架的发展历史来看，我们会发现大家对实时流计算中的“状态”问题也是一点点逐步才弄清楚的。</p>
+<p>关联操作中临时保存的窗口数据、实现时间维度聚合特征、关联图谱特征、CEP中有限状态机、统计或机器学习模型的参数估计，实时流计算系统需要的最主要的几个计算目标，无不与“状态”有关。但，<strong>这些状态是有区别的！</strong></p>
+<p>我们将流在执行过程中涉及到的状态，分为两类：<strong>流数据状态</strong>和<strong>流信息状态</strong>。</p>
+<ul>
+<li><strong>流数据状态。</strong>在流数据处理的过程中，可能需要处理事件窗口、时间乱序、多流关联等问题，在解决这些问题的过程中，通常会涉及到对部分流数据的临时缓存，并在处理完后将其清理。我们将临时保存的部分流数据称为“流数据状态”。</li>
+<li><strong>流信息状态。</strong>在对流数据的分析过程中，会得到一些我们感兴趣的信息，比如时间维度的聚合数据、关联图谱中的一度关联节点数、CEP中的有限状态机等，这些信息可能会在后续的流数据分析过程中被继续使用，从而需要将这些信息保存下来。同时在后续的流数据处理过程中，这些信息还会被不断地访问和更新。我们将这些分析所得并保存下来的数据称为“流信息状态”。</li>
+</ul>
+<p>将实时流计算应用中的状态分为了“流数据状态”和“流信息状态”。可以说是从两个不同的维度对“流”进行的管理。前者“流数据状态”是从“时间”角度对流进行管理，而后者“流信息状态”则是从“空间”角度对流的管理。</p>
+<p>“流信息状态”弥补了“流数据状态”只是对事件在时间序列上做管理的不足，将流的状态扩展到了任意的空间。</p>
+<p><strong>目前，针对“流信息状态”的存储，主要有三种方式：</strong></p>
+<ul>
+<li>计算节点和状态数据节点分离的分布式内存数据库方案</li>
+</ul>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/LSOjyib5giaVdSYgYBau7umBdNvKibwLS3GqTMKyXIfjszxqed0LKTSnh7XviafBdnHmKUjduAXwice8LZrl0CLtibIQ/640?wx_fmt=gif&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" alt="img"></p>
+<p><img src="redis%E9%9B%86%E7%BE%A4.png" alt=""></p>
+<p>▲图3：使用Redis集群进行状态存储和管理</p>
+<ul>
+<li>计算节点和状态数据节点共存的分布式内存格点方案</li>
+</ul>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/LSOjyib5giaVdSYgYBau7umBdNvKibwLS3GqTMKyXIfjszxqed0LKTSnh7XviafBdnHmKUjduAXwice8LZrl0CLtibIQ/640?wx_fmt=gif&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" alt="img"></p>
+<p><img src="Ignite%E9%9B%86%E7%BE%A4.png" alt="img"></p>
+<p>▲图4：使用Ignite集群进行状态存储和管理</p>
+<ul>
+<li>基于分布式文件系统同步状态数据的方案</li>
+</ul>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/LSOjyib5giaVdSYgYBau7umBdNvKibwLS3GqTMKyXIfjszxqed0LKTSnh7XviafBdnHmKUjduAXwice8LZrl0CLtibIQ/640?wx_fmt=gif&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" alt="img"></p>
+<p><img src="%E5%88%86%E5%B8%83%E5%BC%8F%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F.png" alt=""></p>
+<p>▲图5：基于分布式文件系统的状态存储和管理集群</p>
+<p>将“流计算应用本身的执行过程”和“流数据的信息管理机制”解耦，这使得实时流计算系统的整体结构更加清晰。如果我们将前者理解为CPU的执行流水线，那么后者就相当于是内存。实时流计算系统的这种架构就非常像是一个分布式的JVM了！</p>
+<h3 id="04-流计算框架"><a href="#04-流计算框架" class="headerlink" title="04 流计算框架"></a><strong>04 流计算框架</strong></h3><p>目前的开源流计算框架有许多，比如Apache Storm、Spark Streaming、Apache Samza、Apache Flink、Akka Streaming、Apache Beam等。这些流计算框架各有特色，那我们该如何面对琳琅满目的流计算框架呢？可以从两个角度来看待这个问题。</p>
+<p><strong>从横向功能特征的角度来看</strong>，其实所有流计算框架的核心概念都是相同的。只要我们掌握了流计算中的核心概念，把握流计算框架中各种问题的关键所在，那么面对这些流计算框架，也不会感到眼花缭乱，乱了阵脚。</p>
+<p><strong>从纵向发展历史的角度来看</strong>，以Flink为代表的新一代流计算框架，在理论和实践上都已日趋完善和成熟。当掌握了流计算中的核心概念后，不妨一开始就站在Flink这个巨人的肩膀上，开始在流计算领域的探索和实践。</p>
+<p>而作为有希望统一流计算领域的Apache Beam，实际上是构建在各种具体流计算框架上的更高一层统一编程模式，它对流计算中的各种概念和问题做出了总结，是我们追踪流计算领域最新进展的一个好切入点。</p>
+<p>最后附上实时流计算系统思维导图（点击图片可放大）：</p>
+<p><img src="%E6%80%9D%E7%BB%B4%E5%AF%BC%E5%9B%BE.png" alt=""></p>
 
             </div>
             <hr/>
@@ -406,12 +430,12 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Hadoop/">
-                                    <span class="chip bg-color">Hadoop</span>
-                                </a>
-                            
                                 <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/">
                                     <span class="chip bg-color">大数据</span>
+                                </a>
+                            
+                                <a href="/tags/%E6%B5%81%E5%BC%8F%E5%A4%84%E7%90%86/">
+                                    <span class="chip bg-color">流式处理</span>
                                 </a>
                             
                         </div>
@@ -453,31 +477,39 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2019/04/08/%E6%B5%81%E8%AE%A1%E7%AE%97/">
+                <a href="/2019/12/30/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="流计算">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="计算机组成原理">
                         
-                        <span class="card-title">流计算</span>
+                        <span class="card-title">计算机组成原理</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            原文出处：https://mp.weixin.qq.com/s?__biz=MzA5MTc0NTMwNQ==&amp;mid=2650719541&amp;idx=1&amp;sn=39fba251816ee625854c31ddc91f7
+                            一. 计算机系统概述计算机性能指标硬件性能参数
+
+计算机字长：CPU字长，指CPU一次能处理数据的二进制位数
+机器主频：时钟脉冲的频率
+主存容量：计算机能够存放的最大的二进制位数bit，B，KB，MB
+
+计算机性能指标
+
+响应时间：计算机完
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2019-04-08
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-12-30
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/" class="post-category">
-                                    大数据
+                            <a href="/categories/%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/" class="post-category">
+                                    期末复习
                                 </a>
                             
                             
@@ -487,12 +519,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/">
-                        <span class="chip bg-color">大数据</span>
-                    </a>
-                    
-                    <a href="/tags/%E6%B5%81%E5%BC%8F%E5%A4%84%E7%90%86/">
-                        <span class="chip bg-color">流式处理</span>
+                    <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">
+                        <span class="chip bg-color">计算机组成原理</span>
                     </a>
                     
                 </div>
@@ -506,32 +534,31 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/03/30/Java%E4%B8%8E%E7%BA%BF%E7%A8%8B/">
+                <a href="/2019/04/08/Hadoop%20YARN%20%E5%9C%A8%E5%BF%AB%E6%89%8B%E7%9A%84%E5%BA%94%E7%94%A8%E5%AE%9E%E8%B7%B5%E4%B8%8E%E6%8A%80%E6%9C%AF%E6%BC%94%E8%BF%9B%E4%B9%8B%E8%B7%AF/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="Java与线程">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="Hadoop YARN 在快手的应用实践与技术演进之路">
                         
-                        <span class="card-title">Java与线程</span>
+                        <span class="card-title">Hadoop YARN 在快手的应用实践与技术演进之路</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            线程的实现线程是比进程更轻量级的调度执行单位，线程的引入，可以把一个进程的资源分配和执行调度分开，各个线程既可以共享进程资源（内存地址，文件I/O等），又可以独立调度（线程是CPU调度的基本单位）。
-Java语言提供了在不同硬件和操作系统平
+                            原文出处：https://mp.weixin.qq.com/s?__biz=MzA5MTc0NTMwNQ==&amp;mid=2650719076&amp;idx=1&amp;sn=3956a8f9d1dcfc63132984a1f71bf
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-03-30
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-04-08
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/java/" class="post-category">
-                                    java
+                            <a href="/categories/Hadoop/" class="post-category">
+                                    Hadoop
                                 </a>
                             
                             
@@ -541,12 +568,12 @@ Java语言提供了在不同硬件和操作系统平
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/java/">
-                        <span class="chip bg-color">java</span>
+                    <a href="/tags/Hadoop/">
+                        <span class="chip bg-color">Hadoop</span>
                     </a>
                     
-                    <a href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/">
-                        <span class="chip bg-color">虚拟机</span>
+                    <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/">
+                        <span class="chip bg-color">大数据</span>
                     </a>
                     
                 </div>
